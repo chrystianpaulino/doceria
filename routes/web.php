@@ -22,10 +22,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/vue-teste', function () {
-    return view('vue-teste');
-});
-
 Auth::routes();
 
 Route::middleware('auth')->group(function (){
