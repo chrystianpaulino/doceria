@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function (){
     Route::resource('/customers'            , \App\Http\Controllers\CustomerController::class);
     Route::resource('/aditionals'           , \App\Http\Controllers\AditionalController::class);
     Route::resource('/orders'               , \App\Http\Controllers\OrderController::class);
+    Route::resource('/feedstocks'           , \App\Http\Controllers\FeedstockController::class);
+    Route::resource('/providers'            , \App\Http\Controllers\ProviderController::class);
+    Route::resource('/costs'                , \App\Http\Controllers\CostController::class);
 });
 
 

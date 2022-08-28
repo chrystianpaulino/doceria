@@ -43,20 +43,25 @@
                 <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('products.index') }}"><i
-                                    class="fas fa-burger-soda"></i> Produtos</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('products.index') }}"><i class="fas fa-burger-soda"></i> Produtos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('aditionals.index') }}"><i
-                                    class="fas fa-candy-cane"></i> Adicionais</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('aditionals.index') }}"><i class="fas fa-candy-cane"></i> Adicionais</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('customers.index') }}"><i
-                                    class="fas fa-user"></i> Clientes</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('customers.index') }}"><i class="fas fa-user"></i> Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('orders.index') }}"><i
-                                    class="fa fa-shopping-cart" aria-hidden="true"></i> Pedidos</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('orders.index') }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Pedidos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ route('feedstocks.index') }}"><i class="fas fa-inventory"></i> Insumos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ route('providers.index') }}"><i class="fas fa-industry"></i> Fornecedores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ route('costs.index') }}"><i class="fa fa-money" aria-hidden="true"></i> Gastos</a>
                         </li>
                     </ul>
             @endif
@@ -111,31 +116,29 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script src="https://kit.fontawesome.com/4a05637478.js" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"
-        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.6/js/bootstrap-select.min.js"></script>
 
-@yield('js')
-
 <script>
-    jQuery(function($){
-        $(".placa").mask("aaa-9*99");
-        $(".cartao").mask("9999999999999999");
-        $(".ccv").mask("999");
-        $(".ano").mask("9999");
-        $(".mes").mask("99");
-        $(".cep").mask("99999-999");
-        $(".mesano").mask("99/9999");
-        $(".hora").mask("99:99");
-        $(".datas").mask("99/99/9999");
-        $(".cnpj").mask("99.999.999/9999-99");
-        $(".cpf").mask("999.999.999-99");
-        $(".phone").mask("(99) 99999-9999")
-    });
+    $('#price').mask('000.000.000.000.000,00', {reverse: true});
+    $(".placa").mask("aaa-9*99");
+    $(".cartao").mask("9999999999999999");
+    $(".ccv").mask("999");
+    $(".ano").mask("9999");
+    $(".mes").mask("99");
+    $(".cep").mask("99999-999");
+    $(".mesano").mask("99/9999");
+    $(".hora").mask("99:99");
+    $(".datas").mask("99/99/9999");
+    $(".cnpj").mask("99.999.999/9999-99");
+    $(".cpf").mask("999.999.999-99");
+    $(".phone").mask("(99) 99999-9999")
 </script>
+
+@yield('js')
 
 </body>
 </html>
