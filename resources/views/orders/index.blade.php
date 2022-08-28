@@ -29,6 +29,7 @@
                         <td class="text-center">Taxa de Delivery</td>
                         <td class="text-center">Desconto</td>
                         <td class="text-center">Total</td>
+                        <td class="text-center">Pagamento</td>
                         <td class="text-center">Data</td>
                     </tr>
                     </thead>
@@ -56,6 +57,9 @@
                             </td>
                             <td class="text-center">
                                 R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}
+                            </td>
+                            <td class="text-center">
+                                {{ $order->payment_type }}
                             </td>
                             <td class="text-center">
                                 {{ \Carbon\Carbon::parse($order->delivery_date)->format('d/m/Y')}}

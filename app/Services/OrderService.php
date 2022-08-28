@@ -62,6 +62,7 @@ class OrderService
             $order->discount      = $data['discount'] ?? 0;
             $order->total_amount  = $data['total'];
             $order->delivery_date = $data['date'] ?? now();
+            $order->payment_type  = $data['paymentType'] ?? null;
             $order->save();
 
             if (isset($data['arrayProducts'])) {

@@ -62,8 +62,8 @@
                             {{ Form::text('total_amount', number_format($order->total_amount / 100, 2, ','), ['class' => 'form-control', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-3">
-                            {{ Form::label('payment_type','Pagamento') }}
-                            {{ Form::text('payment_type', 'tipo pagamento', ['class' => 'form-control', 'readonly']) }}
+                            {{ Form::label('payment_type','Tipo de pagamento') }}
+                            {{ Form::text('payment_type', $order->payment_type, ['class' => 'form-control', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-3">
                             {{ Form::label('delivery_date','Data de registro') }}

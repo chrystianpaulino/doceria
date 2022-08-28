@@ -97,6 +97,17 @@
                                 </div>--}}
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
+                                        {{ Form::label('payment_type','Tipo de pagamento') }}
+                                        <br>
+                                        <select class="form-select" class="col-12" id="paymentType" name="paymentType" v-model="paymentType" :required="true">
+                                            <option v-for="payment in payments" v-bind:value="payment.value">
+                                                @{{ payment.text }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
                                         {{ Form::label('discount','Desconto') }}
                                         <div class="input-group">
                                             <span class="input-group-text" id="basic-addon1">R$</span>
@@ -173,7 +184,13 @@
                 date: new Date().toISOString().slice(0,10),
                 obs: null,
                 arrayProducts: [],
-                arrayAditionals: []
+                arrayAditionals: [],
+                payments: [
+                    { text: 'Cartão', value: 'CARTAO' },
+                    { text: 'Pix', value: 'PIX' },
+                    { text: 'Dinheiro', value: 'DINHEIRO' }
+                ],
+                paymentType: null,
             },
             watch: {
 
@@ -222,6 +239,11 @@
                         return true;
                     }
 
+                    if (app.customer == null) {
+                        alert('É necessário informar o tipo do pagamento');
+                        return true;
+                    }
+
                     const data = {
                         arrayProducts: app.arrayProducts,
                         arrayAditionals: app.arrayAditionals,
@@ -231,7 +253,8 @@
                         price: app.price,
                         total: app.totalAmount,
                         discount: app.discount,
-                        deliveryFee: app.deliveryFee
+                        deliveryFee: app.deliveryFee,
+                        paymentType: app.paymentType
                     }
                     console.log(data);
                     axios.post('{{ route('orders.store') }}', data).then(function (response) {
