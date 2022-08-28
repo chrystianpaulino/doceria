@@ -22,7 +22,6 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-
                     </tr>
                     </thead>
                     <tbody>
@@ -31,11 +30,14 @@
                             <td>
                                 <code>#{{ $customer->id }}</code>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 {{ $customer->name }}
                             </td>
-                            <td>
+                            <td class="text-center">
                                 {{ $customer->phone }}
+                            </td>
+                            <td class="text-center">
+                                {{ $customer->street ? $customer->street . ", " : '' }}{{ $customer->street_number }}
                             </td>
                         </tr>
                     @endforeach

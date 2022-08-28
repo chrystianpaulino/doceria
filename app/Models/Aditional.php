@@ -24,6 +24,10 @@ class Aditional extends Model
         'status'
     ];
 
+    public $appends = [
+        'status_name', 'price_formated'
+    ];
+
     /**
      * Scope
      *
@@ -35,9 +39,15 @@ class Aditional extends Model
         return $query->where('status', '=', AditionalEnum::ATIVO);
     }
 
-    public $appends = [
-        'status_name', 'price_formated'
-    ];
+    public function setDescriptionAttribute($value)
+    {
+        $this->attributes['description'] = mb_strtoupper($value, 'UTF-8');
+    }
+
+    public function setLongDescriptionAttribute($value)
+    {
+        $this->attributes['long_description'] = mb_strtoupper($value, 'UTF-8');
+    }
 
     public function getStatusNameAttribute()
     {
@@ -55,6 +65,6 @@ class Aditional extends Model
 
     public function getPriceFormatedAttribute()
     {
-        return showCentsValue($this->price);
+        return showCentsValue($this->attributes['price']);
     }
 }

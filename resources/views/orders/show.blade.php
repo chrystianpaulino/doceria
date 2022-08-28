@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group mb-3 col-md-2">
-                            {{ Form::label('customer_id','ID') }}
+                            {{ Form::label('customer_id','Número') }}
                             {{ Form::text('customer_id', $order->customer_id, ['class' => 'form-control', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-6">
@@ -40,8 +40,8 @@
 
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <strong>Venda número #{{ $order->id }}</strong>
-                    <span class="badge bg-info">{{ $order->status_delivery }}</span>
+                    <strong>Pedido número #{{ $order->id }}</strong>
+                    <span class="badge bg-info"> {{ $order->status_delivery }}</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -114,7 +114,7 @@
                         <td class="text-end" colspan="5"><strong class="text-danger">Total de desconto: R$ {{ \App\Helpers\showCentsValue($order->discount) }}</strong></td>
                     </tr>
                     <tr class="bg-light">
-                        <td class="text-end" colspan="5"><strong class="text-success">Total da venda: R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</strong></td>
+                        <td class="text-end" style="font-size: 16px" colspan="5"><strong class="text-info">Total da venda: R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</strong></td>
                     </tr>
                 </table>
             </div>

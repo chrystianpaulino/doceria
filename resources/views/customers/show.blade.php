@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    {{ Form::label('neighborhood','Complemento') }}
+                    {{ Form::label('neighborhood','Bairro') }}
                     {{ Form::text('neighborhood', $customer->neighborhood, ['class' => 'form-control', 'readonly']) }}
                 </div>
 

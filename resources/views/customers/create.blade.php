@@ -39,7 +39,7 @@
 
                     <div class="form-group mb-3">
                         {{ Form::label('email','Email') }}
-                        {{ Form::email('email', null,['class' => 'form-control', 'required']) }}
+                        {{ Form::email('email', null,['class' => 'form-control']) }}
                     </div>
 
                     <div class="form-group mb-3">
@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        {{ Form::label('neighborhood','Complemento') }}
+                        {{ Form::label('neighborhood','Bairro') }}
                         {{ Form::text('neighborhood', null,['class' => 'form-control']) }}
                     </div>
 

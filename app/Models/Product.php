@@ -39,6 +39,16 @@ class Product extends Model
         return $query->where('status', '=', ProductEnum::ATIVO);
     }
 
+    public function setDescriptionAttribute($value)
+    {
+        $this->attributes['description'] = mb_strtoupper($value, 'UTF-8');
+    }
+
+    public function setLongDescriptionAttribute($value)
+    {
+        $this->attributes['long_description'] = mb_strtoupper($value, 'UTF-8');
+    }
+
     public function getStatusNameAttribute()
     {
         if (!isset($this->attributes['status'])) {

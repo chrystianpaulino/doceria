@@ -128,7 +128,7 @@
             <div class="container col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        Itens da Venda
+                        Itens do Pedido
                     </div>
                     <div class="card-body">
                         <ul class="list-group">

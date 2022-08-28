@@ -32,10 +32,24 @@ class Customer extends Model
         'status_name',
     ];
 
-    // altera o valor recebido para uppercase
-    public function setNomeAttribute($value)
+    public function setNameAttribute($value)
     {
         $this->attributes['name'] = mb_strtoupper($value, 'UTF-8');
+    }
+
+    public function setStreetAttribute($value)
+    {
+        $this->attributes['street'] = mb_strtoupper($value, 'UTF-8');
+    }
+
+    public function setNeighborhoodAttribute($value)
+    {
+        $this->attributes['neighborhood'] = mb_strtoupper($value, 'UTF-8');
+    }
+
+    public function setCityAttribute($value)
+    {
+        $this->attributes['city'] = mb_strtoupper($value, 'UTF-8');
     }
 
     public function getStatusNameAttribute()
