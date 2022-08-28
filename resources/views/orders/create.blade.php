@@ -16,7 +16,7 @@
 
     <div class="container" id="app">
         <div class="row">
-            <div class="container col-md-8">
+            <div class="container col-md-8 mb-4">
                 <div class="card">
                     <div class="card-header">
                         <strong>Nova Venda</strong>
@@ -31,13 +31,14 @@
                                 </ul>
                             </div>
                         @endif
-                        <div class="row col-md-12">
+                        <div class="row col-md-12 m-0 d-flex">
                             <div class="col-md-6 mt-4">
                                 <div class="form-group">
                                     {{ Form::label('product_id','Produto') }}
                                 </div>
                                 <div class="form-group" style="display: inline-block; min-width: 80%">
-                                    <select class="form-select" class="col-md-12" v-model="product" required>
+                                    <select class="form-select" v-model="product" required>
+                                        <option :value="null" disabled>Selecione</option>
                                         <option v-for="product in products" :value="product">
                                             @{{ product.description }}
                                         </option>
@@ -50,7 +51,8 @@
                                     {{ Form::label('aditional_id','Adicional') }}
                                 </div>
                                 <div class="form-group" style="display: inline-block; min-width: 80%">
-                                    <select class="form-select" class="col-md-12" v-model="aditional">
+                                    <select class="form-select" v-model="aditional">
+                                        <option :value="null" disabled>Selecione</option>
                                         <option v-for="aditional in aditionals" :value="aditional">
                                             @{{ aditional.description }}
                                         </option>
@@ -59,66 +61,64 @@
                                 <button class="btn btn-primary" v-on:click="adicionarAdicional()"><i class="fas fa-plus"></i></button>
                             </div>
 
-                            <div class="row mt-4">
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        {{ Form::label('customer_id','Cliente') }}
-                                        <br>
-                                        <select class="form-select" class="col-12" id="product" name="product" v-model="customer" required>
-                                            <option v-for="customer in customers" :value="customer">
-                                                @{{ customer.name }}
-                                            </option>
-                                        </select>
+                            <div class="col-md-6 mt-4">
+                                <div class="form-group mb-3">
+                                    {{ Form::label('customer_id','Cliente') }}
+                                    <br>
+                                    <select class="form-select" class="col-12" id="product" name="product" v-model="customer" required>
+                                        <option :value="null" disabled>Selecione</option>
+                                        <option v-for="customer in customers" :value="customer">
+                                            @{{ customer.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-4">
+                                <div class="form-group">
+                                    {{ Form::label('date','Data de entrega') }}
+                                    {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="obs" class="col-md-4 col-form-label">Obs</label>
+                                    <textarea id="obs" rows="2" class="form-control" name="obs" v-model="obs"></textarea>
+                                </div>
+                            </div>
+
+                            {{--<div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    {{ Form::label('deliveryFee','Taxa delivery') }}
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">R$</span>
+                                        {{ Form::number('deliveryFee', null, ['class' => 'form-control', 'v-model' => 'deliveryFee']) }}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        {{ Form::label('date','Data de entrega') }}
-                                        {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
-                                    </div>
+                            </div>--}}
+                            <div class="col-md-6 mt-4">
+                                <div class="form-group mb-3">
+                                    {{ Form::label('payment_type','Tipo de pagamento') }}
+                                    <br>
+                                    <select class="form-select" class="col-12" id="paymentType" name="paymentType" v-model="paymentType" :required="true">
+                                        <option :value="null" disabled>Selecione</option>
+                                        <option v-for="payment in payments" v-bind:value="payment.value">
+                                            @{{ payment.text }}
+                                        </option>
+                                    </select>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="obs" class="col-md-4 col-form-label text-md-right">Obs</label>
-                                        <textarea id="obs" rows="2" class="form-control" name="obs" v-model="obs"></textarea>
+                            </div>
+                            <div class="col-md-6 mt-4">
+                                <div class="form-group mb-3">
+                                    {{ Form::label('discount','Desconto') }}
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">R$</span>
+                                        {{ Form::text('discount', null, ['class' => 'form-control mask-money-discount', 'v-model' => 'discount']) }}
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row mt-4">
-                                {{--<div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        {{ Form::label('deliveryFee','Taxa delivery') }}
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon1">R$</span>
-                                            {{ Form::number('deliveryFee', null, ['class' => 'form-control', 'v-model' => 'deliveryFee']) }}
-                                        </div>
-                                    </div>
-                                </div>--}}
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        {{ Form::label('payment_type','Tipo de pagamento') }}
-                                        <br>
-                                        <select class="form-select" class="col-12" id="paymentType" name="paymentType" v-model="paymentType" :required="true">
-                                            <option v-for="payment in payments" v-bind:value="payment.value">
-                                                @{{ payment.text }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        {{ Form::label('discount','Desconto') }}
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon1">R$</span>
-                                            {{ Form::text('discount', null, ['class' => 'form-control mask-money-discount', 'v-model' => 'discount']) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <button class="btn btn-primary p-2" v-on:click="submit()">Finalizar</button>
+                            <div class="col-md-12 mt-4">
+                                <button class="btn btn-primary" style="width: 100%" v-on:click="submit()">Finalizar</button>
                             </div>
 
                         </div>
@@ -239,7 +239,7 @@
                         return true;
                     }
 
-                    if (app.customer == null) {
+                    if (app.paymentType == null) {
                         alert('É necessário informar o tipo do pagamento');
                         return true;
                     }
