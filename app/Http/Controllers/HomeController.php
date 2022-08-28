@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cost;
 use App\Models\Customer;
 use App\Models\Order;
 use Carbon\Carbon;
@@ -28,11 +29,13 @@ class HomeController extends Controller
 
         $ordersToday   = Order::where('delivery_date', 'like', today()->format('Y-m-d') . '%')->get();
         $novosClientes = Customer::where('created_at', 'like', today()->format('Y-m') . '%')->count();
+        $totalGasto    = Cost::where('created_at', 'like', today()->format('Y-m') . '%')->count();
 
         $mesAtual            = Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
         $primeiroDiaMesAtual = $mesAtual->firstOfMonth()->format('Y-m-d');
         $ontem               = Carbon::yesterday()->format('Y-m-d');
         $qtdDias             = Carbon::createFromFormat('Y-m-d', $ontem)->format('d');
+
 
         $arrayPedidos = [];
 
@@ -52,6 +55,6 @@ class HomeController extends Controller
             array_push($arrayPedidos, $dadosDoDiaX);
         }
 
-        return view('home', compact('ordersToday', 'arrayPedidos', 'pedidosTotalMes', 'totalFaturado', 'novosClientes'));
+        return view('home', compact('ordersToday', 'arrayPedidos', 'pedidosTotalMes', 'totalFaturado', 'novosClientes', 'totalGasto'));
     }
 }

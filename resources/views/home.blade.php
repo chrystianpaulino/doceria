@@ -32,19 +32,25 @@
                     </div>
                     <div class="card-body">
                         <div class="row text-center justify-content-center align-items-center">
-                            <div class="col-md-3 card bg-light mb-3 me-3" style="max-width: 18rem;">
+                            <div class="col-md-4 card bg-light mb-3 me-3" style="max-width: 18rem;">
                                 <div class="card-header" style="background-color: transparent">Pedidos</div>
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $pedidosTotalMes }}</h5>
                                 </div>
                             </div>
-                            <div class="col-md-3 card bg-light mb-3  me-3" style="max-width: 18rem;">
+                            <div class="col-md-4 card bg-light mb-3 me-3" style="max-width: 18rem;">
                                 <div class="card-header" style="background-color: transparent">Faturado</div>
                                 <div class="card-body">
                                     <h5 class="card-title">R$ {{ \App\Helpers\showCentsValue($totalFaturado) }}</h5>
                                 </div>
                             </div>
-                            <div class="col-md-3 card bg-light mb-3" style="max-width: 18rem;">
+                            <div class="col-md-4 card bg-light mb-3 me-3" style="max-width: 18rem;">
+                                <div class="card-header" style="background-color: transparent">Gasto</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">R$ {{ \App\Helpers\showCentsValue($totalGasto) }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-4 card bg-light mb-3 me-3" style="max-width: 18rem;">
                                 <div class="card-header" style="background-color: transparent">Novos Clientes</div>
                                 <div class="card-body">
                                     <h5 class="card-title"> {{ $novosClientes }}</h5>
