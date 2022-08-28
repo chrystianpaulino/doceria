@@ -19,7 +19,7 @@
                 <a href="{{ route('customers.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Adicionar</a>
             </div>
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-hover">
                     <thead>
                     <tr>
                     </tr>

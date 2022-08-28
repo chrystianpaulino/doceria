@@ -18,8 +18,8 @@
                 <strong>Pedidos</strong>
                 <a href="{{ route('orders.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Pedido</a>
             </div>
-            <div class="table-responsive">
-                <table class="table table-striped">
+            <div class="table-responsive table-hover">
+                <table class="table table-hover">
                     <thead>
                     <tr class="align-middle" style="font-weight: bold">
                         <td>#Número</td>

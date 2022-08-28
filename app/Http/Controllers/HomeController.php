@@ -43,7 +43,7 @@ class HomeController extends Controller
             $qtdPedidosDia = Order::where('delivery_date', 'like', $diaMesAtual->format('Y-m-d') . '%')->get();
 
             $dadosDoDiaX     = [
-                'diaMes'  => $diaMesAtual->format('d/m'),
+                'diaMes'  => $diaMesAtual->format('d'),
                 'pedidos' => $qtdPedidosDia->count(),
             ];
             $pedidosTotalMes += $qtdPedidosDia->count();
