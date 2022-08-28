@@ -6,7 +6,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href=" {{ route('home') }}">Início</a></li>
                 <li class="breadcrumb-item"><a href=" {{ route('orders.index') }}">Pedidos</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Nova Venda</li>
+                <li class="breadcrumb-item active" aria-current="page">Novo Pedido</li>
             </ol>
         </nav>
     </div>

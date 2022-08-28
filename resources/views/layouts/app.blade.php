@@ -122,7 +122,6 @@
 
 <script>
     jQuery(function($){
-        $(".termosrelease").mask("9.9.9.9");
         $(".placa").mask("aaa-9*99");
         $(".cartao").mask("9999999999999999");
         $(".ccv").mask("999");

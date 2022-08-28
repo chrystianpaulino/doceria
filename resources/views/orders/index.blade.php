@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <strong>Pedidos</strong>
-                <a href="{{ route('orders.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Nova venda</a>
+                <a href="{{ route('orders.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Pedido</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped">

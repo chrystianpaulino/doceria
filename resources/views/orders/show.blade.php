@@ -114,7 +114,7 @@
                         <td class="text-end" colspan="5"><strong class="text-danger">Total de desconto: R$ {{ \App\Helpers\showCentsValue($order->discount) }}</strong></td>
                     </tr>
                     <tr class="bg-light">
-                        <td class="text-end" colspan="5"><strong class="text-success">Total da venda: R$ {{ number_format($order->total_amount / 100, 2, ',') }}</strong></td>
+                        <td class="text-end" colspan="5"><strong class="text-success">Total da venda: R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</strong></td>
                     </tr>
                 </table>
             </div>

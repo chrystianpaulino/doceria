@@ -6,7 +6,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href=" {{ route('home') }}">Início</a></li>
                 <li class="breadcrumb-item"><a href=" {{ route('orders.index') }}">Pedidos</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Nova Venda</li>
+                <li class="breadcrumb-item active" aria-current="page">Novo Pedido</li>
             </ol>
         </nav>
     </div>
@@ -18,7 +18,7 @@
     <div class="container d-flex justify-content-center">
         <div class="card col-12 col-md-12 col-lg-12">
             <div class="card-header d-flex justify-content-between align-items-center">
-                Nova Venda
+                Novo Pedido
             </div>
             <div class="card-body">
                 @if ($errors->any())

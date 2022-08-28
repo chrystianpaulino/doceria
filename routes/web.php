@@ -36,11 +36,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware('auth')->group(function (){
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::resource('/products', \App\Http\Controllers\ProductController::class);
-    Route::resource('/customers', \App\Http\Controllers\CustomerController::class);
-    Route::resource('/aditionals', \App\Http\Controllers\AditionalController::class);
-    Route::resource('/orders', \App\Http\Controllers\OrderController::class);
+    Route::get('/home'                        , [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('/products'             , \App\Http\Controllers\ProductController::class);
+    Route::resource('/customers'            , \App\Http\Controllers\CustomerController::class);
+    Route::resource('/aditionals'           , \App\Http\Controllers\AditionalController::class);
+    Route::resource('/orders'               , \App\Http\Controllers\OrderController::class);
 });
 
 

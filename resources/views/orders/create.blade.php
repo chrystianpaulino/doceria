@@ -6,7 +6,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href=" {{ route('home') }}">Início</a></li>
                 <li class="breadcrumb-item"><a href=" {{ route('orders.index') }}">Pedidos</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Nova Venda</li>
+                <li class="breadcrumb-item active" aria-current="page">Novo Pedido</li>
             </ol>
         </nav>
     </div>
@@ -19,7 +19,7 @@
             <div class="container col-md-8 mb-4">
                 <div class="card">
                     <div class="card-header">
-                        <strong>Nova Venda</strong>
+                        <strong>Novo Pedido</strong>
                     </div>
                     <div class="card-body">
                         @if ($errors->any())
@@ -60,12 +60,12 @@
                                 </div>
                                 <button class="btn btn-primary" v-on:click="adicionarAdicional()"><i class="fas fa-plus"></i></button>
                             </div>
-
                             <div class="col-md-6 mt-4">
                                 <div class="form-group">
                                     {{ Form::label('customer_id','Cliente') }}
                                     <br>
-                                    <select class="form-select" class="col-12" id="product" name="product" v-model="customer" required>
+                                    <select class="form-select" class="col-12" id="product" name="product"
+                                            v-model="customer" required>
                                         <option :value="null" disabled>Selecione</option>
                                         <option v-for="customer in customers" :value="customer">
                                             @{{ customer.name }}
@@ -85,7 +85,6 @@
                                     <textarea id="obs" rows="2" class="form-control" name="obs" v-model="obs"></textarea>
                                 </div>
                             </div>
-
                             {{--<div class="col-md-6">
                                 <div class="form-group mb-3">
                                     {{ Form::label('deliveryFee','Taxa delivery') }}
@@ -99,7 +98,8 @@
                                 <div class="form-group">
                                     {{ Form::label('payment_type','Tipo de pagamento') }}
                                     <br>
-                                    <select class="form-select" class="col-12" id="paymentType" name="paymentType" v-model="paymentType" :required="true">
+                                    <select class="form-select" class="col-12" id="paymentType" name="paymentType"
+                                            v-model="paymentType" :required="true">
                                         <option :value="null" disabled>Selecione</option>
                                         <option v-for="payment in payments" v-bind:value="payment.value">
                                             @{{ payment.text }}
@@ -116,13 +116,12 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-md-12 mt-4">
-                                <button class="btn btn-primary" style="width: 100%" v-on:click="submit()">Finalizar</button>
+                                <button class="btn btn-primary" style="width: 100%" v-on:click="submit()">
+                                    Finalizar
+                                </button>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -142,7 +141,8 @@
                         <ul class="list-group">
                             <li class="list-group-item list-group-item-secondary">Adicionais</li>
                             <li class="list-group-item" v-for="aditionalItem in arrayAditionals" :value="aditionalItem">
-                                <strong>@{{ aditionalItem.description }}: </strong> R$ @{{ aditionalItem.price_formated }}
+                                <strong>@{{ aditionalItem.description }}: </strong> R$ @{{ aditionalItem.price_formated
+                                }}
                             </li>
                         </ul>
                         <ul class="list-group mt-4">
@@ -152,7 +152,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 @endsection
@@ -187,31 +186,25 @@
                 arrayProducts: [],
                 arrayAditionals: [],
                 payments: [
-                    { text: 'Cartão', value: 'CARTAO' },
-                    { text: 'Pix', value: 'PIX' },
-                    { text: 'Dinheiro', value: 'DINHEIRO' }
+                    {text: 'Cartão', value: 'CARTAO'},
+                    {text: 'Pix', value: 'PIX'},
+                    {text: 'Dinheiro', value: 'DINHEIRO'}
                 ],
                 paymentType: null,
             },
-            watch: {
-
-            },
+            watch: {},
             created() {
             },
             mounted() {
-                // $('.mask-money-delivery').mask('000.000.000.000,00', {reverse: true, placeholder: '0.00'});
                 $('.mask-money-discount').mask('000.000.000.000,00', {reverse: true, placeholder: '0.00'});
-                // $(".mask-money-delivery").maskMoney({thousands:'', decimal:'.', allowZero:true});
-                // $(".mask-money-discount").maskMoney({thousands:'', decimal:'.', allowZero:true});
-
             },
             computed: {
                 total: function () {
                     console.log(this.deliveryFee)
                     console.log(this.discount)
-                    this.price          = this.price.toString().replace(/,/g, '');
+                    this.price = this.price.toString().replace(/,/g, '');
                     // this.deliveryFee    = this.deliveryFee.replace(/,/g, '');
-                    this.discount       = this.discount.replace(/,/g, '');
+                    this.discount = this.discount.replace(/,/g, '');
                     /*const deliveryParaView = this.number_format(this.deliveryFee / 100, '2', ',');
                     const descontoParaView = this.number_format(this.discount / 100, '2', ',');
                     console.log(deliveryParaView)
@@ -223,8 +216,8 @@
                     console.log('-')
                     console.log(this.deliveryFee)
                     console.log(this.discount)*/
-                    this.totalAmount    = ((Number(this.price) + Number(this.deliveryFee)) - Number(this.discount));
-                    let value           = (((Number(this.price) + Number(this.deliveryFee)) - Number(this.discount)) / 100);
+                    this.totalAmount = ((Number(this.price) + Number(this.deliveryFee)) - Number(this.discount));
+                    let value = (((Number(this.price) + Number(this.deliveryFee)) - Number(this.discount)) / 100);
                     return this.number_format(value, '2', ',');
                 }
             },
@@ -272,7 +265,6 @@
                         alert('insira um adicional');
                         return true;
                     }
-                    console.log('add adicional');
                     app.arrayAditionals.push(app.aditional);
                     app.price = Number(app.price) + Number(app.aditional.price);
                     this.aditional = null;
@@ -282,8 +274,6 @@
                         alert('insira um produto');
                         return true;
                     }
-                    console.log('add produto');
-                    console.log()
                     app.arrayProducts.push(app.product)
                     app.price = Number(app.price) + Number(app.product.price);
                     this.product = null;
