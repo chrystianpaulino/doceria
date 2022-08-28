@@ -20,9 +20,13 @@ class Cost extends Model
         'price'
     ];
 
-
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = mb_strtoupper($value, 'UTF-8');
+    }
+
+    public function provider()
+    {
+        return $this->hasOne(Provider::class, 'id', 'provider_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feedstock;
 use App\Models\Provider;
 use App\Services\CostService;
 use Illuminate\Http\Request;
@@ -23,32 +24,33 @@ class CostController extends Controller
 
     public function create()
     {
-        $providers = Provider::all();
-        return view('costs.create', compact('providers'));
+        $providers  = Provider::all();
+        $feedstocks = Feedstock::all();
+        return view('costs.create', compact('providers', 'feedstocks'));
     }
 
     public function store(Request $request)
     {
-        $feedstock = $this->service->store($request->all());
-        return redirect()->route('feedstocks.index');
+        $cost = $this->service->store($request->all());
+        return redirect()->route('costs.index');
     }
 
     public function show($id)
     {
-        $feedstock = $this->service->find($id);
-        return view('feedstocks.show', compact('feedstock'));
+        $cost = $this->service->find($id);
+        return view('costs.show', compact('cost'));
     }
 
     public function edit($id)
     {
-        $feedstock = $this->service->find($id);
-        return view('feedstocks.edit', compact('feedstock'));
+        $cost = $this->service->find($id);
+        return view('costs.edit', compact('cost'));
     }
 
     public function update(Request $request, $id)
     {
-        $feedstock = $this->service->update($id, $request->all());
-        return redirect()->route('feedstocks.show', $feedstock->id);
+        $cost = $this->service->update($id, $request->all());
+        return redirect()->route('costs.show', $cost->id);
     }
 
     public function destroy($id)

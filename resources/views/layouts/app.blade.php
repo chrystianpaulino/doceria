@@ -19,6 +19,171 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <style>
+        a {
+            text-decoration: none;
+            color: #333333;
+        }
+
+        a:hover {
+            color: #164eff;
+        }
+
+        button {
+            background-color: #16cc9b;
+            border: 2px solid #16cc9b;
+            color: #ffffff;
+            transition: all 0.25s linear;
+            cursor: pointer;
+        }
+
+        /*button::after {*/
+        /*    position: relative;*/
+        /*    right: 0;*/
+        /*    content: " \276f";*/
+        /*    transition: all 0.15s linear;*/
+        /*}*/
+
+        button:hover {
+            background-color: #518df5;
+            border-color: #518df5;
+        }
+
+        button:hover::after {
+            right: -5px;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+
+        input {
+            transition: all 0.25s linear;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+
+        input {
+            outline: none;
+        }
+
+
+        /* --- PRODUCT LIST --- */
+        .feedstocks {
+            border-top: 1px solid #ddd;
+        }
+
+        .feedstocks > li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .row {
+            position: relative;
+            overflow: auto;
+            width: 100%;
+        }
+
+        .col, .quantity, .remove {
+            float: left;
+        }
+
+        .col.left {
+            width: 70%;
+        }
+
+        .col.right {
+            width: 30%;
+            position: absolute;
+            right: 0;
+            top: calc(50% - 30px);
+        }
+
+        .detail {
+            padding: 0 0.5rem;
+            line-height: 2.2rem;
+        }
+
+        .detail .name {
+            font-size: 1.2rem;
+        }
+
+        .detail .description {
+            color: #7d7d7d;
+            font-size: 1rem;
+        }
+
+        .detail .price {
+            font-size: 1.5rem;
+        }
+
+        .quantity, .remove {
+            width: 50%;
+            text-align: center;
+        }
+
+        .remove svg {
+            width: 60px;
+            height: 60px;
+        }
+
+        .quantity > input {
+            border-radius: 10px;
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            position: relative;
+            left: calc(50% - 30px);
+            background: #fff;
+            border: 2px solid #ddd;
+            color: #7f7f7f;
+            text-align: center;
+            font: 600 1.3rem Helvetica, Arial, sans-serif;
+        }
+
+        .quantity > input:hover, .quantity > input:focus {
+            border-color: #4187d2;
+        }
+
+        .summary {
+            font-size: 1.2rem;
+            text-align: right;
+        }
+
+        .summary ul li {
+            padding: 0.5rem 0;
+        }
+
+        .summary ul li span {
+            display: inline-block;
+            width: 30%;
+        }
+
+        .summary ul li.total {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .checkout {
+            text-align: right;
+        }
+
+        .checkout > button {
+            font-size: 1.2rem;
+            padding: 0.8rem 2.8rem;
+            border-radius: 1.5rem;
+        }
 
     </style>
 

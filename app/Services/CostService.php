@@ -45,26 +45,12 @@ class CostService
     public function store($data)
     {
         try {
-            $feedstock        = new $this->model();
-            $feedstock->name  = $data['name'];
-            $feedstock->price = stringFloatToCents($data['price']);
-            $feedstock->save();
+            $cost              = new $this->model();
+            $cost->provider_id = $data['provider']['id'];
+            $cost->amount      = stringFloatToCents($data['amount']);
+            $cost->save();
 
-            return $feedstock;
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-    public function update($id, $data)
-    {
-        try {
-            $feedstock        = $this->find($id);
-            $feedstock->name  = $data['name'] ?? $feedstock->name;
-            $feedstock->price = $data['price'] ? stringFloatToCents($data['price']) : $feedstock->price;
-            $feedstock->save();
-
-            return $feedstock;
+            return $cost;
         } catch (Exception $e) {
             throw $e;
         }
@@ -73,8 +59,8 @@ class CostService
     public function destroy($id)
     {
         try {
-            $feedstock = $this->find($id);
-            $feedstock->delete();
+            $cost = $this->find($id);
+            $cost->delete();
 
             return true;
         } catch (Exception $e) {

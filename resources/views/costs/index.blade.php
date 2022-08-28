@@ -31,7 +31,10 @@
                                 <code>#{{ $cost->id }}</code>
                             </td>
                             <td class="text-center">
-                                {{ $cost->provider_id }}
+                                {{ $cost->provider->name }}
+                            </td>
+                            <td class="text-center">
+                                {{ $cost->provider->phone }}
                             </td>
                             <td class="text-center">
                                 R$ {{ \App\Helpers\showCentsValue($cost->amount) }}
