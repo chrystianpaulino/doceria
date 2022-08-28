@@ -18,7 +18,7 @@
                                     <span class="phone">{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
                                 </div>
                                 <div>
-                                    <i class="fas fa-search"></i>
+                                    <i class="fa-solid fa-eye"></i>
                                 </div>
                             </div>
                         </a>
