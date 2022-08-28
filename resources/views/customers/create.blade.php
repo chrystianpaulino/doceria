@@ -32,19 +32,44 @@
                 @endif
                 {{ Form::open(['route' => 'customers.store', 'class' => 'needs-validation']) }}
 
-                <div class="form-group mb-3">
-                    {{ Form::label('name','Nome') }}
-                    {{ Form::text('name', null,['class' => 'form-control', 'required']) }}
-                </div>
+                    <div class="form-group mb-3">
+                        {{ Form::label('name','Nome') }}
+                        {{ Form::text('name', null,['class' => 'form-control', 'required']) }}
+                    </div>
 
                     <div class="form-group mb-3">
                         {{ Form::label('email','Email') }}
-                        {{ Form::text('email', null,['class' => 'form-control', 'required']) }}
+                        {{ Form::email('email', null,['class' => 'form-control', 'required']) }}
                     </div>
 
-                <div class="form-group mb-3">
-                    <button class="w-100 btn btn-success" type="submit">Salvar</button>
-                </div>
+                    <div class="form-group mb-3">
+                        {{ Form::label('phone','Telefone') }}
+                        {{ Form::text('phone', null,['class' => 'form-control phone', 'required']) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ Form::label('street','Rua') }}
+                        {{ Form::text('street', null,['class' => 'form-control', 'required']) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ Form::label('street_number','Número') }}
+                        {{ Form::text('street_number', null,['class' => 'form-control', 'required']) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ Form::label('neighborhood','Complemento') }}
+                        {{ Form::text('neighborhood', null,['class' => 'form-control']) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        {{ Form::label('city','Cidade') }}
+                        {{ Form::text('city', null,['class' => 'form-control', 'required']) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <button class="w-100 btn btn-success" type="submit">Salvar</button>
+                    </div>
 
                 {{ Form::close() }}
             </div>
@@ -55,8 +80,6 @@
 
 @section('js')
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
-    <script>
-        $('#price').mask('000.000.000.000.000,00', {reverse: true});
-    </script>
+
 
 @endsection

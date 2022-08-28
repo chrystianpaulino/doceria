@@ -56,7 +56,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{{ route('orders.index') }}"><i
-                                    class="fa fa-shopping-cart" aria-hidden="true"></i> Vendas</a>
+                                    class="fa fa-shopping-cart" aria-hidden="true"></i> Pedidos</a>
                         </li>
                     </ul>
             @endif
@@ -119,6 +119,24 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.6/js/bootstrap-select.min.js"></script>
 
 @yield('js')
+
+<script>
+    jQuery(function($){
+        $(".termosrelease").mask("9.9.9.9");
+        $(".placa").mask("aaa-9*99");
+        $(".cartao").mask("9999999999999999");
+        $(".ccv").mask("999");
+        $(".ano").mask("9999");
+        $(".mes").mask("99");
+        $(".cep").mask("99999-999");
+        $(".mesano").mask("99/9999");
+        $(".hora").mask("99:99");
+        $(".datas").mask("99/99/9999");
+        $(".cnpj").mask("99.999.999/9999-99");
+        $(".cpf").mask("999.999.999-99");
+        $(".phone").mask("(99) 99999-9999")
+    });
+</script>
 
 </body>
 </html>

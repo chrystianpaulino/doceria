@@ -26,7 +26,7 @@ class Order extends Model
     ];
 
     public $appends = [
-        'status_name',
+        'status_name', 'status_delivery'
     ];
 
     public function getStatusNameAttribute()
@@ -43,6 +43,28 @@ class Order extends Model
             case OrderEnum::ERRO:
                 return 'Erro';
         }
+    }
+
+    public function getStatusDeliveryAttribute()
+    {
+        $dataEntrega     = $this->attributes['delivery_date'];
+        $hoje            = today();
+        $diasParaEntrega = $hoje->diffInDays($dataEntrega);
+
+        if ($dataEntrega >= $hoje) {
+            if ($diasParaEntrega >= 3) {
+                return 'PEDIDO REGISTRADO';
+            } else if ($diasParaEntrega == 2) {
+                return 'PEDIDO PRÓXIMO';
+            } else if ($diasParaEntrega == 1) {
+                return 'PEDIDO PARA AMANHÃ';
+            } else {
+                return 'PEDIDO PARA HOJE';
+            }
+        } else {
+            return 'DATA DE PEDIDO ULTRAPASSADA';
+        }
+
     }
 
     public function aditionals()

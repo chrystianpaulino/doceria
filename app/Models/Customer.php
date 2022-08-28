@@ -32,6 +32,12 @@ class Customer extends Model
         'status_name',
     ];
 
+    // altera o valor recebido para uppercase
+    public function setNomeAttribute($value)
+    {
+        $this->attributes['name'] = mb_strtoupper($value, 'UTF-8');
+    }
+
     public function getStatusNameAttribute()
     {
         if (!isset($this->attributes['status'])) {

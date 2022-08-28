@@ -5,7 +5,7 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item"><a href={{ route('orders.index') }}>Vendas</a></li>
+                <li class="breadcrumb-item"><a href={{ route('orders.index') }}>Pedidos</a></li>
                 <li class="breadcrumb-item active" aria-current="page"> Visualizar</li>
             </ol>
         </nav>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group mb-3 col-md-4">
                             {{ Form::label('phone','Celular') }}
-                            {{ Form::text('phone', $order->customer->phone, ['class' => 'form-control', 'readonly']) }}
+                            {{ Form::text('phone', $order->customer->phone, ['class' => 'form-control phone', 'readonly']) }}
                         </div>
                     </div>
                 </div>
@@ -41,25 +41,25 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <strong>Venda número #{{ $order->id }}</strong>
-                    <span class="badge bg-info">PEDIDO REGISTRADO</span>
+                    <span class="badge bg-info">{{ $order->status_delivery }}</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group mb-3 col-md-3">
                             {{ Form::label('price','Valor') }}
-                            {{ Form::text('price', \App\Helpers\showCentsValue($order->price), ['class' => 'form-control', 'readonly']) }}
+                            {{ Form::text('price', 'R$ ' . \App\Helpers\showCentsValue($order->price), ['class' => 'form-control', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-3">
                             {{ Form::label('delivery_fee','Tx Entrega') }}
-                            {{ Form::text('delivery_fee', \App\Helpers\showCentsValue($order->delivery_fee), ['class' => 'form-control', 'readonly']) }}
+                            {{ Form::text('delivery_fee', 'R$ ' . \App\Helpers\showCentsValue($order->delivery_fee), ['class' => 'form-control', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-3">
                             {{ Form::label('discount','Desconto') }}
-                            {{ Form::text('discount', \App\Helpers\showCentsValue($order->discount), ['class' => 'form-control', 'readonly']) }}
+                            {{ Form::text('discount', 'R$ ' . \App\Helpers\showCentsValue($order->discount), ['class' => 'form-control', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-3">
                             {{ Form::label('total_amount','Total da compra') }}
-                            {{ Form::text('total_amount', number_format($order->total_amount / 100, 2, ','), ['class' => 'form-control', 'readonly']) }}
+                            {{ Form::text('total_amount', 'R$ ' . number_format($order->total_amount / 100, 2, ','), ['class' => 'form-control', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-3">
                             {{ Form::label('payment_type','Tipo de pagamento') }}

@@ -32,7 +32,7 @@ class OrderService
     public function all()
     {
         try {
-            return $this->model->get();
+            return $this->model->orderBy('delivery_date', 'asc')->get();
         } catch (\Exception $e) {
             throw $e;
         }

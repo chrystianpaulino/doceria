@@ -47,7 +47,7 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         $customer = $this->service->update($id, $request->all());
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.show', $customer->id);
     }
 
     public function destroy($id)

@@ -5,7 +5,7 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href=" {{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item"><a href=" {{ route('orders.index') }}">Vendas</a></li>
+                <li class="breadcrumb-item"><a href=" {{ route('orders.index') }}">Pedidos</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Nova Venda</li>
             </ol>
         </nav>
@@ -62,7 +62,7 @@
                             </div>
 
                             <div class="col-md-6 mt-4">
-                                <div class="form-group mb-3">
+                                <div class="form-group">
                                     {{ Form::label('customer_id','Cliente') }}
                                     <br>
                                     <select class="form-select" class="col-12" id="product" name="product" v-model="customer" required>
@@ -96,7 +96,7 @@
                                 </div>
                             </div>--}}
                             <div class="col-md-6 mt-4">
-                                <div class="form-group mb-3">
+                                <div class="form-group">
                                     {{ Form::label('payment_type','Tipo de pagamento') }}
                                     <br>
                                     <select class="form-select" class="col-12" id="paymentType" name="paymentType" v-model="paymentType" :required="true">
@@ -108,7 +108,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 mt-4">
-                                <div class="form-group mb-3">
+                                <div class="form-group">
                                     {{ Form::label('discount','Desconto') }}
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">R$</span>
@@ -181,7 +181,8 @@
                 product: null,
                 aditional: null,
                 customer: null,
-                date: new Date().toISOString().slice(0,10),
+                // date: new Date().toISOString().slice(0,10),
+                date: null,
                 obs: null,
                 arrayProducts: [],
                 arrayAditionals: [],
@@ -241,6 +242,11 @@
 
                     if (app.paymentType == null) {
                         alert('É necessário informar o tipo do pagamento');
+                        return true;
+                    }
+
+                    if (app.date == null) {
+                        alert('É necessário informar a data de entrega do pedido');
                         return true;
                     }
 
