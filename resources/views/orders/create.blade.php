@@ -1,5 +1,30 @@
 @extends('layouts.app')
 
+@section('css')
+    <style>
+        .quantity-toggle {
+            display: flex;
+        }
+
+        .quantity-input {
+            border: 0;
+            border-top: 2px solid #ddd;
+            border-bottom: 2px solid #ddd;
+            width: 2.5rem;
+            text-align: center;
+            padding: 0 .5rem;
+        }
+
+        .quantity-button {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background: #f5f5f5;
+            color: #888;
+            cursor: pointer;
+        }
+    </style>
+@endsection
+
 @section('breads')
     <div class="container">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -44,7 +69,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                <button class="btn btn-primary" v-on:click="adicionarProduto()"><i class="fas fa-plus"></i></button>
+                                <button class="btn btn-primary" v-on:click="adicionarProduto()"><i class="fas fa-plus"></i> </button>
                             </div>
                             <div class="col-md-6 mt-4">
                                 <div class="form-group">
@@ -58,7 +83,8 @@
                                         </option>
                                     </select>
                                 </div>
-                                <button class="btn btn-primary" v-on:click="adicionarAdicional()"><i class="fas fa-plus"></i></button>
+                                <button class="btn btn-primary" v-on:click="adicionarAdicional()"><i
+                                        class="fas fa-plus"></i></button>
                             </div>
                             <div class="col-md-6 mt-4">
                                 <div class="form-group">
@@ -82,7 +108,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="obs" class="col-md-4 col-form-label">Obs</label>
-                                    <textarea id="obs" rows="2" class="form-control" name="obs" v-model="obs"></textarea>
+                                    <textarea id="obs" rows="2" class="form-control" name="obs"
+                                              v-model="obs"></textarea>
                                 </div>
                             </div>
                             {{--<div class="col-md-6">
@@ -133,16 +160,40 @@
                     <div class="card-body">
                         <ul class="list-group">
                             <li class="list-group-item list-group-item-secondary">Produtos</li>
-                            <li class="list-group-item d-flex align-items-center" v-for="productItem in arrayProducts" :value="productItem">
-                                <span class="badge bg-info me-3"> @{{ productItem.quantity }}</span> <strong class="me-1">@{{ productItem.description }}: </strong> <span> R$ @{{ productItem.price_formated }}</span>
-                            </li>
+                            <template v-if="arrayProducts.length > 0">
+                                <li class="list-group-item d-flex align-items-center justify-content-between" v-for="(productItem, index) in arrayProducts" :value="productItem">
+                                    <span class="badge bg-info me-3"> @{{ productItem.quantity }}</span> <strong class="me-1">@{{ productItem.description }}: </strong> <span> R$ @{{ productItem.price_formated }}</span>
+                                    <div class="quantity-toggle">
+                                        <div class="me-2">
+                                            <button class="btn btn-outline-info" title="Diminuir um" v-on:click="decrement(index, 'P', productItem.quantity)"> - </button>
+                                        </div>
+                                        <div class="">
+                                            <button class="btn btn-outline-info me-2" title="Acrescentar um" v-on:click="increment(index, 'P')"> + </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </template>
+                            <template v-else>
+                                <li class="list-group-item d-flex align-items-center justify-content-between">
+                                    <span> Não há produtos selecionados para este pedido</span>
+                                </li>
+                            </template>
                         </ul>
                         <br>
                         <ul class="list-group">
                             <li class="list-group-item list-group-item-secondary">Adicionais</li>
-                            <li class="list-group-item d-flex align-items-center" v-for="aditionalItem in arrayAditionals" :value="aditionalItem">
-                                <span class="badge bg-info me-3"> @{{ aditionalItem.quantity }}</span> <strong class="me-1">@{{ aditionalItem.description }}: </strong> <span> R$ @{{ aditionalItem.price_formated }}</span>
-                            </li>
+                            <template v-if="arrayAditionals.length > 0">
+                                <li class="list-group-item d-flex align-items-center"
+                                    v-for="aditionalItem in arrayAditionals" :value="aditionalItem">
+                                    <span class="badge bg-info me-3"> @{{ aditionalItem.quantity }}</span> <strong
+                                        class="me-1">@{{ aditionalItem.description }}: </strong> <span> R$ @{{ aditionalItem.price_formated }}</span>
+                                </li>
+                            </template>
+                            <template v-else>
+                                <li class="list-group-item d-flex align-items-center justify-content-between">
+                                    <span> Não há adicionais selecionados para este pedido</span>
+                                </li>
+                            </template>
                         </ul>
                         <ul class="list-group mt-4">
                             <li class="list-group-item list-group-item-success">Total: R$ @{{ total }}</li>
@@ -159,7 +210,9 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.2.6/jquery.inputmask.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"
+            integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://unpkg.com/vue-cookies@1.7.0/vue-cookies.js"></script>
@@ -263,7 +316,7 @@
                     }
 
                     for (var i = 0; i < app.arrayAditionals.length; i++) {
-                        if(app.aditional.id === app.arrayAditionals[i].id) {
+                        if (app.aditional.id === app.arrayAditionals[i].id) {
                             app.arrayAditionals[i].quantity += 1;
                         }
                     }
@@ -272,23 +325,74 @@
                     this.aditional = null;
                 },
                 adicionarProduto() {
+                    console.log(app.product);
                     if (app.product == null) {
                         alert('insira um produto');
                         return true;
                     }
 
+                    console.log(app.product.quantity)
                     if (app.product.quantity === 0) {
+                        console.log('array push')
                         app.arrayProducts.push(app.product)
                     }
 
                     for (var i = 0; i < app.arrayProducts.length; i++) {
-                        if(app.product.id === app.arrayProducts[i].id) {
+                        if (app.product.id === app.arrayProducts[i].id) {
                             app.arrayProducts[i].quantity += 1;
                         }
                     }
 
                     app.price = Number(app.price) + Number(app.product.price);
                     this.product = null;
+                },
+                increment(index, type) {
+                    if (type === 'P') {
+                        app.$set(app.arrayProducts, index, {
+                            ...app.arrayProducts[index],
+                            quantity: app.arrayProducts[index].quantity + 1
+                        });
+                        app.price = Number(app.price) + Number(app.arrayProducts[index].price);
+                        this.product = null;
+                    } else {
+                        app.$set(app.arrayAditionals, index, {
+                            ...app.arrayAditionals[index],
+                            quantity: app.arrayAditionals[index].quantity + 1
+                        });
+                        app.price = Number(app.price) + Number(app.arrayAditionals[index].price);
+                        this.product = null;
+                    }
+                },
+                decrement(index, type, qtdAtual) {
+                    if (type === 'P') {
+                        if (qtdAtual == 1) {
+                            app.products.filter(function (produto, i) {
+                                if (produto.id === app.arrayProducts[index].id) {
+                                    app.$set(app.products, i, {...app.products[i], quantity: 0});
+                                }
+                            });
+                            app.price = Number(app.price) - Number(app.arrayProducts[index].price);
+                            app.arrayProducts.splice(index, 1);
+                            return true;
+                        }
+                        app.$set(app.arrayProducts, index, {...app.arrayProducts[index], quantity: app.arrayProducts[index].quantity - 1});
+                        app.price = Number(app.price) - Number(app.arrayProducts[index].price);
+                        this.product = null;
+                    } else {
+                        if (qtdAtual == 1) {
+                            app.aditionals.filter(function (adicional, i) {
+                                if (adicional.id === app.arrayAditionals[index].id) {
+                                    app.$set(app.aditionals, i, {...app.aditionals[i], quantity: 0});
+                                }
+                            });
+                            app.price = Number(app.price) - Number(app.arrayAditionals[index].price);
+                            app.arrayAditionals.splice(index, 1);
+                            return true;
+                        }
+                        app.$set(app.arrayAditionals, index, {...app.arrayAditionals[index], quantity: app.arrayAditionals[index].quantity - 1});
+                        app.price = Number(app.price) - Number(app.arrayAditionals[index].price);
+                        this.aditional = null;
+                    }
                 },
                 number_format(number, decimals, dec_point, thousands_sep) {
                     // Strip all characters but numerical ones.
