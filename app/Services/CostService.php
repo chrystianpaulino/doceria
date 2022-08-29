@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Cost;
+use App\Models\CostFeedscock;
 use Exception;
 use function App\Helpers\stringFloatToCents;
 
@@ -48,7 +49,24 @@ class CostService
             $cost              = new $this->model();
             $cost->provider_id = $data['provider']['id'];
             $cost->amount      = stringFloatToCents($data['amount']);
+            $cost->date_cost   = $data['date'] ?? date('Y-m-d');
             $cost->save();
+
+            if (isset($data['feedstocks'])) {
+                foreach ($data['feedstocks'] as $insumo) {
+                    if ($insumo['quantity'] > 0) {
+                        $costFeedstock               = new CostFeedscock();
+                        $costFeedstock->cost_id      = $cost->id;
+                        $costFeedstock->feedstock_id = $insumo['id'];
+                        $costFeedstock->quantity     = $insumo['quantity'];
+                        $costFeedstock->price        = 0;
+                        $costFeedstock->discount     = 0;
+                        $costFeedstock->total        = 0;
+                        $costFeedstock->save();
+                    }
+
+                }
+            }
 
             return $cost;
         } catch (Exception $e) {

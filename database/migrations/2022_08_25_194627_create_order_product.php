@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('product_id');
             $table->integer('quantity');
             $table->bigInteger('price');
-            $table->bigInteger('discount');
+            $table->bigInteger('discount')->nullable();
             $table->bigInteger('total');
             $table->timestamps();
             $table->softDeletes();

@@ -195,7 +195,7 @@
                     </div>
                 @endif
                 <div class="row col-md-12 m-0 d-flex">
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-4 mb-4">
                         <div class="form-group">
                             {{ Form::label('provider_id','Fornecedor') }}
                         </div>
@@ -208,12 +208,18 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-4 mb-4">
+                        <div class="form-group">
+                            {{ Form::label('date','Data') }}
+                            {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
                         <div class="form-group">
                             {{ Form::label('amount','Valor') }}
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">R$</span>
-                                {{ Form::text('amount', null, ['class' => 'form-control', 'v-model' => 'amount']) }}
+                                {{ Form::text('amount', null, ['class' => 'form-control', 'v-model' => 'amount', 'required' => 'true']) }}
                             </div>
                         </div>
                     </div>
@@ -226,12 +232,14 @@
                                 <div class="col-8">
                                     <div class="detail">
                                         <div class="name"><a href="#">@{{ feedstock.name }}</a></div>
-{{--                                        <div class="price">@{{ feedstock.price | currencyFormatted }}</div>--}}
+                                        {{--                                        <div class="price">@{{ feedstock.price | currencyFormatted }}</div>--}}
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="quantity">
-                                        <input type="number" class="quantity" step="1" @input="updateQuantity(index, $event)" @blur="checkQuantity(index, $event)" placeholder="0" />
+                                        <input type="number" class="quantity" step="1"
+                                               @input="updateQuantity(index, $event)"
+                                               @blur="checkQuantity(index, $event)" placeholder="0"/>
                                     </div>
                                 </div>
                             </li>
@@ -252,7 +260,9 @@
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.2.6/jquery.inputmask.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"
+            integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://unpkg.com/vue-cookies@1.7.0/vue-cookies.js"></script>
@@ -266,7 +276,8 @@
                 feedstocks: @json($feedstocks),
                 provider: null,
                 checkedFeedstocks: [],
-                amount: ""
+                amount: "",
+                date: null,
             },
             watch: {},
             created() {
@@ -278,7 +289,7 @@
                 //
             },
             computed: {
-                itemCount: function() {
+                itemCount: function () {
                     var count = 0;
 
                     for (var i = 0; i < this.feedstocks.length; i++) {
@@ -287,7 +298,7 @@
 
                     return count;
                 },
-                subTotal: function() {
+                subTotal: function () {
                     var subTotal = 0;
 
                     for (var i = 0; i < this.feedstocks.length; i++) {
@@ -296,12 +307,12 @@
 
                     return subTotal;
                 },
-                totalPrice: function() {
+                totalPrice: function () {
                     return this.subTotal;
                 }
             },
             filters: {
-                currencyFormatted: function(value) {
+                currencyFormatted: function (value) {
                     return Number(value).toLocaleString('pt-BR', {
                         style: 'currency',
                         currency: 'BRL'
@@ -314,6 +325,7 @@
                         feedstocks: app.feedstocks,
                         provider: app.provider,
                         amount: app.amount,
+                        date: app.date,
                     }
                     console.log(data);
                     console.log('submit');
@@ -321,7 +333,7 @@
                         window.location.href = '/costs';
                     });
                 },
-                updateQuantity: function(index, event) {
+                updateQuantity: function (index, event) {
                     var value = event.target.value;
                     var feedstock = this.feedstocks[index];
 
@@ -332,7 +344,7 @@
 
                     this.$set(this.feedstocks, index, feedstock);
                 },
-                checkQuantity: function(index, event) {
+                checkQuantity: function (index, event) {
                     // Update quantity to 1 if it is empty
                     if (event.target.value === "") {
                         var feedstock = this.feedstocks[index];
@@ -340,10 +352,10 @@
                         this.$set(this.feedstocks, index, feedstock);
                     }
                 },
-                removeItem: function(index) {
+                removeItem: function (index) {
                     this.feedstocks.splice(index, 1);
                 },
-                checkPromoCode: function() {
+                checkPromoCode: function () {
                     for (var i = 0; i < this.promotions.length; i++) {
                         if (this.promoCode === this.promotions[i].code) {
                             this.discount = parseFloat(

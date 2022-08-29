@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feedstock extends Model
 {
+    // materia-prima (insumos)
+
     use HasFactory;
 
     /**

@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('feedstocks', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->bigInteger('price')->unsigned();
-            $table->timestamps();
+        Schema::table('costs', function (Blueprint $table) {
+            $table->date('date_cost')->after('amount')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feedstocks');
+        Schema::table('costs', function (Blueprint $table) {
+            $table->dropColumn('date_cost');
+        });
     }
 };

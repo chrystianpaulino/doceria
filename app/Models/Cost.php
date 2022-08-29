@@ -17,7 +17,8 @@ class Cost extends Model
     protected $fillable = [
         'name',
         'phone',
-        'price'
+        'price',
+        'date_cost'
     ];
 
     public function setNameAttribute($value)
@@ -29,4 +30,10 @@ class Cost extends Model
     {
         return $this->hasOne(Provider::class, 'id', 'provider_id');
     }
+
+    public function feedstocks()
+    {
+        return $this->hasMany(CostFeedscock::class);
+    }
+
 }

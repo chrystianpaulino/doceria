@@ -13,11 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('feedstocks', function (Blueprint $table) {
+        Schema::create('cost_feedstocks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->bigInteger('price')->unsigned();
+            $table->integer('cost_id');
+            $table->integer('feedstock_id');
+            $table->integer('quantity');
+            $table->bigInteger('price');
+            $table->bigInteger('discount')->nullable();
+            $table->bigInteger('total');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feedstocks');
+        Schema::dropIfExists('cost_feedstocks');
     }
 };
