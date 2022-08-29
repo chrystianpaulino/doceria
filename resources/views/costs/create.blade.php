@@ -228,21 +228,18 @@
                             {{ Form::label('feedstocks','Insumos da Compra') }}
                         </div>
                         <ul class="feedstocks text-center d-flex flex-column justify-content-between">
-                            <li class="row align-items-center" v-for="(feedstock, index) in feedstocks">
-                                <div class="col-8">
-                                    <div class="detail">
+                            <div class="row">
+                                <li class=" col-md-4" v-for="(feedstock, index) in feedstocks">
+                                    <div class="detail d-flex align-items-center justify-content-end mt-4">
                                         <div class="name"><a href="#">@{{ feedstock.name }}</a></div>
                                         {{--                                        <div class="price">@{{ feedstock.price | currencyFormatted }}</div>--}}
+                                        <div class="quantity">
+                                            <input type="number" class="quantity" step="1" @input="updateQuantity(index, $event)" @blur="checkQuantity(index, $event)" placeholder="0"/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="quantity">
-                                        <input type="number" class="quantity" step="1"
-                                               @input="updateQuantity(index, $event)"
-                                               @blur="checkQuantity(index, $event)" placeholder="0"/>
-                                    </div>
-                                </div>
-                            </li>
+                                    <hr>
+                                </li>
+                            </div>
                         </ul>
                     </div>
                     <div class="col-md-12">

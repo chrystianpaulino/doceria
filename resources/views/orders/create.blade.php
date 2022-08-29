@@ -331,15 +331,12 @@
                     this.aditional = null;
                 },
                 adicionarProduto() {
-                    console.log(app.product);
                     if (app.product == null) {
                         alert('insira um produto');
                         return true;
                     }
 
-                    console.log(app.product.quantity)
                     if (app.product.quantity === 0) {
-                        console.log('array push')
                         app.arrayProducts.push(app.product)
                     }
 
