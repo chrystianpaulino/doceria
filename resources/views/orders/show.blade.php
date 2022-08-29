@@ -74,6 +74,12 @@
                             {{ Form::text('delivery_date', \Carbon\Carbon::parse($order->delivery_date)->format('d/m/Y'), ['class' => 'form-control', 'readonly']) }}
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="form-group mb-3 col-md-12">
+                            {{ Form::label('obs','Observacões') }}
+                            {{ Form::textarea('obs', $order->obs, ['class' => 'form-control', 'readonly', 'rows' => '2']) }}
+                        </div>
+                    </div>
                 </div>
 
                 <table class="table table-bordered">

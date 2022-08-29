@@ -133,16 +133,15 @@
                     <div class="card-body">
                         <ul class="list-group">
                             <li class="list-group-item list-group-item-secondary">Produtos</li>
-                            <li class="list-group-item" v-for="productItem in arrayProducts" :value="productItem">
-                                <strong>@{{ productItem.description }}: </strong> R$ @{{ productItem.price_formated }}
+                            <li class="list-group-item d-flex align-items-center" v-for="productItem in arrayProducts" :value="productItem">
+                                <span class="badge bg-info me-3"> @{{ productItem.quantity }}</span> <strong class="me-1">@{{ productItem.description }}: </strong> <span> R$ @{{ productItem.price_formated }}</span>
                             </li>
                         </ul>
                         <br>
                         <ul class="list-group">
                             <li class="list-group-item list-group-item-secondary">Adicionais</li>
-                            <li class="list-group-item" v-for="aditionalItem in arrayAditionals" :value="aditionalItem">
-                                <strong>@{{ aditionalItem.description }}: </strong> R$ @{{ aditionalItem.price_formated
-                                }}
+                            <li class="list-group-item d-flex align-items-center" v-for="aditionalItem in arrayAditionals" :value="aditionalItem">
+                                <span class="badge bg-info me-3"> @{{ aditionalItem.quantity }}</span> <strong class="me-1">@{{ aditionalItem.description }}: </strong> <span> R$ @{{ aditionalItem.price_formated }}</span>
                             </li>
                         </ul>
                         <ul class="list-group mt-4">
@@ -194,28 +193,21 @@
             },
             watch: {},
             created() {
+                for (var i = 0; i < this.products.length; i++) {
+                    this.products[i].quantity = 0;
+                }
+                for (var i = 0; i < this.aditionals.length; i++) {
+                    this.aditionals[i].quantity = 0;
+                }
             },
             mounted() {
                 $('.mask-money-discount').mask('000.000.000.000,00', {reverse: true, placeholder: '0.00'});
             },
             computed: {
                 total: function () {
-                    console.log(this.deliveryFee)
-                    console.log(this.discount)
                     this.price = this.price.toString().replace(/,/g, '');
                     // this.deliveryFee    = this.deliveryFee.replace(/,/g, '');
                     this.discount = this.discount.replace(/,/g, '');
-                    /*const deliveryParaView = this.number_format(this.deliveryFee / 100, '2', ',');
-                    const descontoParaView = this.number_format(this.discount / 100, '2', ',');
-                    console.log(deliveryParaView)
-                    console.log(descontoParaView)
-                    console.log(this.deliveryFee)
-                    console.log(this.discount)
-                    this.deliveryFee = deliveryParaView;
-                    this.discount = descontoParaView;
-                    console.log('-')
-                    console.log(this.deliveryFee)
-                    console.log(this.discount)*/
                     this.totalAmount = ((Number(this.price) + Number(this.deliveryFee)) - Number(this.discount));
                     let value = (((Number(this.price) + Number(this.deliveryFee)) - Number(this.discount)) / 100);
                     return this.number_format(value, '2', ',');
@@ -265,7 +257,17 @@
                         alert('insira um adicional');
                         return true;
                     }
-                    app.arrayAditionals.push(app.aditional);
+
+                    if (app.aditional.quantity === 0) {
+                        app.arrayAditionals.push(app.aditional);
+                    }
+
+                    for (var i = 0; i < app.arrayAditionals.length; i++) {
+                        if(app.aditional.id === app.arrayAditionals[i].id) {
+                            app.arrayAditionals[i].quantity += 1;
+                        }
+                    }
+
                     app.price = Number(app.price) + Number(app.aditional.price);
                     this.aditional = null;
                 },
@@ -274,7 +276,17 @@
                         alert('insira um produto');
                         return true;
                     }
-                    app.arrayProducts.push(app.product)
+
+                    if (app.product.quantity === 0) {
+                        app.arrayProducts.push(app.product)
+                    }
+
+                    for (var i = 0; i < app.arrayProducts.length; i++) {
+                        if(app.product.id === app.arrayProducts[i].id) {
+                            app.arrayProducts[i].quantity += 1;
+                        }
+                    }
+
                     app.price = Number(app.price) + Number(app.product.price);
                     this.product = null;
                 },

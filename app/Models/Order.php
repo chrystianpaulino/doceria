@@ -22,7 +22,8 @@ class Order extends Model
         'delivery_fee',
         'discount',
         'total_amount',
-        'delivery_date'
+        'delivery_date',
+        'obs'
     ];
 
     public $appends = [

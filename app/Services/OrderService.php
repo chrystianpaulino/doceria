@@ -63,6 +63,7 @@ class OrderService
             $order->total_amount  = $data['total'];
             $order->delivery_date = $data['date'] ?? now();
             $order->payment_type  = $data['paymentType'] ?? null;
+            $order->obs           = $data['obs'] ?? null;
             $order->save();
 
             if (isset($data['arrayProducts'])) {
@@ -70,7 +71,7 @@ class OrderService
                     $orderProduct             = new OrderProduct();
                     $orderProduct->order_id   = $order->id;
                     $orderProduct->product_id = $product['id'];
-                    $orderProduct->quantity   = 1;
+                    $orderProduct->quantity   = $product['quantity'];
                     $orderProduct->price      = $product['price'];
                     $orderProduct->discount   = 0;
                     $orderProduct->total      = $product['price'];
@@ -83,7 +84,7 @@ class OrderService
                     $ordeAditional               = new OrderAditional();
                     $ordeAditional->order_id     = $order->id;
                     $ordeAditional->aditional_id = $aditional['id'];
-                    $ordeAditional->quantity     = 1;
+                    $ordeAditional->quantity     = $aditional['quantity'];
                     $ordeAditional->price        = $aditional['price'];
                     $ordeAditional->discount     = 0;
                     $ordeAditional->total        = $aditional['price'];
