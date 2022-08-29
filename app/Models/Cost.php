@@ -18,7 +18,8 @@ class Cost extends Model
         'name',
         'phone',
         'price',
-        'date_cost'
+        'date_cost',
+        'payment_type'
     ];
 
     public function setNameAttribute($value)

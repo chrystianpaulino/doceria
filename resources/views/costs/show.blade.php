@@ -50,7 +50,7 @@
                         </div>
                         <div class="form-group mb-3 col-md-3">
                             {{ Form::label('payment_type','Tipo de pagamento') }}
-                            {{ Form::text('payment_type', 'tipo pagamento', ['class' => 'form-control', 'readonly']) }}
+                            {{ Form::text('payment_type', $cost->payment_type, ['class' => 'form-control', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-3">
                             {{ Form::label('delivery_date','Data da despesa') }}

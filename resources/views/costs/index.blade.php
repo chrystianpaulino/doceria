@@ -34,6 +34,9 @@
                                 {{ $cost->provider->name }}
                             </td>
                             <td class="text-center">
+                                {{ $cost->payment_type }}
+                            </td>
+                            <td class="text-center">
                                 {{ $cost->provider->phone }}
                             </td>
                             <td class="text-center">

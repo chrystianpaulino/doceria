@@ -195,7 +195,7 @@
                     </div>
                 @endif
                 <div class="row col-md-12 m-0 d-flex">
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-3 mb-4">
                         <div class="form-group">
                             {{ Form::label('provider_id','Fornecedor') }}
                         </div>
@@ -208,19 +208,32 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-3 mb-4">
                         <div class="form-group">
                             {{ Form::label('date','Data') }}
                             {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
                         </div>
                     </div>
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-3 mb-4">
                         <div class="form-group">
                             {{ Form::label('amount','Valor') }}
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">R$</span>
                                 {{ Form::text('amount', null, ['class' => 'form-control', 'v-model' => 'amount', 'required' => 'true']) }}
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="form-group">
+                            {{ Form::label('payment_type','Tipo de pagamento') }}
+                        </div>
+                        <div class="form-group">
+                            <select class="form-select" id="paymentType" name="paymentType" v-model="paymentType" :required="true">
+                                <option :value="null" disabled>Selecione</option>
+                                <option v-for="payment in payments" v-bind:value="payment.value">
+                                    @{{ payment.text }}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
@@ -275,6 +288,12 @@
                 checkedFeedstocks: [],
                 amount: "",
                 date: null,
+                payments: [
+                    {text: 'Cartão', value: 'CARTAO'},
+                    {text: 'Pix', value: 'PIX'},
+                    {text: 'Dinheiro', value: 'DINHEIRO'}
+                ],
+                paymentType: null,
             },
             watch: {},
             created() {
@@ -323,6 +342,7 @@
                         provider: app.provider,
                         amount: app.amount,
                         date: app.date,
+                        paymentType: app.paymentType
                     }
                     console.log(data);
                     console.log('submit');
