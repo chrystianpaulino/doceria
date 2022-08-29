@@ -183,10 +183,16 @@
                         <ul class="list-group">
                             <li class="list-group-item list-group-item-secondary">Adicionais</li>
                             <template v-if="arrayAditionals.length > 0">
-                                <li class="list-group-item d-flex align-items-center"
-                                    v-for="aditionalItem in arrayAditionals" :value="aditionalItem">
-                                    <span class="badge bg-info me-3"> @{{ aditionalItem.quantity }}</span> <strong
-                                        class="me-1">@{{ aditionalItem.description }}: </strong> <span> R$ @{{ aditionalItem.price_formated }}</span>
+                                <li class="list-group-item d-flex align-items-center justify-content-between" v-for="(aditionalItem, index) in arrayAditionals" :value="aditionalItem">
+                                    <span class="badge bg-info me-3"> @{{ aditionalItem.quantity }}</span> <strong class="me-1">@{{ aditionalItem.description }}: </strong> <span> R$ @{{ aditionalItem.price_formated }}</span>
+                                    <div class="quantity-toggle">
+                                        <div class="me-2">
+                                            <button class="btn btn-outline-info" title="Diminuir um" v-on:click="decrement(index, 'A', aditionalItem.quantity)"> - </button>
+                                        </div>
+                                        <div class="">
+                                            <button class="btn btn-outline-info me-2" title="Acrescentar um" v-on:click="increment(index, 'A')"> + </button>
+                                        </div>
+                                    </div>
                                 </li>
                             </template>
                             <template v-else>

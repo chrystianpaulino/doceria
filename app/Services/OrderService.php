@@ -74,7 +74,7 @@ class OrderService
                     $orderProduct->quantity   = $product['quantity'];
                     $orderProduct->price      = $product['price'];
                     $orderProduct->discount   = 0;
-                    $orderProduct->total      = $product['price'];
+                    $orderProduct->total      = $product['price'] * $product['quantity'];
                     $orderProduct->save();
                 }
             }
@@ -87,7 +87,7 @@ class OrderService
                     $ordeAditional->quantity     = $aditional['quantity'];
                     $ordeAditional->price        = $aditional['price'];
                     $ordeAditional->discount     = 0;
-                    $ordeAditional->total        = $aditional['price'];
+                    $ordeAditional->total        = $aditional['price'] * $aditional['quantity'];
                     $ordeAditional->save();
                 }
             }
