@@ -28,7 +28,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header bg-info text-white">
-                        Dashboard
+                        Resumo do mês
                     </div>
                     <div class="card-body">
                         <div class="row text-center justify-content-center align-items-center">
