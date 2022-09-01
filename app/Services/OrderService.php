@@ -10,6 +10,7 @@ use App\Models\Product;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use function App\Helpers\stringFloatToCents;
 
 class OrderService
 {
@@ -49,21 +50,22 @@ class OrderService
 
     public function store($data)
     {
-        info("store order service");
 
         try {
 
+
             DB::beginTransaction();
 
-            $order                = new Order();
-            $order->customer_id   = $data['customer']['id'];
-            $order->price         = $data['price'];
-            $order->delivery_fee  = $data['deliveryFee'] ?? 0;
-            $order->discount      = $data['discount'] ?? 0;
-            $order->total_amount  = $data['total'];
-            $order->delivery_date = $data['date'] ?? now();
-            $order->payment_type  = $data['paymentType'] ?? null;
-            $order->obs           = $data['obs'] ?? null;
+            $order                  = new Order();
+            $order->customer_id     = $data['customer']['id'];
+            $order->price           = $data['price'];
+            $order->delivery_fee    = $data['deliveryFee'] ? stringFloatToCents($data['deliveryFee']) : 0;
+            $order->discount        = $data['discount'] ? stringFloatToCents($data['discount']) : 0;
+            $order->payment_advance = $data['totalPaid'] ? stringFloatToCents($data['totalPaid']) : 0;
+            $order->total_amount    = $data['total'];
+            $order->delivery_date   = $data['date'] ?? now();
+            $order->payment_type    = $data['paymentType'] ?? null;
+            $order->obs             = $data['obs'] ?? null;
             $order->save();
 
             if (isset($data['arrayProducts'])) {

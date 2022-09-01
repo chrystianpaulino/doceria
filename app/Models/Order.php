@@ -23,7 +23,8 @@ class Order extends Model
         'discount',
         'total_amount',
         'delivery_date',
-        'obs'
+        'obs',
+        'payment_advance'
     ];
 
     public $appends = [
@@ -81,5 +82,18 @@ class Order extends Model
     public function customer()
     {
         return $this->hasOne(Customer::class, 'id', 'customer_id');
+    }
+
+    public function getMissing()
+    {
+        if ($this->attributes['total_amount'] and $this->attributes['payment_advance']) {
+            $missing = $this->attributes['total_amount'] - $this->attributes['payment_advance'];
+            if ($missing > 0)
+                return number_format($missing / 100, 2, ',');
+            else
+                return 'Pedidi pago totalmente';
+        }
+
+        return null;
     }
 }

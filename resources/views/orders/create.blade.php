@@ -112,21 +112,29 @@
                                               v-model="obs"></textarea>
                                 </div>
                             </div>
-                            {{--<div class="col-md-6">
-                                <div class="form-group mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group mt-4">
                                     {{ Form::label('deliveryFee','Taxa delivery') }}
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">R$</span>
-                                        {{ Form::number('deliveryFee', null, ['class' => 'form-control', 'v-model' => 'deliveryFee']) }}
+                                        {{ Form::text('deliveryFee', null, ['class' => 'form-control mask-money', 'v-model' => 'deliveryFee']) }}
                                     </div>
                                 </div>
-                            </div>--}}
+                            </div>
+                            <div class="col-md-6 mt-4">
+                                <div class="form-group">
+                                    {{ Form::label('discount','Desconto') }}
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">R$</span>
+                                        {{ Form::text('discount', null, ['class' => 'form-control mask-money', 'v-model' => 'discount']) }}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-6 mt-4">
                                 <div class="form-group">
                                     {{ Form::label('payment_type','Tipo de pagamento') }}
                                     <br>
-                                    <select class="form-select" class="col-12" id="paymentType" name="paymentType"
-                                            v-model="paymentType" :required="true">
+                                    <select class="form-select" class="col-12" id="paymentType" name="paymentType" v-model="paymentType" :required="true">
                                         <option :value="null" disabled>Selecione</option>
                                         <option v-for="payment in payments" v-bind:value="payment.value">
                                             @{{ payment.text }}
@@ -136,10 +144,10 @@
                             </div>
                             <div class="col-md-6 mt-4">
                                 <div class="form-group">
-                                    {{ Form::label('discount','Desconto') }}
+                                    {{ Form::label('total_paid','Valor pago') }}
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">R$</span>
-                                        {{ Form::text('discount', null, ['class' => 'form-control mask-money-discount', 'v-model' => 'discount']) }}
+                                        {{ Form::text('total_paid', null, ['class' => 'form-control mask-money', 'v-model' => 'totalPaid']) }}
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +172,10 @@
                                 <li class="list-group-item d-flex align-items-center justify-content-between" v-for="(productItem, index) in arrayProducts" :value="productItem">
                                     <span class="badge bg-info me-3"> @{{ productItem.quantity }}</span> <strong class="me-1">@{{ productItem.description }}: </strong> <span> R$ @{{ productItem.price_formated }}</span>
                                     <div class="quantity-toggle">
-                                        <div class="me-2">
+                                        <div class="me-2" v-if="productItem.quantity == 1">
+                                            <button class="btn btn-outline-danger" title="Diminuir um" v-on:click="decrement(index, 'P', productItem.quantity)"> Remover </button>
+                                        </div>
+                                        <div class="me-2" v-else>
                                             <button class="btn btn-outline-info" title="Diminuir um" v-on:click="decrement(index, 'P', productItem.quantity)"> - </button>
                                         </div>
                                         <div class="">
@@ -186,7 +197,10 @@
                                 <li class="list-group-item d-flex align-items-center justify-content-between" v-for="(aditionalItem, index) in arrayAditionals" :value="aditionalItem">
                                     <span class="badge bg-info me-3"> @{{ aditionalItem.quantity }}</span> <strong class="me-1">@{{ aditionalItem.description }}: </strong> <span> R$ @{{ aditionalItem.price_formated }}</span>
                                     <div class="quantity-toggle">
-                                        <div class="me-2">
+                                        <div class="me-2" v-if="aditionalItem.quantity == 1">
+                                            <button class="btn btn-outline-danger" title="Diminuir um" v-on:click="decrement(index, 'A', aditionalItem.quantity)"> Remover </button>
+                                        </div>
+                                        <div class="me-2" v-else>
                                             <button class="btn btn-outline-info" title="Diminuir um" v-on:click="decrement(index, 'A', aditionalItem.quantity)"> - </button>
                                         </div>
                                         <div class="">
@@ -204,6 +218,12 @@
                         <ul class="list-group mt-4">
                             <li class="list-group-item list-group-item-success">Total: R$ @{{ total }}</li>
                         </ul>
+                        <ul class="list-group mt-4">
+                            <li class="list-group-item list-group-item-success">Pago: R$ @{{ totalPaid }}</li>
+                        </ul>
+                        <ul class="list-group mt-4">
+                            <li class="list-group-item list-group-item-success">Faltando: R$ @{{ valueMissing }}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -216,9 +236,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.2.6/jquery.inputmask.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"
-            integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://unpkg.com/vue-cookies@1.7.0/vue-cookies.js"></script>
@@ -233,12 +251,13 @@
                 customers: @json($customers),
                 price: 0,
                 totalAmount: 0,
+                valueMissing: "0,00",
                 deliveryFee: '',
                 discount: '',
+                totalPaid: '',
                 product: null,
                 aditional: null,
                 customer: null,
-                // date: new Date().toISOString().slice(0,10),
                 date: null,
                 obs: null,
                 arrayProducts: [],
@@ -260,21 +279,38 @@
                 }
             },
             mounted() {
-                $('.mask-money-discount').mask('000.000.000.000,00', {reverse: true, placeholder: '0.00'});
+                $('.mask-money').mask('000.000.000.000,00', {reverse: true, placeholder: '0.00'});
             },
             computed: {
                 total: function () {
-                    this.price = this.price.toString().replace(/,/g, '');
-                    // this.deliveryFee    = this.deliveryFee.replace(/,/g, '');
-                    this.discount = this.discount.replace(/,/g, '');
-                    this.totalAmount = ((Number(this.price) + Number(this.deliveryFee)) - Number(this.discount));
+                    console.log('total')
+
+                    this.price          = this.price.toString().replace(/,/g, '');
+                    this.deliveryFee    = this.deliveryFee.replace(/,/g, '');
+                    this.discount       = this.discount.replace(/,/g, '');
+                    this.totalPaid      = this.totalPaid.replace(/,/g, '');
+                    this.totalAmount    = ((Number(this.price) + Number(this.deliveryFee)) - Number(this.discount));
+
                     let value = (((Number(this.price) + Number(this.deliveryFee)) - Number(this.discount)) / 100);
+
+                    const paidCents = this.totalPaid
+                    console.log(paidCents)
+                    this.discount = this.formatReal(this.discount);
+                    this.deliveryFee = this.formatReal(this.deliveryFee);
+                    this.totalPaid = this.formatReal(this.totalPaid);
+                    console.log(this.totalPaid);
+
+                    if (paidCents != '') {
+                        console.log('diferente')
+                        app.getValueMissing(value, paidCents)
+                    }
+
                     return this.number_format(value, '2', ',');
                 }
             },
             methods: {
                 submit() {
-                    if (app.arrayProducts.length == 0) {
+                    /*if (app.arrayProducts.length == 0) {
                         alert('É necessário informar pelo menos um produto');
                         return true;
                     }
@@ -292,19 +328,19 @@
                     if (app.date == null) {
                         alert('É necessário informar a data de entrega do pedido');
                         return true;
-                    }
-
+                    }*/
                     const data = {
                         arrayProducts: app.arrayProducts,
                         arrayAditionals: app.arrayAditionals,
                         obs: app.obs,
                         date: app.date,
                         customer: app.customer,
+                        paymentType: app.paymentType,
                         price: app.price,
                         total: app.totalAmount,
                         discount: app.discount,
                         deliveryFee: app.deliveryFee,
-                        paymentType: app.paymentType
+                        totalPaid: app.totalPaid,
                     }
                     console.log(data);
                     axios.post('{{ route('orders.store') }}', data).then(function (response) {
@@ -420,6 +456,21 @@
                     }
                     return s.join(dec);
                 },
+                getMoney(str) {
+                    return parseInt(str.replace(/[\D]+/g, ''));
+                },
+                formatReal(int) {
+                    var tmp = int + '';
+                    tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+                    if (tmp.length > 6)
+                        tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+
+                    return tmp;
+                },
+                getValueMissing(value, totalPaid) {
+                    const valueMissing  = value - (totalPaid / 100);
+                    app.valueMissing    = this.number_format(valueMissing, '2', ',');
+                }
             }
         })
 

@@ -45,23 +45,31 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="form-group mb-3 col-md-3">
+                        <div class="form-group mb-3 col-md-2">
                             {{ Form::label('price','Valor') }}
                             {{ Form::text('price', 'R$ ' . \App\Helpers\showCentsValue($order->price), ['class' => 'form-control', 'readonly']) }}
                         </div>
-                        <div class="form-group mb-3 col-md-3">
+                        <div class="form-group mb-3 col-md-2">
                             {{ Form::label('delivery_fee','Tx Entrega') }}
                             {{ Form::text('delivery_fee', 'R$ ' . \App\Helpers\showCentsValue($order->delivery_fee), ['class' => 'form-control', 'readonly']) }}
                         </div>
-                        <div class="form-group mb-3 col-md-3">
+                        <div class="form-group mb-3 col-md-2">
                             {{ Form::label('discount','Desconto') }}
                             {{ Form::text('discount', 'R$ ' . \App\Helpers\showCentsValue($order->discount), ['class' => 'form-control', 'readonly']) }}
                         </div>
-                        <div class="form-group mb-3 col-md-3">
+                        <div class="form-group mb-3 col-md-2">
                             {{ Form::label('total_amount','Total da compra') }}
                             {{ Form::text('total_amount', 'R$ ' . number_format($order->total_amount / 100, 2, ','), ['class' => 'form-control', 'readonly']) }}
                         </div>
-                        <div class="form-group mb-3 col-md-3">
+                        <div class="form-group mb-3 col-md-2">
+                            {{ Form::label('payment_advance','Total já pago') }}
+                            {{ Form::text('payment_advance', 'R$ ' . number_format($order->payment_advance / 100, 2, ','), ['class' => 'form-control', 'readonly']) }}
+                        </div>
+                        <div class="form-group mb-3 col-md-2">
+                            {{ Form::label('get_missing','Faltando receber') }}
+                            {{ Form::text('get_missing', 'R$ ' . $order->getMissing(), ['class' => 'form-control', 'readonly']) }}
+                        </div>
+                        <div class="form-group mb-3 col-md-2">
                             {{ Form::label('payment_type','Tipo de pagamento') }}
                             {{ Form::text('payment_type', $order->payment_type, ['class' => 'form-control', 'readonly']) }}
                         </div>

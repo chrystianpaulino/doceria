@@ -14,19 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('testes', function (){
-    $order = \App\Models\Order::first();
-    $ontem = today()->subDays(1);
-    $hoje = today();
-    $dif = $hoje->diffInDays($ontem);
-
-    dd($hoje < $ontem, $dif);
-    $order = \App\Models\Order::find(20);
-    $data = $order->delivery_date;
-    $hoje = today();
-    $dif = $hoje->diffInDays($data);
-    dd($hoje >= $data, $dif);
-    $numero = 1500;
-    dd(\App\Helpers\showCentsValue($numero));
+    $numero = 0.29;
+    $return = \App\Helpers\stringFloatToCents($numero);
+    dd(\App\Helpers\showCentsValue($return));
 });
 
 Route::get('/', function () {
