@@ -18,11 +18,15 @@
                 <span>Clientes</span>
                 <a href="{{ route('customers.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Cliente</a>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive table-hover">
                 <table class="table table-hover">
                     <thead>
-                    <tr>
-                    </tr>
+                        <tr>
+                            <td>ID</td>
+                            <td>Nome</td>
+                            <td>Contato</td>
+                            <td class="text-center">Endereco</td>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($customers as $customer)
@@ -30,10 +34,10 @@
                             <td>
                                 <code>#{{ $customer->id }}</code>
                             </td>
-                            <td class="text-center">
+                            <td class="">
                                 {{ $customer->name }}
                             </td>
-                            <td class="text-center">
+                            <td class="">
                                 {{ $customer->phone }}
                             </td>
                             <td class="text-center">

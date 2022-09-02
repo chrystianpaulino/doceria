@@ -21,8 +21,11 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                    <tr>
-                    </tr>
+                        <tr>
+                            <td>ID</td>
+                            <td class="text-center">Nome</td>
+                            <td class="text-center">Contato</td>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($providers as $provider)

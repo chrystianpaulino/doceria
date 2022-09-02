@@ -52,7 +52,7 @@
                             <a class="nav-link" aria-current="page" href="{{ route('customers.index') }}"><i class="fas fa-user"></i> Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('orders.index') }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Vendas</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('orders.index') }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Pedidos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{{ route('feedstocks.index') }}"><i class="fas fa-inventory"></i> Insumos</a>
@@ -62,6 +62,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{{ route('costs.index') }}"><i class="fa fa-money" aria-hidden="true"></i> Despesas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#"><i class="fa fa-file" aria-hidden="true"></i> Relatórios</a>
                         </li>
                     </ul>
             @endif

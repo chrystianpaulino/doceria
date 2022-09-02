@@ -16,14 +16,14 @@
             <div class="col-md-4 mb-4">
                 <div class="list-group mb-4">
                     <button type="button" class="list-group-item list-group-item-action active">
-                        Vendas de hoje
+                        Pedidos de Hoje
                     </button>
                     @if(count($ordersToday) > 0)
                         @foreach($ordersToday as $order)
                             <a href="{{ route('orders.show', $order->id) }}" type="button" class="list-group-item list-group-item-action">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <span>{{ $order->customer->name }}</span> <br>
+                                        <strong>{{ $order->customer->name }}</strong> <br>
                                         <span class="phone">{{ $order->customer->phone }}</span> <br>
                                         <span>R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
                                         <span class="phone">{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
@@ -46,14 +46,14 @@
                 </div>
                 <div class="list-group">
                     <button type="button" class="list-group-item list-group-item-action active">
-                        Vendas de amanhã
+                        Pedidos de Amanhã
                     </button>
                     @if(count($ordersTomorrow) > 0)
                         @foreach($ordersTomorrow as $order)
                             <a href="{{ route('orders.show', $order->id) }}" type="button" class="list-group-item list-group-item-action">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <span>{{ $order->customer->name }}</span> <br>
+                                        <strong>{{ $order->customer->name }}</strong> <br>
                                         <span class="phone">{{ $order->customer->phone }}</span> <br>
                                         <span>R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
                                         <span class="phone">{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>

@@ -21,8 +21,13 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                    <tr>
-                    </tr>
+                        <tr>
+                            <td>ID</td>
+                            <td class="text-center">Fornecedor</td>
+                            <td class="text-center">Contato</td>
+                            <td class="text-center">Pagamento</td>
+                            <td class="text-center">Valor</td>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($costs as $cost)
@@ -34,10 +39,10 @@
                                 {{ $cost->provider->name }}
                             </td>
                             <td class="text-center">
-                                {{ $cost->payment_type }}
+                                {{ $cost->provider->phone }}
                             </td>
                             <td class="text-center">
-                                {{ $cost->provider->phone }}
+                                {{ $cost->payment_type }}
                             </td>
                             <td class="text-center">
                                 R$ {{ \App\Helpers\showCentsValue($cost->amount) }}

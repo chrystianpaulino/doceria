@@ -18,12 +18,15 @@
                 <span>Adicionais</span>
                 <a href="{{ route('aditionals.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Adicional</a>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive table-hover">
                 <table class="table table-hover">
                     <thead>
-                    <tr>
-
-                    </tr>
+                        <tr>
+                            <td>ID</td>
+                            <td>Nome</td>
+                            <td>Status</td>
+                            <td class="text-center">Valor</td>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($aditionals as $aditional)

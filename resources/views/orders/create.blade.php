@@ -44,7 +44,7 @@
             <div class="container col-md-8 mb-4">
                 <div class="card">
                     <div class="card-header">
-                        <strong>Novo Pedido</strong>
+                        <span>Novo Pedido</span>
                     </div>
                     <div class="card-body">
                         @if ($errors->any())
@@ -105,13 +105,6 @@
                                     {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="obs" class="col-md-4 col-form-label">Obs</label>
-                                    <textarea id="obs" rows="2" class="form-control" name="obs"
-                                              v-model="obs"></textarea>
-                                </div>
-                            </div>
                             <div class="col-md-6">
                                 <div class="form-group mt-4">
                                     {{ Form::label('deliveryFee','Taxa delivery') }}
@@ -149,6 +142,12 @@
                                         <span class="input-group-text" id="basic-addon1">R$</span>
                                         {{ Form::text('total_paid', null, ['class' => 'form-control mask-money', 'v-model' => 'totalPaid']) }}
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="obs" class="col-md-4 col-form-label">Obs</label>
+                                    <textarea id="obs" rows="2" class="form-control" name="obs" v-model="obs"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mt-4">
@@ -216,14 +215,14 @@
                             </template>
                         </ul>
                         <ul class="list-group mt-4">
-                            <li class="list-group-item list-group-item-success">Valor Total: R$ @{{ total }}</li>
+                            <li class="list-group-item list-group-item-info"><strong>Valor Total:</strong> R$ @{{ total }}</li>
                         </ul>
                         <ul class="list-group mt-4">
-                            <li v-if="totalPaid != ''" class="list-group-item list-group-item-success">Pago: R$ @{{ totalPaid }}</li>
-                            <li v-else class="list-group-item list-group-item-success">Valor Pago: R$ 0,00</li>
+                            <li v-if="totalPaid != ''" class="list-group-item list-group-item-success"><strong>Valor Pago:</strong> R$ @{{ totalPaid }}</li>
+                            <li v-else class="list-group-item list-group-item-success"><strong>Valor Pago:</strong> R$ 0,00</li>
                         </ul>
                         <ul class="list-group mt-4">
-                            <li class="list-group-item list-group-item-success">Restante a Receber: R$ @{{ valueMissing }}</li>
+                            <li class="list-group-item list-group-item-danger"><strong>Restante a Receber:</strong> R$ @{{ valueMissing }}</li>
                         </ul>
                     </div>
                 </div>

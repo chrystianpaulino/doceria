@@ -18,12 +18,15 @@
                 <span>Produtos</span>
                 <a href="{{ route('products.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Produto</a>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive table-hover">
                 <table class="table table-hover">
                     <thead>
-                    <tr>
-
-                    </tr>
+                        <tr>
+                            <td>ID</td>
+                            <td>Nome</td>
+                            <td>Status</td>
+                            <td class="text-center">Valor</td>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($products as $product)

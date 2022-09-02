@@ -5,7 +5,7 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href=" {{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Vendas</li>
+                <li class="breadcrumb-item active" aria-current="page">Pedidos</li>
             </ol>
         </nav>
     </div>
@@ -15,23 +15,23 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span>Vendas</span>
-                <a href="{{ route('orders.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Nova Venda</a>
+                <span>Pedidos</span>
+                <a href="{{ route('orders.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Pedido</a>
             </div>
             <div class="table-responsive table-hover">
                 <table class="table table-hover">
                     <thead>
-                    <tr class="align-middle" style="font-weight: bold">
-                        <td>ID</td>
-                        <td>Cliente</td>
-                        <td class="text-center">Preco</td>
-                        <td class="text-center">Taxa de Delivery</td>
-                        <td class="text-center">Desconto</td>
-                        <td class="text-center">Total</td>
-                        <td class="text-center">Pagamento</td>
-                        <td class="text-center">Status</td>
-                        <td class="text-center">Data</td>
-                    </tr>
+                        <tr class="align-middle">
+                            <td>ID</td>
+                            <td>Cliente</td>
+                            <td class="text-center">Preco</td>
+                            <td class="text-center">Taxa de Delivery</td>
+                            <td class="text-center">Desconto</td>
+                            <td class="text-center">Total</td>
+                            <td class="text-center">Pagamento</td>
+                            <td class="text-center">Status</td>
+                            <td class="text-center">Data</td>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($orders as $order)
