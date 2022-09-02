@@ -172,10 +172,10 @@
                                 <li class="list-group-item d-flex align-items-center justify-content-between" v-for="(productItem, index) in arrayProducts" :value="productItem">
                                     <span class="badge bg-info me-3"> @{{ productItem.quantity }}</span> <strong class="me-1">@{{ productItem.description }}: </strong> <span> R$ @{{ productItem.price_formated }}</span>
                                     <div class="quantity-toggle">
-                                        <div class="me-2" v-if="productItem.quantity == 1">
+                                        <div class="mx-2" v-if="productItem.quantity == 1">
                                             <button class="btn btn-outline-danger" title="Diminuir um" v-on:click="decrement(index, 'P', productItem.quantity)"> Remover </button>
                                         </div>
-                                        <div class="me-2" v-else>
+                                        <div class="mx-2" v-else>
                                             <button class="btn btn-outline-info" title="Diminuir um" v-on:click="decrement(index, 'P', productItem.quantity)"> - </button>
                                         </div>
                                         <div class="">
@@ -216,13 +216,14 @@
                             </template>
                         </ul>
                         <ul class="list-group mt-4">
-                            <li class="list-group-item list-group-item-success">Total: R$ @{{ total }}</li>
+                            <li class="list-group-item list-group-item-success">Valor Total: R$ @{{ total }}</li>
                         </ul>
                         <ul class="list-group mt-4">
-                            <li class="list-group-item list-group-item-success">Pago: R$ @{{ totalPaid }}</li>
+                            <li v-if="totalPaid != ''" class="list-group-item list-group-item-success">Pago: R$ @{{ totalPaid }}</li>
+                            <li v-else class="list-group-item list-group-item-success">Valor Pago: R$ 0,00</li>
                         </ul>
                         <ul class="list-group mt-4">
-                            <li class="list-group-item list-group-item-success">Faltando: R$ @{{ valueMissing }}</li>
+                            <li class="list-group-item list-group-item-success">Restante a Receber: R$ @{{ valueMissing }}</li>
                         </ul>
                     </div>
                 </div>
@@ -310,7 +311,7 @@
             },
             methods: {
                 submit() {
-                    /*if (app.arrayProducts.length == 0) {
+                    if (app.arrayProducts.length == 0) {
                         alert('É necessário informar pelo menos um produto');
                         return true;
                     }
@@ -328,7 +329,7 @@
                     if (app.date == null) {
                         alert('É necessário informar a data de entrega do pedido');
                         return true;
-                    }*/
+                    }
                     const data = {
                         arrayProducts: app.arrayProducts,
                         arrayAditionals: app.arrayAditionals,

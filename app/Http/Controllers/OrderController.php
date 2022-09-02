@@ -53,13 +53,13 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = $this->service->find($id);
-        return view('orders.edit', compact('aditional'));
+        return view('orders.edit', compact('order'));
     }
 
     public function update(Request $request, $id)
     {
         $order = $this->service->update($id, $request->all());
-        return redirect()->route('orders.index');
+        return redirect()->route('orders.show', $order->id);
     }
 
     public function destroy($id)

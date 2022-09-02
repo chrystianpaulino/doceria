@@ -28,7 +28,7 @@ class Order extends Model
     ];
 
     public $appends = [
-        'status_name', 'status_delivery'
+        'status_name', 'status_delivery', 'status_payment'
     ];
 
     public function getStatusNameAttribute()
@@ -89,9 +89,22 @@ class Order extends Model
         if ($this->attributes['total_amount'] and $this->attributes['payment_advance']) {
             $missing = $this->attributes['total_amount'] - $this->attributes['payment_advance'];
             if ($missing > 0)
-                return number_format($missing / 100, 2, ',');
+                return "R$ " . number_format($missing / 100, 2, ',');
             else
-                return 'Pedidi pago totalmente';
+                return '0,00';
+        }
+
+        return null;
+    }
+
+    public function getStatusPaymentAttribute()
+    {
+        if ($this->attributes['total_amount'] and $this->attributes['payment_advance']) {
+            $missing = $this->attributes['total_amount'] - $this->attributes['payment_advance'];
+            if ($missing > 0)
+                return "PAGAMENTO PENDENTE";
+            else
+                return "PAGAMENTO CONCLUÍDO";
         }
 
         return null;

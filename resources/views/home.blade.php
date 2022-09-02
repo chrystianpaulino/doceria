@@ -4,25 +4,65 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-4 mb-4">
-                <div class="list-group">
+                <div class="list-group mb-4">
                     <button type="button" class="list-group-item list-group-item-action active">
-                        Pedidos de hoje
+                        Pedidos para hoje
                     </button>
-                    @foreach($ordersToday as $order)
-                        <a href="{{ route('orders.show', $order->id) }}" type="button" class="list-group-item list-group-item-action">
+                    @if(count($ordersToday) > 0)
+                        @foreach($ordersToday as $order)
+                            <a href="{{ route('orders.show', $order->id) }}" type="button" class="list-group-item list-group-item-action">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span>{{ $order->customer->name }}</span> <br>
+                                        <span class="phone">{{ $order->customer->phone }}</span> <br>
+                                        <span>R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
+                                        <span class="phone">{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
+                                    </div>
+                                    <div>
+                                        <i class="fa-solid fa-eye"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    @else
+                        <a href="#" type="button" class="list-group-item list-group-item-action">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span>{{ $order->customer->name }}</span> <br>
-                                    <span class="phone">{{ $order->customer->phone }}</span> <br>
-                                    <span>R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
-                                    <span class="phone">{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
-                                </div>
-                                <div>
-                                    <i class="fa-solid fa-eye"></i>
+                                    <span>Não há pedidos para hoje</span>
                                 </div>
                             </div>
                         </a>
-                    @endforeach
+                    @endif
+                </div>
+                <div class="list-group">
+                    <button type="button" class="list-group-item list-group-item-action active">
+                        Pedidos para amanhã
+                    </button>
+                    @if(count($ordersTomorrow) > 0)
+                        @foreach($ordersTomorrow as $order)
+                            <a href="{{ route('orders.show', $order->id) }}" type="button" class="list-group-item list-group-item-action">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span>{{ $order->customer->name }}</span> <br>
+                                        <span class="phone">{{ $order->customer->phone }}</span> <br>
+                                        <span>R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
+                                        <span class="phone">{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
+                                    </div>
+                                    <div>
+                                        <i class="fa-solid fa-eye"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    @else
+                        <a href="#" type="button" class="list-group-item list-group-item-action">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span>Não há pedidos para amanhã</span>
+                                </div>
+                            </div>
+                        </a>
+                    @endif
                 </div>
             </div>
             <div class="col-md-8">
@@ -87,7 +127,7 @@
                     ],
                     datasets: [
                         {
-                            label: 'Pedidos',
+                            label: 'Qtd. pedidos',
                             backgroundColor: '#6cb2eb',
                             borderColor: '#6cb2eb',
                             data: [
@@ -130,7 +170,7 @@
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Pedidos Concluídos'
+                                labelString: 'Pedidos Registrados'
                             }
                         }]
                     }

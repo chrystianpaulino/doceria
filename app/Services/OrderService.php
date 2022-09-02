@@ -107,14 +107,19 @@ class OrderService
     public function update($id, $data)
     {
         try {
-            $product                   = $this->find($id);
-            $product->description      = $data['description'] ?? $product->description;
-            $product->long_description = $data['long_description'] ?? $product->long_description;
-            $product->price            = $data['price'] ?? $product->price;
-            $product->status           = $data['status'] ?? $product->status;
-            $product->save();
+            $order                  = $this->find($id);
+            $order->customer_id     = $data['customer_id'] ?? $order->customer_id;
+            $order->price           = $data['price'] ? stringFloatToCents($data['price']) : $order->price;
+            $order->delivery_fee    = $data['delivery_fee'] ? stringFloatToCents($data['delivery_fee']) : $order->delivery_fee;
+            $order->discount        = $data['discount'] ? stringFloatToCents($data['discount']) : $order->discount;
+            $order->payment_advance = $data['payment_advance'] ? stringFloatToCents($data['payment_advance']) : $order->payment_advance;
+            $order->total_amount    = $data['total_amount'] ? stringFloatToCents($data['total_amount']) : $order->total_amount;
+            $order->delivery_date   = $data['delivery_date'] ?? $order->delivery_date;
+            $order->payment_type    = $data['paymentType'] ?? $order->payment_type;
+            $order->obs             = $data['obs'] ?? null;
+            $order->save();
 
-            return $product;
+            return $order;
         } catch (Exception $e) {
             throw $e;
         }

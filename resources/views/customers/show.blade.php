@@ -18,8 +18,7 @@
         <div class="card col-12 col-md-10 col-lg-6">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <strong>Cliente</strong>
-                <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-sm btn-primary"><i
-                        class="fas fa-pencil"></i> Editar</a>
+                <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Editar</a>
             </div>
             <div class="card-body">
 

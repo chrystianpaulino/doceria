@@ -29,8 +29,14 @@ class Customer extends Model
     ];
 
     public $appends = [
-        'status_name',
+        'status_name', 'first_name'
     ];
+
+    public function getFirstNameAttribute()
+    {
+        $words = explode(" ", $this->attributes['name']);
+        return $words[0];
+    }
 
     public function setNameAttribute($value)
     {

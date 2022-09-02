@@ -16,23 +16,30 @@
 
     <div class="container d-flex justify-content-center">
         <div class="col-md-12">
+            <div class="col-md-12 text-end d-flex justify-content-end align-items-center mb-2">
+                <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Editar Pedido</a>
+            </div>
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <strong>Cliente</strong>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="form-group mb-3 col-md-2">
-                            {{ Form::label('customer_id','Número') }}
+                        <div class="form-group mb-3 col-1">
+                            {{ Form::label('customer_id','ID') }}
                             {{ Form::text('customer_id', $order->customer_id, ['class' => 'form-control', 'readonly']) }}
                         </div>
-                        <div class="form-group mb-3 col-md-6">
+                        <div class="form-group mb-3 col-md-3">
                             {{ Form::label('name','Nome') }}
                             {{ Form::text('name', $order->customer->name, ['class' => 'form-control', 'readonly']) }}
                         </div>
-                        <div class="form-group mb-3 col-md-4">
+                        <div class="form-group mb-3 col-md-2">
                             {{ Form::label('phone','Celular') }}
                             {{ Form::text('phone', $order->customer->phone, ['class' => 'form-control phone', 'readonly']) }}
+                        </div>
+                        <div class="form-group mb-3 col-md-6">
+                            {{ Form::label('street','Rua') }}
+                            {{ Form::text('street', $order->customer->street . ", " . $order->customer->street_number . ". " .$order->customer->city . ". " .$order->customer->neighborhood, ['class' => 'form-control', 'readonly']) }}
                         </div>
                     </div>
                 </div>
@@ -41,33 +48,58 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <strong>Pedido número #{{ $order->id }}</strong>
-                    <span class="badge bg-info"> {{ $order->status_delivery }}</span>
+                      <div>
+                          <span class="badge bg-info"> {{ $order->status_delivery }}</span>
+                          @if($order->status_payment == 'PAGAMENTO PENDENTE')
+                            <span class="badge bg-danger"> {{ $order->status_payment }}</span>
+                          @else
+                              <span class="badge bg-success"> {{ $order->status_payment }}</span>
+                          @endif
+                      </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group mb-3 col-md-2">
                             {{ Form::label('price','Valor') }}
-                            {{ Form::text('price', 'R$ ' . \App\Helpers\showCentsValue($order->price), ['class' => 'form-control', 'readonly']) }}
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">R$</span>
+                                {{ Form::text('price', \App\Helpers\showCentsValue($order->price), ['class' => 'form-control', 'readonly']) }}
+                            </div>
                         </div>
                         <div class="form-group mb-3 col-md-2">
                             {{ Form::label('delivery_fee','Tx Entrega') }}
-                            {{ Form::text('delivery_fee', 'R$ ' . \App\Helpers\showCentsValue($order->delivery_fee), ['class' => 'form-control', 'readonly']) }}
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">R$</span>
+                                {{ Form::text('delivery_fee', \App\Helpers\showCentsValue($order->delivery_fee), ['class' => 'form-control', 'readonly']) }}
+                            </div>
                         </div>
                         <div class="form-group mb-3 col-md-2">
                             {{ Form::label('discount','Desconto') }}
-                            {{ Form::text('discount', 'R$ ' . \App\Helpers\showCentsValue($order->discount), ['class' => 'form-control', 'readonly']) }}
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">R$</span>
+                                {{ Form::text('discount', 'R$ ' . \App\Helpers\showCentsValue($order->discount), ['class' => 'form-control', 'readonly']) }}
+                            </div>
                         </div>
                         <div class="form-group mb-3 col-md-2">
-                            {{ Form::label('total_amount','Total da compra') }}
-                            {{ Form::text('total_amount', 'R$ ' . number_format($order->total_amount / 100, 2, ','), ['class' => 'form-control', 'readonly']) }}
+                            {{ Form::label('total_amount','Total') }}
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">R$</span>
+                                {{ Form::text('total_amount', 'R$ ' . number_format($order->total_amount / 100, 2, ','), ['class' => 'form-control', 'readonly']) }}
+                            </div>
                         </div>
                         <div class="form-group mb-3 col-md-2">
                             {{ Form::label('payment_advance','Total já pago') }}
-                            {{ Form::text('payment_advance', 'R$ ' . number_format($order->payment_advance / 100, 2, ','), ['class' => 'form-control', 'readonly']) }}
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">R$</span>
+                                {{ Form::text('payment_advance', 'R$ ' . number_format($order->payment_advance / 100, 2, ','), ['class' => 'form-control', 'readonly']) }}
+                            </div>
                         </div>
                         <div class="form-group mb-3 col-md-2">
                             {{ Form::label('get_missing','Faltando receber') }}
-                            {{ Form::text('get_missing', 'R$ ' . $order->getMissing(), ['class' => 'form-control', 'readonly']) }}
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">R$</span>
+                                {{ Form::text('get_missing', $order->getMissing(), ['class' => 'form-control', 'readonly']) }}
+                            </div>
                         </div>
                         <div class="form-group mb-3 col-md-2">
                             {{ Form::label('payment_type','Tipo de pagamento') }}
@@ -123,6 +155,9 @@
                     @endforeach
                     <tr class="bg-light">
                         <td class="text-end" colspan="5"><strong class="text-dark">Valor da venda: R$ {{ \App\Helpers\showCentsValue($order->price) }}</strong></td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td class="text-end" colspan="5"><strong class="text-dark">Valor da entrega: R$ {{ \App\Helpers\showCentsValue($order->delivery_fee) }}</strong></td>
                     </tr>
                     <tr class="bg-light">
                         <td class="text-end" colspan="5"><strong class="text-danger">Total de desconto: R$ {{ \App\Helpers\showCentsValue($order->discount) }}</strong></td>

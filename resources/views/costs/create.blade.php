@@ -219,7 +219,7 @@
                             {{ Form::label('amount','Valor') }}
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">R$</span>
-                                {{ Form::text('amount', null, ['class' => 'form-control', 'v-model' => 'amount', 'required' => 'true']) }}
+                                <input id="amount" class="form-control mask-money" @focusout="amountFocusout" v-model="amount" required>
                             </div>
                         </div>
                     </div>
@@ -270,9 +270,7 @@
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.2.6/jquery.inputmask.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"
-            integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://unpkg.com/vue-cookies@1.7.0/vue-cookies.js"></script>
@@ -295,14 +293,15 @@
                 ],
                 paymentType: null,
             },
-            watch: {},
+            watch: {
+            },
             created() {
                 for (var i = 0; i < this.feedstocks.length; i++) {
                     this.feedstocks[i].quantity = 0;
                 }
             },
             mounted() {
-                //
+                $('.mask-money').mask('000.000.000.000,00', {reverse: true, placeholder: '0.00'});
             },
             computed: {
                 itemCount: function () {
@@ -336,6 +335,11 @@
                 }
             },
             methods: {
+                amountFocusout(e) {
+                    console.log('focusout', e)
+                    this.amount = this.amount.replace(/,/g, '');
+                    this.amount = this.formatReal(this.amount);
+                },
                 submit() {
                     const data = {
                         feedstocks: app.feedstocks,
@@ -383,7 +387,15 @@
                     }
 
                     alert("Sorry, the Promotional code you entered is not valid!");
-                }
+                },
+                formatReal(int) {
+                    var tmp = int + '';
+                    tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+                    if (tmp.length > 6)
+                        tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+
+                    return tmp;
+                },
             }
         })
 

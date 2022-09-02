@@ -22,7 +22,7 @@
                 <table class="table table-hover">
                     <thead>
                     <tr class="align-middle" style="font-weight: bold">
-                        <td>#Número</td>
+                        <td>ID</td>
                         <td>Cliente</td>
                         <td class="text-center">Preco</td>
                         <td class="text-center">Taxa de Delivery</td>
@@ -41,7 +41,7 @@
                                 <code>#{{ $order->id }}</code>
                             </td>
                             <td>
-                                {{ $order->customer->name }}
+                                {{ $order->customer->first_name }}
                             </td>
 
                             <td class="text-center">
@@ -60,10 +60,14 @@
                                 {{ $order->payment_type }}
                             </td>
                             <td class="text-center">
-                                {{ $order->status_delivery }}
+                                @if($order->status_payment == 'PAGAMENTO PENDENTE')
+                                    <span class="badge bg-danger"> {{ $order->status_payment }}</span>
+                                @else
+                                    <span class="badge bg-success"> {{ $order->status_payment }}</span>
+                                @endif
                             </td>
                             <td class="text-center">
-                                {{ \Carbon\Carbon::parse($order->delivery_date)->format('d/m/Y')}}
+                                {{ $order->status_delivery }} - {{ \Carbon\Carbon::parse($order->delivery_date)->format('d/m/Y')}}
                             </td>
                         </tr>
                     @endforeach

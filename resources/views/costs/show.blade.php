@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group mb-3 col-md-2">
-                            {{ Form::label('customer_id','Número') }}
+                            {{ Form::label('customer_id','ID') }}
                             {{ Form::text('customer_id', $cost->id, ['class' => 'form-control', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-6">

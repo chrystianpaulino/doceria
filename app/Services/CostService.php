@@ -46,10 +46,10 @@ class CostService
     public function store($data)
     {
         try {
-            $cost                = new $this->model();
-            $cost->provider_id   = $data['provider']['id'];
-            $cost->amount        = stringFloatToCents($data['amount']);
-            $cost->date_cost     = $data['date'] ?? date('Y-m-d');
+            $cost               = new $this->model();
+            $cost->provider_id  = $data['provider']['id'];
+            $cost->amount       = stringFloatToCents($data['amount']);
+            $cost->date_cost    = $data['date'] ?? date('Y-m-d');
             $cost->payment_type = $data['paymentType'] ?? null;
             $cost->save();
 
