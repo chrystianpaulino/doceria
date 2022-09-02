@@ -1,12 +1,22 @@
 @extends('layouts.app')
 
+@section('breads')
+    <div class="container">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+            </ol>
+        </nav>
+    </div>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-4 mb-4">
                 <div class="list-group mb-4">
                     <button type="button" class="list-group-item list-group-item-action active">
-                        Pedidos para hoje
+                        Vendas de hoje
                     </button>
                     @if(count($ordersToday) > 0)
                         @foreach($ordersToday as $order)
@@ -36,7 +46,7 @@
                 </div>
                 <div class="list-group">
                     <button type="button" class="list-group-item list-group-item-action active">
-                        Pedidos para amanhã
+                        Vendas de amanhã
                     </button>
                     @if(count($ordersTomorrow) > 0)
                         @foreach($ordersTomorrow as $order)

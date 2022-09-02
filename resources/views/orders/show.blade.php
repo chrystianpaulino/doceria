@@ -5,7 +5,7 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item"><a href={{ route('orders.index') }}>Pedidos</a></li>
+                <li class="breadcrumb-item"><a href={{ route('orders.index') }}>Vendas</a></li>
                 <li class="breadcrumb-item active" aria-current="page"> Visualizar</li>
             </ol>
         </nav>
@@ -17,11 +17,11 @@
     <div class="container d-flex justify-content-center">
         <div class="col-md-12">
             <div class="col-md-12 text-end d-flex justify-content-end align-items-center mb-2">
-                <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Editar Pedido</a>
+                <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Editar Venda</a>
             </div>
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <strong>Cliente</strong>
+                    <span>Cliente</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -47,11 +47,11 @@
 
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <strong>Pedido número #{{ $order->id }}</strong>
+                    <span>Venda #{{ $order->id }}</span>
                       <div>
                           <span class="badge bg-info"> {{ $order->status_delivery }}</span>
                           @if($order->status_payment == 'PAGAMENTO PENDENTE')
-                            <span class="badge bg-danger"> {{ $order->status_payment }}</span>
+                              <span class="badge bg-danger"> {{ $order->status_payment }}</span>
                           @else
                               <span class="badge bg-success"> {{ $order->status_payment }}</span>
                           @endif
@@ -125,7 +125,7 @@
                 <table class="table table-bordered">
                     <tr>
                         <td colspan="4">
-                            <strong>Itens da compra</strong>
+                            <span>Itens da compra</span>
                         </td>
                     </tr>
                     <tr>

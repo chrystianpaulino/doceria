@@ -5,7 +5,7 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href=" {{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Pedidos</li>
+                <li class="breadcrumb-item active" aria-current="page">Vendas</li>
             </ol>
         </nav>
     </div>
@@ -15,8 +15,8 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>Pedidos</strong>
-                <a href="{{ route('orders.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Pedido</a>
+                <span>Vendas</span>
+                <a href="{{ route('orders.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Nova Venda</a>
             </div>
             <div class="table-responsive table-hover">
                 <table class="table table-hover">
@@ -67,7 +67,7 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                {{ $order->status_delivery }} - {{ \Carbon\Carbon::parse($order->delivery_date)->format('d/m/Y')}}
+                                <span class="badge bg-secondary"> {{ $order->status_delivery }} - {{ \Carbon\Carbon::parse($order->delivery_date)->format('d/m/Y')}}</span>
                             </td>
                         </tr>
                     @endforeach

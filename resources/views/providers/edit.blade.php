@@ -19,7 +19,7 @@
     <div class="container d-flex justify-content-center">
         <div class="card col-12 col-md-10 col-lg-6">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>Editar Fornecedor</strong>
+                <span>Editar Fornecedor</span>
             </div>
             {{ Form::model($provider,['route' => ['providers.update', $provider->id], 'method' => 'PUT', 'class' => 'needs-validation']) }}
 
@@ -46,8 +46,8 @@
             </div>
             <div class="card-footer d-flex justify-content-end align-items-center">
                 <div>
-                    <a href="{{ route('providers.show', $provider->id) }}" class=" btn btn-primary">Cancelar</a>
-                    <button class=" btn btn-success text-white" type="submit">Salvar</button>
+                    <a href="{{ route('providers.show', $provider->id) }}" class=" btn btn-outline-dark">Cancelar</a>
+                    <button class=" btn btn-primary text-white" type="submit">Salvar</button>
                 </div>
             </div>
 

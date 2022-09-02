@@ -170,8 +170,8 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href=" {{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('costs.index') }}">Gastos</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Novo Gasto</li>
+                <li class="breadcrumb-item"><a href="{{ route('costs.index') }}">Despesas</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Nova Despesa</li>
             </ol>
         </nav>
     </div>
@@ -182,7 +182,7 @@
     <div class="container d-flex justify-content-center">
         <div class="card col-md-10">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>Novo Gasto</strong>
+                <span>Nova Despesa</span>
             </div>
             <div class="card-body">
                 @if ($errors->any())
@@ -358,7 +358,6 @@
                     var value = event.target.value;
                     var feedstock = this.feedstocks[index];
 
-                    // Minimum quantity is 1, maximum quantity is 100, can left blank to input easily
                     if (value === "" || (parseInt(value) > 0 && parseInt(value) < 100)) {
                         feedstock.quantity = value;
                     }
@@ -366,7 +365,6 @@
                     this.$set(this.feedstocks, index, feedstock);
                 },
                 checkQuantity: function (index, event) {
-                    // Update quantity to 1 if it is empty
                     if (event.target.value === "") {
                         var feedstock = this.feedstocks[index];
                         feedstock.quantity = 1;
@@ -375,18 +373,6 @@
                 },
                 removeItem: function (index) {
                     this.feedstocks.splice(index, 1);
-                },
-                checkPromoCode: function () {
-                    for (var i = 0; i < this.promotions.length; i++) {
-                        if (this.promoCode === this.promotions[i].code) {
-                            this.discount = parseFloat(
-                                this.promotions[i].discount.replace("%", "")
-                            );
-                            return;
-                        }
-                    }
-
-                    alert("Sorry, the Promotional code you entered is not valid!");
                 },
                 formatReal(int) {
                     var tmp = int + '';

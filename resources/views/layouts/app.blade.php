@@ -52,7 +52,7 @@
                             <a class="nav-link" aria-current="page" href="{{ route('customers.index') }}"><i class="fas fa-user"></i> Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('orders.index') }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Pedidos</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('orders.index') }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Vendas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{{ route('feedstocks.index') }}"><i class="fas fa-inventory"></i> Insumos</a>
@@ -61,7 +61,7 @@
                             <a class="nav-link" aria-current="page" href="{{ route('providers.index') }}"><i class="fas fa-industry"></i> Fornecedores</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('costs.index') }}"><i class="fa fa-money" aria-hidden="true"></i> Gastos</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('costs.index') }}"><i class="fa fa-money" aria-hidden="true"></i> Despesas</a>
                         </li>
                     </ul>
             @endif

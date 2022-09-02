@@ -15,8 +15,8 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>Adicionais</strong>
-                <a href="{{ route('aditionals.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Adicionar</a>
+                <span>Adicionais</span>
+                <a href="{{ route('aditionals.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Adicional</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover">

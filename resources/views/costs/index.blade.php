@@ -5,7 +5,7 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href=" {{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Custos</li>
+                <li class="breadcrumb-item active" aria-current="page">Despesas</li>
             </ol>
         </nav>
     </div>
@@ -15,8 +15,8 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>Gastos</strong>
-                <a href="{{ route('costs.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Gasto</a>
+                <span>Despesas</span>
+                <a href="{{ route('costs.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Nova Despesa</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover">

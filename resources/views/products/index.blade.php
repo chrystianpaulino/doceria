@@ -15,8 +15,8 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>Produtos</strong>
-                <a href="{{ route('products.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Adicionar</a>
+                <span>Produtos</span>
+                <a href="{{ route('products.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Produto</a>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover">

@@ -17,7 +17,7 @@
     <div class="container d-flex justify-content-center">
         <div class="card col-12 col-md-10 col-lg-6">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>Novo Fornecedor</strong>
+                <span>Novo Fornecedor</span>
             </div>
             <div class="card-body">
                 @if ($errors->any())
@@ -39,7 +39,7 @@
                         {{ Form::text('phone', null,['class' => 'form-control phone', 'required']) }}
                     </div>
                     <div class="form-group mb-3">
-                        <button class="w-100 btn btn-success" type="submit">Salvar</button>
+                        <button class="w-100 btn btn-primary" type="submit">Salvar</button>
                     </div>
                 {{ Form::close() }}
             </div>

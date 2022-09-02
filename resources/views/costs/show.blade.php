@@ -5,7 +5,7 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item"><a href={{ route('costs.index') }}>Custos</a></li>
+                <li class="breadcrumb-item"><a href={{ route('costs.index') }}>Despesas</a></li>
                 <li class="breadcrumb-item active" aria-current="page"> Visualizar</li>
             </ol>
         </nav>
@@ -18,13 +18,13 @@
         <div class="col-md-12">
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <strong>Fornecedor</strong>
+                    <span>Fornecedor</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group mb-3 col-md-2">
                             {{ Form::label('customer_id','ID') }}
-                            {{ Form::text('customer_id', $cost->id, ['class' => 'form-control', 'readonly']) }}
+                            {{ Form::text('customer_id', $cost->provider->id, ['class' => 'form-control', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-6">
                             {{ Form::label('name','Fornecedor') }}
@@ -37,16 +37,22 @@
                     </div>
                 </div>
             </div>
-
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <strong>Custo número #{{ $cost->id }}</strong>
+                    <span>Despesa #{{ $cost->id }}</span>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="form-group mb-3 col-md-3">
+                        <div class="form-group mb-3 col-md-1">
+                            {{ Form::label('customer_id','ID') }}
+                            {{ Form::text('customer_id', $cost->id, ['class' => 'form-control', 'readonly']) }}
+                        </div>
+                        <div class="form-group mb-3 col-md-2">
                             {{ Form::label('price','Valor') }}
-                            {{ Form::text('price', 'R$ ' . \App\Helpers\showCentsValue($cost->amount), ['class' => 'form-control', 'readonly']) }}
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">R$</span>
+                                {{ Form::text('price', \App\Helpers\showCentsValue($cost->amount), ['class' => 'form-control', 'readonly']) }}
+                            </div>
                         </div>
                         <div class="form-group mb-3 col-md-3">
                             {{ Form::label('payment_type','Tipo de pagamento') }}

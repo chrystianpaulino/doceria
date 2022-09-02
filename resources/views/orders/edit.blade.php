@@ -5,8 +5,8 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item"><a href={{ route('orders.index') }}>Pedidos</a></li>
-                <li class="breadcrumb-item"><a href={{ route('orders.show', $order->id) }}> Pedido {{ $order->id }}</a></li>
+                <li class="breadcrumb-item"><a href={{ route('orders.index') }}>Vendas</a></li>
+                <li class="breadcrumb-item"><a href={{ route('orders.show', $order->id) }}> Venda #{{ $order->id }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page"> Editar</li>
             </ol>
         </nav>
@@ -19,11 +19,12 @@
         <div class="col-md-12">
             {{ Form::model($order,['route' => ['orders.update', $order->id], 'method' => 'PUT', 'class' => 'needs-validation']) }}
                 <div class="col-md-12 text-end d-flex justify-content-end align-items-center mb-2">
-                    <button class=" btn btn-sm btn-primary text-white" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i> Atualizar Pedido</button>
+                    <a class="btn btn-sm btn-outline-dark me-2" href={{ route('orders.show', $order->id) }}> Cancelar</a>
+                    <button class=" btn btn-sm btn-primary text-white" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i> Atualizar Venda</button>
                 </div>
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <strong>Cliente</strong>
+                        <span>Cliente</span>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -43,10 +44,17 @@
                     </div>
                 </div>
                 <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <strong>Pedido número #{{ $order->id }}</strong>
-                    <span class="badge bg-info"> {{ $order->status_delivery }}</span>
-                </div>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Venda #{{ $order->id }}</span>
+                        <div>
+                            <span class="badge bg-info"> {{ $order->status_delivery }}</span>
+                            @if($order->status_payment == 'PAGAMENTO PENDENTE')
+                                <span class="badge bg-danger"> {{ $order->status_payment }}</span>
+                            @else
+                                <span class="badge bg-success"> {{ $order->status_payment }}</span>
+                            @endif
+                        </div>
+                    </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group mb-3 col-md-2">
@@ -81,7 +89,11 @@
                             {{ Form::label('payment_advance','Total já pago') }}
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">R$</span>
-                                {{ Form::text('payment_advance', $order->payment_advance, ['class' => 'form-control money']) }}
+                                @if($order->status_payment == 'PAGAMENTO PENDENTE')
+                                    {{ Form::text('payment_advance', $order->payment_advance, ['class' => 'form-control money']) }}
+                                @else
+                                    {{ Form::text('payment_advance', $order->payment_advance, ['class' => 'form-control money', 'readonly']) }}
+                                @endif
                             </div>
                         </div>
                         <div class="form-group mb-3 col-md-2">

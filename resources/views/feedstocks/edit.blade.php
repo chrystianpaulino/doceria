@@ -20,7 +20,7 @@
     <div class="container d-flex justify-content-center">
         <div class="card col-12 col-md-10 col-lg-6">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>Editar cliente</strong>
+                <span>Editar Insumo</span>
             </div>
             {{ Form::model($feedstock,['route' => ['feedstocks.update', $feedstock->id], 'method' => 'PUT', 'class' => 'needs-validation']) }}
 
@@ -41,14 +41,16 @@
                 </div>
                 <div class="form-group mb-3">
                     {{ Form::label('price','Preco') }}
-                    {{ Form::text('price', null,['class' => 'form-control text-uppercase mask-money']) }}
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1">R$</span>
+                        {{ Form::text('price', null,['class' => 'form-control text-uppercase mask-money']) }}
+                    </div>
                 </div>
-
             </div>
             <div class="card-footer d-flex justify-content-end align-items-center">
                 <div>
-                    <a href="{{ route('feedstocks.show', $feedstock->id) }}" class=" btn btn-primary">Cancelar</a>
-                    <button class=" btn btn-success text-white" type="submit">Salvar</button>
+                    <a href="{{ route('feedstocks.show', $feedstock->id) }}" class=" btn btn-outline-dark">Cancelar</a>
+                    <button class=" btn btn-primary " type="submit">Salvar</button>
                 </div>
             </div>
 

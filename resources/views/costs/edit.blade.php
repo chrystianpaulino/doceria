@@ -6,8 +6,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Início</a></li>
                 <li class="breadcrumb-item"><a href={{ route('feedstocks.index') }}>Matéria-Prima</a></li>
-                <li class="breadcrumb-item"><a
-                        href={{ route('feedstocks.show', $feedstock->id) }}> {{ $feedstock->name }}</a></li>
+                <li class="breadcrumb-item"><a href={{ route('feedstocks.show', $feedstock->id) }}> {{ $feedstock->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page"> Editar</li>
             </ol>
         </nav>
@@ -20,7 +19,7 @@
     <div class="container d-flex justify-content-center">
         <div class="card col-12 col-md-10 col-lg-6">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>Editar cliente</strong>
+                <span>Editar cliente</span>
             </div>
             {{ Form::model($feedstock,['route' => ['feedstocks.update', $feedstock->id], 'method' => 'PUT', 'class' => 'needs-validation']) }}
 
