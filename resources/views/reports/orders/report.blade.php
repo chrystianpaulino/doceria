@@ -82,7 +82,7 @@
                             @if($order->status == 'DELIVERED')
                                 <span class="badge bg-success">PEDIDO ENTREGUE</span>
                             @else
-                                <span class="badge bg-danger">PEDIDO PENDENTE</span>
+                                <span class="badge bg-danger">ENTREGA PENDENTE</span>
                             @endif
                         </td>
                         <td class="text-center">

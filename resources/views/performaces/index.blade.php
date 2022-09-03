@@ -13,116 +13,10 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-4 mb-4">
-                <div class="list-group mb-4">
-                    <button type="button" class="list-group-item list-group-item-action active">
-                        Pedidos de Hoje
-                    </button>
-                    @if(count($ordersToday) > 0)
-                        @foreach($ordersToday as $order)
-                            <div class="list-group-item list-group-item-action">
-                                <div class="col-12 d-flex flex-row mb-2">
-                                    <div class="text-center">
-                                        @if($order->status_payment == 'PAGAMENTO PENDENTE')
-                                            <span class="badge bg-danger"> {{ $order->status_payment }}</span>
-                                        @else
-                                            <span class="badge bg-success"> {{ $order->status_payment }}</span>
-                                        @endif
-                                        @if($order->status == 'DELIVERED')
-                                            <span class="badge bg-success">PEDIDO ENTREGUE</span>
-                                        @else
-                                            <span class="badge bg-danger">PEDIDO PENDENTE</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="col-9">
-                                        <div class="d-flex align-items-center">
-                                            <strong class="me-2">{{ $order->customer->first_name  }} </strong> <span class="badge bg-secondary"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
-                                        </div>
-                                        <span class="phone">{{ $order->customer->phone }}</span> <br>
-                                        <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span>
-                                    </div>
-                                    <div class=""></div>
-                                    <div class="col-2 d-flex flex-column align-items-center">
-                                        <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary mb-2"> <i class="fa-solid fa-eye"></i></a>
-                                        @if($order->status != 'DELIVERED')
-                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-dark mb-2"><i class="far fa-hand-holding-box"></i></a>
-                                        @endif
-                                        @if($order->getMissing() != '0,00' or $order->getMissing() == null)
-                                            <a href="{{ route('orders.paid', $order->id) }}" title="Pago totalmente" class="btn btn-sm btn-outline-success mb-2"> <i class="fas fa-money-bill-wave"></i></a>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
-                        <a href="#" type="button" class="list-group-item list-group-item-action">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span>Não há pedidos para hoje</span>
-                                </div>
-                            </div>
-                        </a>
-                    @endif
-                </div>
-                <div class="list-group mb-4">
-                    <button type="button" class="list-group-item list-group-item-action active">
-                        Pedidos de Amanhã
-                    </button>
-                    @if(count($ordersTomorrow) > 0)
-                        @foreach($ordersTomorrow as $order)
-                            <div class="list-group-item list-group-item-action">
-                                <div class="col-12 d-flex flex-row mb-2">
-                                    <div class="text-center">
-                                        @if($order->status_payment == 'PAGAMENTO PENDENTE')
-                                            <span class="badge bg-danger"> {{ $order->status_payment }}</span>
-                                        @else
-                                            <span class="badge bg-success"> {{ $order->status_payment }}</span>
-                                        @endif
-                                        @if($order->status == 'DELIVERED')
-                                            <span class="badge bg-success">PEDIDO ENTREGUE</span>
-                                        @else
-                                            <span class="badge bg-danger">PEDIDO PENDENTE</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="col-9">
-                                        <div class="d-flex align-items-center">
-                                            <strong class="me-2">{{ $order->customer->first_name  }} </strong> <span class="badge bg-secondary"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
-                                        </div>
-                                        <span class="phone">{{ $order->customer->phone }}</span> <br>
-                                        <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
-                                    </div>
-                                    <div class=""></div>
-                                    <div class="col-2 d-flex flex-column align-items-center">
-                                        <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary mb-2"> <i class="fa-solid fa-eye"></i></a>
-                                        @if($order->status != 'DELIVERED')
-                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-dark mb-2"><i class="far fa-hand-holding-box"></i></a>
-                                        @endif
-                                        @if($order->getMissing() != '0,00' or $order->getMissing() == null)
-                                            <a href="{{ route('orders.paid', $order->id) }}" title="Pago totalmente" class="btn btn-sm btn-outline-success mb-2"> <i class="fas fa-money-bill-wave"></i></a>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
-                        <a href="#" type="button" class="list-group-item list-group-item-action">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span>Não há pedidos para amanhã</span>
-                                </div>
-                            </div>
-                        </a>
-                    @endif
-                </div>
-            </div>
-            <div class="col-md-8">
+            <div class="col-md-12 mb-4">
                 <div class="card">
                     <div class="card-header bg-info text-white">
-                        Resumo do mês
+                        Resumo do Mês
                     </div>
                     <div class="card-body">
                         <div class="row text-center justify-content-center align-items-center">
@@ -151,17 +45,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="width: 100%;">
-                            <canvas id="canvaDesempenhoPedidosMensal"></canvas>
-                        </div>
-                        <br>
-                        <div class="row" style="width: 100%;">
-                            <canvas id="canvaDesempenhoPedidosAnual"></canvas>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <canvas id="canvaDesempenhoPedidosMensal"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 mt-4">
-                    <a href="{{ route('orders.create') }}" style="width: 100%" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Pedido</a>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        Resumo do Ano
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <canvas id="canvaDesempenhoPedidosAnual"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -204,7 +107,7 @@
                     responsive: true,
                     title: {
                         display: true,
-                        text: 'Desempenho de Pedidos - Último mês'
+                        text: 'Desempenho de Pedidos - Mês Atual'
                     },
                     tooltips: {
                         mode: 'index',
@@ -250,8 +153,8 @@
                     datasets: [
                         {
                             label: 'Qtd. pedidos',
-                            backgroundColor: '#6cb2eb',
-                            borderColor: '#6cb2eb',
+                            backgroundColor: '#8800ff',
+                            borderColor: '#8800ff',
                             data: [
                                 @foreach($arrayPedidosAno as $pedidosDia)
                                 {{ isset($pedidosDia['pedidos']) ? $pedidosDia['pedidos'] : null }},
@@ -265,7 +168,7 @@
                     responsive: true,
                     title: {
                         display: true,
-                        text: 'Desempenho de Pedidos - Últimos 12 meses'
+                        text: 'Desempenho de Pedidos - Ano Atual'
                     },
                     tooltips: {
                         mode: 'index',
@@ -285,7 +188,7 @@
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Mês'
+                                labelString: 'Mês do Ano'
                             }
                         }],
                         yAxes: [{

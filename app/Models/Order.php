@@ -107,6 +107,6 @@ class Order extends Model
                 return "PAGAMENTO CONCLUÍDO";
         }
 
-        return null;
+        return "PAGAMENTO PENDENTE";
     }
 }

@@ -64,7 +64,7 @@ class PerformaceController extends Controller
             $qtdPedidosMes = Order::where('delivery_date', 'like', $mes->format('Y-m') . '%')->count();
 
             $dadosDoMesX = [
-                'diaMes'  => ucwords($mes->format('m/Y')),
+                'diaMes'  => ucwords($mes->format('m/y')),
                 'pedidos' => $qtdPedidosMes,
             ];
 

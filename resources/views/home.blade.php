@@ -21,7 +21,7 @@
                     @if(count($ordersToday) > 0)
                         @foreach($ordersToday as $order)
                             <div class="list-group-item list-group-item-action">
-                                <div class="col-12 d-flex flex-row mb-4">
+                                <div class="col-12 d-flex flex-row mb-2">
                                     <div class="text-center">
                                         @if($order->status_payment == 'PAGAMENTO PENDENTE')
                                             <span class="badge bg-danger"> {{ $order->status_payment }}</span>
@@ -31,7 +31,7 @@
                                         @if($order->status == 'DELIVERED')
                                             <span class="badge bg-success">PEDIDO ENTREGUE</span>
                                         @else
-                                            <span class="badge bg-danger">PEDIDO PENDENTE</span>
+                                            <span class="badge bg-danger">ENTREGA PENDENTE</span>
                                         @endif
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                         @if($order->status == 'DELIVERED')
                                             <span class="badge bg-success">PEDIDO ENTREGUE</span>
                                         @else
-                                            <span class="badge bg-danger">PEDIDO PENDENTE</span>
+                                            <span class="badge bg-danger">ENTREGA PENDENTE</span>
                                         @endif
                                     </div>
                                 </div>
