@@ -74,17 +74,15 @@
                         @if(count($cost->feedstocks) > 0)
                             <tr>
                                 <td colspan="4">
-                                    <strong>Itens da despesa</strong>
+                                    <span>Itens da Despesa</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Tipo</td>
                                 <td>Nome</td>
                                 <td class="text-center">Qtd</td>
                             </tr>
                             @foreach($cost->feedstocks as $costFeedstock)
                                 <tr>
-                                    <td>INSUMO</td>
                                     <td>{{ $costFeedstock->feedstock->name }}</td>
                                     <td class="text-center">{{ $costFeedstock->quantity }}</td>
                                 </tr>
@@ -94,9 +92,9 @@
                                 <td>Não foram inseridos insumos para este gasto</td>
                             </tr>
                         @endif
-                        <tr class="bg-light">
-                            <td class="text-end" style="font-size: 16px" colspan="5"><strong class="text-info">Total da despesa: R$ {{ \App\Helpers\showCentsValue($cost->amount) }}</strong></td>
-                        </tr>
+                            <tr class="bg-light">
+                                <td class="text-end" style="font-size: 16px" colspan="5"><strong class="text-info">Total da Despesa: R$ {{ \App\Helpers\showCentsValue($cost->amount) }}</strong></td>
+                            </tr>
                     </table>
                 @endif
             </div>

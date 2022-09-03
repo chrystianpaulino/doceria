@@ -18,8 +18,8 @@
                 <span>Despesas</span>
                 <a href="{{ route('costs.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Nova Despesa</a>
             </div>
-            <div class="table-responsive">
-                <table class="table table-hover">
+            <div class="table-responsive table-hover p-2">
+                <table class="table table-hover data-table">
                     <thead>
                         <tr>
                             <td>ID</td>
@@ -27,6 +27,7 @@
                             <td class="text-center">Contato</td>
                             <td class="text-center">Pagamento</td>
                             <td class="text-center">Valor</td>
+                            <td class="text-center">Data</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,6 +47,9 @@
                             </td>
                             <td class="text-center">
                                 R$ {{ \App\Helpers\showCentsValue($cost->amount) }}
+                            </td>
+                            <td class="text-center">
+                                {{ \Carbon\Carbon::parse($cost->date_cost)->format('d/m/Y') }}
                             </td>
                         </tr>
                     @endforeach

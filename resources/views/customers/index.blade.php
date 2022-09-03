@@ -18,8 +18,8 @@
                 <span>Clientes</span>
                 <a href="{{ route('customers.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Cliente</a>
             </div>
-            <div class="table-responsive table-hover">
-                <table class="table table-hover">
+            <div class="table-responsive table-hover p-2">
+                <table class="table table-hover data-table">
                     <thead>
                         <tr>
                             <td>ID</td>

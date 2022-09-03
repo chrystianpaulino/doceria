@@ -25,7 +25,10 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = $this->service->all();
+        $orders   = $this->service->all();
+        $atuais   = $orders->where('delivery_date', '>=', now()->format('Y-m-d'));
+        $passadas = $orders->where('delivery_date', '<', now()->format('Y-m-d'));
+        $orders   = $atuais->merge($passadas);
         return view('orders.index', compact('orders'));
     }
 
@@ -60,6 +63,12 @@ class OrderController extends Controller
     {
         $order = $this->service->update($id, $request->all());
         return redirect()->route('orders.show', $order->id);
+    }
+
+    public function delivered($id)
+    {
+        $order = $this->service->delivered($id);
+        return redirect()->back();
     }
 
     public function destroy($id)

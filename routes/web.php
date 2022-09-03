@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function (){
     Route::resource('/feedstocks'           , \App\Http\Controllers\FeedstockController::class);
     Route::resource('/providers'            , \App\Http\Controllers\ProviderController::class);
     Route::resource('/costs'                , \App\Http\Controllers\CostController::class);
+    Route::get('/orders/delivered/{orderId}'  , [\App\Http\Controllers\OrderController::class, 'delivered'])->name('orders.delivered');
 });
 
 

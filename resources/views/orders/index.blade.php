@@ -18,59 +18,67 @@
                 <span>Pedidos</span>
                 <a href="{{ route('orders.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Novo Pedido</a>
             </div>
-            <div class="table-responsive table-hover">
-                <table class="table table-hover">
+            <div class="table-responsive table-hover p-2">
+                <table class="table table-hover data-table">
                     <thead>
                         <tr class="align-middle">
                             <td>ID</td>
                             <td>Cliente</td>
-                            <td class="text-center">Preco</td>
+                            <td class="text-center">Valor</td>
                             <td class="text-center">Taxa de Delivery</td>
                             <td class="text-center">Desconto</td>
                             <td class="text-center">Total</td>
-                            <td class="text-center">Pagamento</td>
-                            <td class="text-center">Status</td>
+                            {{--<td class="text-center">Tipo do Pagamento</td>--}}
+                            <td class="text-center">Status Pagamento</td>
+                            <td class="text-center">Status Pedido</td>
                             <td class="text-center">Data</td>
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($orders as $order)
-                        <tr class="align-middle" onclick="alertMe(this)"
-                            data-url="{{ route('orders.show', $order->id) }}">
-                            <td>
-                                <code>#{{ $order->id }}</code>
-                            </td>
-                            <td>
-                                {{ $order->customer->first_name }}
-                            </td>
+                        @foreach($orders as $order)
+                            <tr class="align-middle" onclick="alertMe(this)"
+                                data-url="{{ route('orders.show', $order->id) }}">
+                                <td>
+                                    <code>#{{ $order->id }}</code>
+                                </td>
+                                <td>
+                                    {{ $order->customer->first_name }}
+                                </td>
 
-                            <td class="text-center">
-                                R$ {{ \App\Helpers\showCentsValue($order->price) }}
-                            </td>
-                            <td class="text-center">
-                                R$ {{ \App\Helpers\showCentsValue($order->delivery_fee) }}
-                            </td>
-                            <td class="text-center">
-                                R$ {{ \App\Helpers\showCentsValue($order->discount) }}
-                            </td>
-                            <td class="text-center">
-                                R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}
-                            </td>
-                            <td class="text-center">
-                                {{ $order->payment_type }}
-                            </td>
-                            <td class="text-center">
-                                @if($order->status_payment == 'PAGAMENTO PENDENTE')
-                                    <span class="badge bg-danger"> {{ $order->status_payment }}</span>
-                                @else
-                                    <span class="badge bg-success"> {{ $order->status_payment }}</span>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                <span class="badge bg-secondary"> {{ $order->status_delivery }} - {{ \Carbon\Carbon::parse($order->delivery_date)->format('d/m/Y')}}</span>
-                            </td>
-                        </tr>
-                    @endforeach
+                                <td class="text-center">
+                                    R$ {{ \App\Helpers\showCentsValue($order->price) }}
+                                </td>
+                                <td class="text-center">
+                                    R$ {{ \App\Helpers\showCentsValue($order->delivery_fee) }}
+                                </td>
+                                <td class="text-center">
+                                    R$ {{ \App\Helpers\showCentsValue($order->discount) }}
+                                </td>
+                                <td class="text-center">
+                                    R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}
+                                </td>
+                                {{--<td class="text-center">
+                                    {{ $order->payment_type }}
+                                </td>--}}
+                                <td class="text-center">
+                                    @if($order->status_payment == 'PAGAMENTO PENDENTE')
+                                        <span class="badge bg-danger"> {{ $order->status_payment }}</span>
+                                    @else
+                                        <span class="badge bg-success"> {{ $order->status_payment }}</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    @if($order->status == 'DELIVERED')
+                                        <span class="badge bg-success">PEDIDO ENTREGUE</span>
+                                    @else
+                                        <span class="badge bg-danger">PEDIDO PENDENTE</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <span class=""> {{ $order->status_delivery }} - {{ \Carbon\Carbon::parse($order->delivery_date)->format('d/m/Y')}}</span>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

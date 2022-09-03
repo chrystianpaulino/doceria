@@ -33,7 +33,7 @@ class OrderService
     public function all()
     {
         try {
-            return $this->model->orderBy('id', 'desc')->get();
+            return $this->model->orderBy('delivery_date')->get();
         } catch (\Exception $e) {
             throw $e;
         }
@@ -66,6 +66,7 @@ class OrderService
             $order->delivery_date   = $data['date'] ?? now();
             $order->payment_type    = $data['paymentType'] ?? null;
             $order->obs             = $data['obs'] ?? null;
+            $order->status          = $data['status'] ?? 'PENDING';
             $order->save();
 
             if (isset($data['arrayProducts'])) {
@@ -116,13 +117,28 @@ class OrderService
             $order->total_amount    = $data['total_amount'] ? stringFloatToCents($data['total_amount']) : $order->total_amount;
             $order->delivery_date   = $data['delivery_date'] ?? $order->delivery_date;
             $order->payment_type    = $data['paymentType'] ?? $order->payment_type;
-            $order->obs             = $data['obs'] ?? null;
+            $order->obs             = $data['obs'] ?? $order->obs;
+            $order->status          = $data['status'] ?? $order->status;
             $order->save();
 
             return $order;
         } catch (Exception $e) {
             throw $e;
         }
+    }
+
+    public function delivered($id)
+    {
+        try {
+            $order         = $this->find($id);
+            $order->status = 'DELIVERED';
+            $order->save();
+
+            return $order;
+        } catch (Exception $e) {
+            throw $e;
+        }
+
     }
 
     public function destroy($id)

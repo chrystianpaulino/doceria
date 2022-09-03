@@ -18,8 +18,14 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" id="light-style"/>
     <link href="{{ asset('css/select2-bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
-    <style>
+    <!-- bootstrap5 dataTables css cdn -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>
 
+    <style>
+        .vertical {
+            border-left: 1px solid black;
+            height: 70px;
+        }
     </style>
 
     @yield('css')
@@ -122,20 +128,56 @@
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script src="https://kit.fontawesome.com/4a05637478.js" crossorigin="anonymous"></script>
 
+<!-- bootstrap5 dataTables js cdn -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
 <script>
-    $('#price').mask('000.000.000.000.000,00', {reverse: true});
-    $(".placa").mask("aaa-9*99");
-    $(".cartao").mask("9999999999999999");
-    $(".ccv").mask("999");
-    $(".ano").mask("9999");
-    $(".mes").mask("99");
-    $(".cep").mask("99999-999");
-    $(".mesano").mask("99/9999");
-    $(".hora").mask("99:99");
-    $(".datas").mask("99/99/9999");
-    $(".cnpj").mask("99.999.999/9999-99");
-    $(".cpf").mask("999.999.999-99");
-    $(".phone").mask("(99) 99999-9999")
+
+    $(document).ready(function() {
+        $('.data-table').DataTable({
+            "language": {
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Exibindo 0 até 0 de 0 registros",
+                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sInfoThousands": ".",
+                "sLengthMenu": "Exibindo _MENU_ resultados por página",
+                "sLoadingRecords": "Carregando...",
+                "sProcessing": "Processando...",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sSearch": "Pesquisar",
+                "oPaginate": {
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior",
+                    "sFirst": "Primeiro",
+                    "sLast": "Último"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                }
+            },
+            "pageLength": 25,
+            "order": []
+        });
+
+        $('#price').mask('000.000.000.000.000,00', {reverse: true});
+        $(".placa").mask("aaa-9*99");
+        $(".cartao").mask("9999999999999999");
+        $(".ccv").mask("999");
+        $(".ano").mask("9999");
+        $(".mes").mask("99");
+        $(".cep").mask("99999-999");
+        $(".mesano").mask("99/9999");
+        $(".hora").mask("99:99");
+        $(".datas").mask("99/99/9999");
+        $(".cnpj").mask("99.999.999/9999-99");
+        $(".cpf").mask("999.999.999-99");
+        $(".phone").mask("(99) 99999-9999")
+    });
 </script>
 
 @yield('js')

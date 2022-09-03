@@ -30,7 +30,7 @@ class HomeController extends Controller
         $ordersToday    = Order::where('delivery_date', 'like', today()->format('Y-m-d') . '%')->get();
         $ordersTomorrow = Order::where('delivery_date', 'like', today()->addDay()->format('Y-m-d') . '%')->get();
         $novosClientes  = Customer::where('created_at', 'like', today()->format('Y-m') . '%')->count();
-        $totalGasto     = Cost::where('created_at', 'like', today()->format('Y-m') . '%')->count();
+        $totalGasto     = Cost::where('created_at', 'like', today()->format('Y-m') . '%')->sum('amount');
 
         $mesAtual            = Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
         $primeiroDiaMesAtual = $mesAtual->firstOfMonth()->format('Y-m-d');

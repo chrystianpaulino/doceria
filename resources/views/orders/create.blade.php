@@ -93,13 +93,6 @@
                                     </select>
                                 </div>
                             </div>
-                            {{--Data de Entrega--}}
-                            <div class="col-md-6 mb-2">
-                                <div class="form-group">
-                                    {{ Form::label('date','Data de entrega') }}
-                                    {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
-                                </div>
-                            </div>
                             {{--Tipo de Pagamento--}}
                             <div class="col-md-6 mb-2">
                                 <div class="form-group">
@@ -111,6 +104,26 @@
                                             @{{ payment.text }}
                                         </option>
                                     </select>
+                                </div>
+                            </div>
+                            {{--Status do pedido--}}
+                            <div class="col-md-6 mb-2">
+                                <div class="form-group">
+                                    {{ Form::label('status','Status do Pedido') }}
+                                    <br>
+                                    <select class="form-select" class="col-12" id="status" name="status" v-model="status" :required="true">
+                                        <option :value="null" disabled>Selecione</option>
+                                        <option v-for="status in orderStatus" v-bind:value="status.value">
+                                            @{{ status.text }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            {{--Data de Entrega--}}
+                            <div class="col-md-6 mb-2">
+                                <div class="form-group">
+                                    {{ Form::label('date','Data de entrega') }}
+                                    {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
                                 </div>
                             </div>
                             {{--Valor de Delivery--}}
@@ -144,9 +157,9 @@
                                 </div>
                             </div>
                             {{--Texto de Obs--}}
-                            <div class="col-md-12">
+                            <div class="col-md-12 mb-2">
                                 <div class="form-group">
-                                    <label for="obs" class="col-md-4 col-form-label">Obs</label>
+                                    <label for="obs" class="col-md-4 col-form-label">Observacões</label>
                                     <textarea id="obs" rows="2" class="form-control" name="obs" v-model="obs"></textarea>
                                 </div>
                             </div>
@@ -161,7 +174,7 @@
                         Itens do Pedido
                     </div>
                     {{--Card Body com os itens--}}
-                    <div class="card-body">
+                    <div class="card-body" style="min-height: 379.05px">
                         <div class="mb-4" v-if="arrayProducts.length <= 0 && arrayAditionals.length <= 0">
                             <div class="d-flex flex-column text-center justify-content-center align-content-center align-items-center">
                                 <img src="{{ asset('images/cartempty1.png') }}" alt="sem produtos">
@@ -169,8 +182,8 @@
                             </div>
                         </div>
 
-                        <div v-if="arrayProducts.length > 0">
-                            <table class="table">
+                        <div class="table-responsive" v-if="arrayProducts.length > 0">
+                            <table class="table table-responsive">
                                 <thead>
                                     <tr>
                                         <th scope="col">Tipo</th>
@@ -238,26 +251,25 @@
                         <div v-else>
                             <span></span>
                         </div>
-
+                    </div>
+                    {{--Card Footer com valores e botão de finalizar--}}
+                    <div class="card-footer">
                         <div class="col-md-12">
                             <ul class="list-group mt-2 text-end">
                                 <li class="list-group-item list-group-item-info"><strong>Valor Total:</strong> R$ @{{ total }}</li>
                             </ul>
                         </div>
-                        <div class="row mt-3 d-flex justify-content-between align-content-between">
-                            <ul class="list-group col-md-6 text-end" style="padding-left: 10px">
+                        <div class="row mt-2 mb-2 d-flex justify-content-between align-content-between">
+                            <ul class="list-group mb-2 col-md-6 text-end" style="padding-left: 10px">
                                 <li v-if="totalPaid != ''" class="list-group-item list-group-item-success"><strong>Total Recebido:</strong> R$ @{{ totalPaid }}</li>
                                 <li v-else class="list-group-item list-group-item-success"><strong>Total Recebido:</strong> R$ 0,00</li>
                             </ul>
-                            <ul class="list-group col-md-6 text-end">
+                            <ul class="list-group col-md-6 text-end" style="padding-left: 10px">
                                 <li class="list-group-item list-group-item-danger"><strong>Faltando Receber:</strong> R$ @{{ valueMissing }}</li>
                             </ul>
                         </div>
-                    </div>
-                    {{--Card Footer com botão de finalizar--}}
-                    <div class="card-footer">
                         {{--Botão Finalizar--}}
-                        <div class="col-md-12 mt-4">
+                        <div class="col-md-12 mt-2">
                             <button class="btn btn-primary" style="width: 100%" v-on:click="submit()">
                                 Finalizar
                             </button>
@@ -315,7 +327,12 @@
                     {text: 'Pix', value: 'PIX'},
                     {text: 'Dinheiro', value: 'DINHEIRO'}
                 ],
+                orderStatus: [
+                    {text: 'Pendente', value: 'PENDING'},
+                    {text: 'Entregue', value: 'DELIVERED'},
+                ],
                 paymentType: null,
+                status: null,
             },
             watch: {},
             created() {
@@ -369,13 +386,13 @@
             },
             methods: {
                 submit() {
-                    if (app.arrayProducts.length == 0) {
-                        alert('É necessário informar pelo menos um produto');
+                    if (app.customer == null) {
+                        alert('É necessário informar o cliente do pedido');
                         return true;
                     }
 
-                    if (app.customer == null) {
-                        alert('É necessário informar o cliente do pedido');
+                    if (app.arrayProducts.length == 0) {
+                        alert('É necessário informar pelo menos um produto');
                         return true;
                     }
 
@@ -388,6 +405,17 @@
                         alert('É necessário informar a data de entrega do pedido');
                         return true;
                     }
+
+                    if (app.status == null) {
+                        alert('É necessário informar o status do pedido');
+                        return true;
+                    }
+
+                    if (app.totalPaid == null || app.totalPaid ==  "") {
+                        alert('É necessário informar o quanto foi pago do pedido');
+                        return true;
+                    }
+
                     const data = {
                         arrayProducts: app.arrayProducts,
                         arrayAditionals: app.arrayAditionals,
@@ -400,6 +428,7 @@
                         discount: app.discount,
                         deliveryFee: app.deliveryFee,
                         totalPaid: app.totalPaid,
+                        status: app.status
                     }
                     console.log(data);
                     axios.post('{{ route('orders.store') }}', data).then(function (response) {

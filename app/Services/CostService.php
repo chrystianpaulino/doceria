@@ -28,7 +28,7 @@ class CostService
     public function all()
     {
         try {
-            return $this->model->get();
+            return $this->model->orderBy('date_cost', 'desc')->get();
         } catch (\Exception $e) {
             throw $e;
         }

@@ -2,14 +2,7 @@
 
 @section('css')
     <style>
-        a {
-            text-decoration: none;
-            color: #333333;
-        }
 
-        a:hover {
-            color: #164eff;
-        }
 
         button {
             background-color: #16cc9b;
@@ -238,14 +231,13 @@
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="form-group">
-                            {{ Form::label('feedstocks','Insumos da Compra') }}
+                            {{ Form::label('feedstocks','Insumos da Despesa (opcional)') }}
                         </div>
                         <ul class="feedstocks text-center d-flex flex-column justify-content-between">
                             <div class="row">
                                 <li class=" col-md-4" v-for="(feedstock, index) in feedstocks">
                                     <div class="detail d-flex align-items-center justify-content-end mt-4">
-                                        <div class="name"><a href="#">@{{ feedstock.name }}</a></div>
-                                        {{--                                        <div class="price">@{{ feedstock.price | currencyFormatted }}</div>--}}
+                                        <div class="name"><a href="#" style="text-decoration: none;color: #333333;">@{{ feedstock.name }}</a></div>
                                         <div class="quantity">
                                             <input type="number" class="quantity" step="1" @input="updateQuantity(index, $event)" @blur="checkQuantity(index, $event)" placeholder="0"/>
                                         </div>
@@ -296,6 +288,10 @@
             watch: {
             },
             created() {
+                var tzoffset        = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+                var localISOTime    = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+                this.date           = localISOTime.slice(0,10);
+
                 for (var i = 0; i < this.feedstocks.length; i++) {
                     this.feedstocks[i].quantity = 0;
                 }

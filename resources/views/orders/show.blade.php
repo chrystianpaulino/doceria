@@ -5,7 +5,7 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item"><a href={{ route('orders.index') }}>Vendas</a></li>
+                <li class="breadcrumb-item"><a href={{ route('orders.index') }}>Pedidos</a></li>
                 <li class="breadcrumb-item active" aria-current="page"> Visualizar</li>
             </ol>
         </nav>
@@ -17,7 +17,7 @@
     <div class="container d-flex justify-content-center">
         <div class="col-md-12">
             <div class="col-md-12 text-end d-flex justify-content-end align-items-center mb-2">
-                <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Editar Venda</a>
+                <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Editar Pedido</a>
             </div>
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -38,7 +38,7 @@
                             {{ Form::text('phone', $order->customer->phone, ['class' => 'form-control phone', 'readonly']) }}
                         </div>
                         <div class="form-group mb-3 col-md-6">
-                            {{ Form::label('street','Rua') }}
+                            {{ Form::label('street','Endereco') }}
                             {{ Form::text('street', $order->customer->street . ", " . $order->customer->street_number . ". " .$order->customer->city . ". " .$order->customer->neighborhood, ['class' => 'form-control', 'readonly']) }}
                         </div>
                     </div>
@@ -47,7 +47,7 @@
 
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>Venda #{{ $order->id }}</span>
+                    <span>Pedido #{{ $order->id }}</span>
                       <div>
                           <span class="badge bg-info"> {{ $order->status_delivery }}</span>
                           @if($order->status_payment == 'PAGAMENTO PENDENTE')
@@ -101,7 +101,7 @@
                                 {{ Form::text('get_missing', $order->getMissing(), ['class' => 'form-control', 'readonly']) }}
                             </div>
                         </div>
-                        <div class="form-group mb-3 col-md-2">
+                        <div class="form-group mb-3 col-md-3">
                             {{ Form::label('payment_type','Tipo de pagamento') }}
                             {{ Form::text('payment_type', $order->payment_type, ['class' => 'form-control', 'readonly']) }}
                         </div>
@@ -112,6 +112,10 @@
                         <div class="form-group mb-3 col-md-3">
                             {{ Form::label('delivery_date','Data de entrega') }}
                             {{ Form::text('delivery_date', \Carbon\Carbon::parse($order->delivery_date)->format('d/m/Y'), ['class' => 'form-control', 'readonly']) }}
+                        </div>
+                        <div class="form-group mb-3 col-md-3">
+                            {{ Form::label('status','Status do Pedido') }}
+                            {{ Form::select('status', ['PENDING' => 'Pendente', 'DELIVERED' => 'Entregue'], $order->status, ['class' => 'form-control', 'readonly']) }}
                         </div>
                     </div>
                     <div class="row">
@@ -125,7 +129,7 @@
                 <table class="table table-bordered">
                     <tr>
                         <td colspan="4">
-                            <span>Itens da compra</span>
+                            <span>Itens do Pedido</span>
                         </td>
                     </tr>
                     <tr>
@@ -154,16 +158,16 @@
                         </tr>
                     @endforeach
                     <tr class="bg-light">
-                        <td class="text-end" colspan="5"><strong class="text-dark">Valor da venda: R$ {{ \App\Helpers\showCentsValue($order->price) }}</strong></td>
+                        <td class="text-end" colspan="5"><strong class="text-dark">Valor do Pedido: R$ {{ \App\Helpers\showCentsValue($order->price) }}</strong></td>
                     </tr>
                     <tr class="bg-light">
-                        <td class="text-end" colspan="5"><strong class="text-dark">Valor da entrega: R$ {{ \App\Helpers\showCentsValue($order->delivery_fee) }}</strong></td>
+                        <td class="text-end" colspan="5"><strong class="text-dark">Valor da Entrega: R$ {{ \App\Helpers\showCentsValue($order->delivery_fee) }}</strong></td>
                     </tr>
                     <tr class="bg-light">
-                        <td class="text-end" colspan="5"><strong class="text-danger">Total de desconto: R$ {{ \App\Helpers\showCentsValue($order->discount) }}</strong></td>
+                        <td class="text-end" colspan="5"><strong class="text-danger">Total de Desconto: R$ {{ \App\Helpers\showCentsValue($order->discount) }}</strong></td>
                     </tr>
                     <tr class="bg-light">
-                        <td class="text-end" style="font-size: 16px" colspan="5"><strong class="text-info">Total da venda: R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</strong></td>
+                        <td class="text-end" style="font-size: 16px" colspan="5"><strong class="text-info">Total do Pedido: R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</strong></td>
                     </tr>
                 </table>
             </div>

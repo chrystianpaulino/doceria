@@ -5,8 +5,8 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item"><a href={{ route('orders.index') }}>Vendas</a></li>
-                <li class="breadcrumb-item"><a href={{ route('orders.show', $order->id) }}> Venda #{{ $order->id }}</a></li>
+                <li class="breadcrumb-item"><a href={{ route('orders.index') }}>Pedidos</a></li>
+                <li class="breadcrumb-item"><a href={{ route('orders.show', $order->id) }}> Pedido #{{ $order->id }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page"> Editar</li>
             </ol>
         </nav>
@@ -19,8 +19,8 @@
         <div class="col-md-12">
             {{ Form::model($order,['route' => ['orders.update', $order->id], 'method' => 'PUT', 'class' => 'needs-validation']) }}
                 <div class="col-md-12 text-end d-flex justify-content-end align-items-center mb-2">
-                    <a class="btn btn-sm btn-outline-dark me-2" href={{ route('orders.show', $order->id) }}> Cancelar</a>
-                    <button class=" btn btn-sm btn-primary text-white" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i> Atualizar Venda</button>
+                    <a class="btn btn-sm btn-outline-dark me-2" href={{ route('orders.show', $order->id) }}> Voltar</a>
+                    <button class=" btn btn-sm btn-primary text-white" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i> Atualizar Pedido</button>
                 </div>
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -29,7 +29,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group mb-3 col-md-2">
-                                {{ Form::label('customer_id','Número') }}
+                                {{ Form::label('customer_id','ID') }}
                                 {{ Form::text('customer_id', $order->customer_id, ['class' => 'form-control', 'readonly']) }}
                             </div>
                             <div class="form-group mb-3 col-md-6">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Venda #{{ $order->id }}</span>
+                        <span>Pedido #{{ $order->id }}</span>
                         <div>
                             <span class="badge bg-info"> {{ $order->status_delivery }}</span>
                             @if($order->status_payment == 'PAGAMENTO PENDENTE')
@@ -115,6 +115,10 @@
                             {{ Form::label('delivery_date','Data de entrega') }}
                             {{ Form::date('delivery_date', \Carbon\Carbon::parse($order->delivery_date)->format('Y-m-d'), ['class' => 'form-control']) }}
                         </div>
+                        <div class="form-group mb-3 col-md-3">
+                            {{ Form::label('status','Status do Pedido') }}
+                            {{ Form::select('status', ['PENDING' => 'Pendente', 'DELIVERED' => 'Entregue'], $order->status, ['class' => 'form-control']) }}
+                        </div>
                     </div>
                     <div class="row">
                         <div class="form-group mb-3 col-md-12">
@@ -127,7 +131,7 @@
                 <table class="table table-bordered">
                     <tr>
                         <td colspan="4">
-                            <strong>Itens da compra</strong>
+                            <span>Itens do Pedido</span>
                         </td>
                     </tr>
                     <tr>

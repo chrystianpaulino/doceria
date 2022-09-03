@@ -20,19 +20,37 @@
                     </button>
                     @if(count($ordersToday) > 0)
                         @foreach($ordersToday as $order)
-                            <a href="{{ route('orders.show', $order->id) }}" type="button" class="list-group-item list-group-item-action">
+                            <div class="list-group-item list-group-item-action">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <strong>{{ $order->customer->name }}</strong> <br>
+                                    <div class="col-9">
+                                        <strong>{{ $order->customer->first_name }}</strong> <br>
                                         <span class="phone">{{ $order->customer->phone }}</span> <br>
                                         <span>R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
-                                        <span class="phone">{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
+                                        <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
                                     </div>
-                                    <div>
-                                        <i class="fa-solid fa-eye"></i>
+                                    <div class=""></div>
+                                    <div class="col-2 d-flex flex-column align-items-center">
+                                        <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary mb-2"> <i class="fa-solid fa-eye"></i></a>
+                                        @if($order->status != 'DELIVERED')
+                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-dark mb-2"> <i class='fa fa-check'></i></a>
+                                        @endif
                                     </div>
                                 </div>
-                            </a>
+                                <div class="col-12 d-flex flex-row">
+                                    <div class="text-center">
+                                        @if($order->status_payment == 'PAGAMENTO PENDENTE')
+                                            <span class="badge bg-danger"> {{ $order->status_payment }}</span>
+                                        @else
+                                            <span class="badge bg-success"> {{ $order->status_payment }}</span>
+                                        @endif
+                                            @if($order->status == 'DELIVERED')
+                                                <span class="badge bg-success">PEDIDO ENTREGUE</span>
+                                            @else
+                                                <span class="badge bg-danger">PEDIDO PENDENTE</span>
+                                            @endif
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     @else
                         <a href="#" type="button" class="list-group-item list-group-item-action">
@@ -44,25 +62,43 @@
                         </a>
                     @endif
                 </div>
-                <div class="list-group">
+                <div class="list-group mb-4">
                     <button type="button" class="list-group-item list-group-item-action active">
                         Pedidos de Amanhã
                     </button>
                     @if(count($ordersTomorrow) > 0)
                         @foreach($ordersTomorrow as $order)
-                            <a href="{{ route('orders.show', $order->id) }}" type="button" class="list-group-item list-group-item-action">
+                            <div class="list-group-item list-group-item-action">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <strong>{{ $order->customer->name }}</strong> <br>
+                                    <div class="col-9">
+                                        <strong>{{ $order->customer->first_name }}</strong> <br>
                                         <span class="phone">{{ $order->customer->phone }}</span> <br>
                                         <span>R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
-                                        <span class="phone">{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
+                                        <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
                                     </div>
-                                    <div>
-                                        <i class="fa-solid fa-eye"></i>
+                                    <div class=""></div>
+                                    <div class="col-2 d-flex flex-column align-items-center">
+                                        <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary mb-2"> <i class="fa-solid fa-eye"></i></a>
+                                        @if($order->status != 'DELIVERED')
+                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-dark mb-2"> <i class='fa fa-check'></i></a>
+                                        @endif
                                     </div>
                                 </div>
-                            </a>
+                                <div class="col-12 d-flex flex-row">
+                                    <div class="text-center">
+                                        @if($order->status_payment == 'PAGAMENTO PENDENTE')
+                                            <span class="badge bg-danger"> {{ $order->status_payment }}</span>
+                                        @else
+                                            <span class="badge bg-success"> {{ $order->status_payment }}</span>
+                                        @endif
+                                        @if($order->status == 'DELIVERED')
+                                            <span class="badge bg-success">PEDIDO ENTREGUE</span>
+                                        @else
+                                            <span class="badge bg-danger">PEDIDO PENDENTE</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     @else
                         <a href="#" type="button" class="list-group-item list-group-item-action">
@@ -130,9 +166,10 @@
             window.myLine = new Chart(ctx, {
                 type: 'line',
                 data: {
+                    type: 'line',
                     labels: [
                         @foreach($arrayPedidos as $pedidosDia)
-                            {{ isset($pedidosDia['diaMes']) ? $pedidosDia['diaMes'] : null }},
+                             '{{ isset($pedidosDia['diaMes']) ? "Dia " . $pedidosDia['diaMes'] : null }}',
                         @endforeach
                     ],
                     datasets: [
