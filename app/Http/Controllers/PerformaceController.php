@@ -44,10 +44,13 @@ class PerformaceController extends Controller
         for ($i = 0; $i < $qtdDias; $i++) {
             $diaMesAtual   = Carbon::createFromFormat('Y-m-d', $primeiroDiaMesAtual)->addDays($i);
             $qtdPedidosDia = Order::where('delivery_date', 'like', $diaMesAtual->format('Y-m-d') . '%')->get();
+            $qtdGastosDia  = Cost::where('date_cost', 'like', $diaMesAtual->format('Y-m-d') . '%')->get();
 
             $dadosDoDiaX = [
-                'diaMes'  => $diaMesAtual->format('d'),
-                'pedidos' => $qtdPedidosDia->count(),
+                'diaMes'    => $diaMesAtual->format('d'),
+                'pedidos'   => $qtdPedidosDia->count(),
+                'faturado'  => $qtdPedidosDia->sum('total_amount') / 100,
+                'investido' => $qtdGastosDia->sum('amount') / 100,
             ];
 
             $pedidosTotalMes += $qtdPedidosDia->count();
@@ -58,14 +61,16 @@ class PerformaceController extends Controller
         }
 
         $arrayPedidosAno = [];
-
         for ($i = 12; $i >= 0; $i--) {
             $mes           = Carbon::createFromFormat('Y-m-d', date('Y-m-d'))->firstOfMonth()->subMonths($i);
-            $qtdPedidosMes = Order::where('delivery_date', 'like', $mes->format('Y-m') . '%')->count();
+            $qtdPedidosMes = Order::where('delivery_date', 'like', $mes->format('Y-m') . '%')->get();
+            $qtdGastosMes  = Cost::where('date_cost', 'like', $mes->format('Y-m') . '%')->get();
 
             $dadosDoMesX = [
-                'diaMes'  => ucwords($mes->format('m/y')),
-                'pedidos' => $qtdPedidosMes,
+                'diaMes'    => ucwords($mes->format('m/y')),
+                'pedidos'   => $qtdPedidosMes->count(),
+                'faturado'  => $qtdPedidosMes->sum('total_amount') / 100,
+                'investido' => $qtdGastosMes->sum('amount') / 100,
             ];
 
             array_push($arrayPedidosAno, $dadosDoMesX);
