@@ -23,16 +23,17 @@
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="col-9">
-                                        <strong>{{ $order->customer->first_name }}</strong> <br>
+                                        <div class="d-flex align-items-center">
+                                            <strong class="me-2">{{ $order->customer->first_name  }} </strong> <span class="badge bg-secondary"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
+                                        </div>
                                         <span class="phone">{{ $order->customer->phone }}</span> <br>
-                                        <span>R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
                                         <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
                                     </div>
                                     <div class=""></div>
                                     <div class="col-2 d-flex flex-column align-items-center">
                                         <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary mb-2"> <i class="fa-solid fa-eye"></i></a>
                                         @if($order->status != 'DELIVERED')
-                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-dark mb-2"> <i class='fa fa-check'></i></a>
+                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-success mb-2"> <i class='fa fa-check'></i></a>
                                         @endif
                                     </div>
                                 </div>
@@ -71,16 +72,17 @@
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="col-9">
-                                        <strong>{{ $order->customer->first_name }}</strong> <br>
+                                        <div class="d-flex align-items-center">
+                                            <strong class="me-2">{{ $order->customer->first_name  }} </strong> <span class="badge bg-secondary"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
+                                        </div>
                                         <span class="phone">{{ $order->customer->phone }}</span> <br>
-                                        <span>R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
                                         <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
                                     </div>
                                     <div class=""></div>
                                     <div class="col-2 d-flex flex-column align-items-center">
                                         <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary mb-2"> <i class="fa-solid fa-eye"></i></a>
                                         @if($order->status != 'DELIVERED')
-                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-dark mb-2"> <i class='fa fa-check'></i></a>
+                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-success mb-2"> <i class='fa fa-check'></i></a>
                                         @endif
                                     </div>
                                 </div>

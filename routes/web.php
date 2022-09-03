@@ -31,6 +31,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function (){
     Route::get('/home'                        , [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
     Route::resource('/products'             , \App\Http\Controllers\ProductController::class);
     Route::resource('/customers'            , \App\Http\Controllers\CustomerController::class);
     Route::resource('/aditionals'           , \App\Http\Controllers\AditionalController::class);
@@ -38,7 +39,19 @@ Route::middleware('auth')->group(function (){
     Route::resource('/feedstocks'           , \App\Http\Controllers\FeedstockController::class);
     Route::resource('/providers'            , \App\Http\Controllers\ProviderController::class);
     Route::resource('/costs'                , \App\Http\Controllers\CostController::class);
-    Route::get('/orders/delivered/{orderId}'  , [\App\Http\Controllers\OrderController::class, 'delivered'])->name('orders.delivered');
+
+    Route::get('/orders/delivered/{orderId}'    , [\App\Http\Controllers\OrderController::class, 'delivered'])->name('orders.delivered');
+    Route::get('reports'                        , [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+
+    Route::get('reports/orders'                 , [\App\Http\Controllers\ReportController::class, 'orders'])->name('reports.orders');
+    Route::post('reports/orders'                , [\App\Http\Controllers\ReportController::class, 'orders']);
+
+    Route::get('reports/costs'                  , [\App\Http\Controllers\ReportController::class, 'costs'])->name('reports.costs');
+    Route::post('reports/costs'                 , [\App\Http\Controllers\ReportController::class, 'costs']);
+
+    Route::get('reports/customers'              , [\App\Http\Controllers\ReportController::class, 'customers'])->name('reports.customers');
+    Route::post('reports/customers'             , [\App\Http\Controllers\ReportController::class, 'customers']);
+
 });
 
 

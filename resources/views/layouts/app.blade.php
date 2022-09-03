@@ -70,7 +70,7 @@
                             <a class="nav-link" aria-current="page" href="{{ route('costs.index') }}"><i class="fa fa-money" aria-hidden="true"></i> Despesas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#"><i class="fa fa-file" aria-hidden="true"></i> Relatórios</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('reports.index') }}"><i class="fa fa-file" aria-hidden="true"></i> Relatórios</a>
                         </li>
                     </ul>
             @endif
