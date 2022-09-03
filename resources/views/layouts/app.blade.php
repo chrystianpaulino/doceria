@@ -16,8 +16,8 @@
     <!-- Scripts -->
     {{--    @vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" id="light-style"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+    <link href="{{ asset('css/select2-bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
     <style>
 
     </style>
@@ -117,13 +117,10 @@
     </main>
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/select2.full.js') }}"></script>
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script src="https://kit.fontawesome.com/4a05637478.js" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.6/js/bootstrap-select.min.js"></script>
 
 <script>
     $('#price').mask('000.000.000.000.000,00', {reverse: true});

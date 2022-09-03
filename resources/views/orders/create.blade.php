@@ -41,7 +41,7 @@
 
     <div class="container" id="app">
         <div class="row">
-            <div class="container col-md-8 mb-4">
+            <div class="container col-md-4 mb-4">
                 <div class="card">
                     <div class="card-header">
                         <span>Novo Pedido</span>
@@ -57,41 +57,11 @@
                             </div>
                         @endif
                         <div class="row col-md-12 m-0 d-flex">
-                            <div class="col-md-6 mt-4">
-                                <div class="form-group">
-                                    {{ Form::label('product_id','Produto') }}
-                                </div>
-                                <div class="form-group" style="display: inline-block; min-width: 80%">
-                                    <select class="form-select" v-model="product" required>
-                                        <option :value="null" disabled>Selecione</option>
-                                        <option v-for="product in products" :value="product">
-                                            @{{ product.description }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-primary" v-on:click="adicionarProduto()"><i class="fas fa-plus"></i> </button>
-                            </div>
-                            <div class="col-md-6 mt-4">
-                                <div class="form-group">
-                                    {{ Form::label('aditional_id','Adicional') }}
-                                </div>
-                                <div class="form-group" style="display: inline-block; min-width: 80%">
-                                    <select class="form-select" v-model="aditional">
-                                        <option :value="null" disabled>Selecione</option>
-                                        <option v-for="aditional in aditionals" :value="aditional">
-                                            @{{ aditional.description }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-primary" v-on:click="adicionarAdicional()"><i
-                                        class="fas fa-plus"></i></button>
-                            </div>
-                            <div class="col-md-6 mt-4">
+                            {{--Select Cliente--}}
+                            <div class="mb-2">
                                 <div class="form-group">
                                     {{ Form::label('customer_id','Cliente') }}
-                                    <br>
-                                    <select class="form-select" class="col-12" id="product" name="product"
-                                            v-model="customer" required>
+                                    <select class="form-select" id="customer_id" name="customer_id" v-model="customer" required>
                                         <option :value="null" disabled>Selecione</option>
                                         <option v-for="customer in customers" :value="customer">
                                             @{{ customer.name }}
@@ -99,31 +69,39 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6 mt-4">
+                            {{--Select Produto--}}
+                            <div class="mb-2">
+                                <div class="form-group">
+                                    {{ Form::label('product_id','Produto') }}
+                                    <select class="form-select" v-model="product" @change="adicionarProduto()" required>
+                                        <option :value="null" disabled>Selecione</option>
+                                        <option v-for="product in products" :value="product">
+                                            @{{ product.description }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            {{--Select Adicional--}}
+                            <div class="mb-2">
+                                <div class="form-group">
+                                    {{ Form::label('aditional_id','Adicional') }}
+                                    <select class="form-select" v-model="aditional" @change="adicionarAdicional()" required>
+                                        <option :value="null" disabled>Selecione</option>
+                                        <option v-for="aditional in aditionals" :value="aditional">
+                                            @{{ aditional.description }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            {{--Data de Entrega--}}
+                            <div class="col-md-6 mb-2">
                                 <div class="form-group">
                                     {{ Form::label('date','Data de entrega') }}
                                     {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mt-4">
-                                    {{ Form::label('deliveryFee','Taxa delivery') }}
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="basic-addon1">R$</span>
-                                        {{ Form::text('deliveryFee', null, ['class' => 'form-control mask-money', 'v-model' => 'deliveryFee']) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-4">
-                                <div class="form-group">
-                                    {{ Form::label('discount','Desconto') }}
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="basic-addon1">R$</span>
-                                        {{ Form::text('discount', null, ['class' => 'form-control mask-money', 'v-model' => 'discount']) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-4">
+                            {{--Tipo de Pagamento--}}
+                            <div class="col-md-6 mb-2">
                                 <div class="form-group">
                                     {{ Form::label('payment_type','Tipo de pagamento') }}
                                     <br>
@@ -135,7 +113,28 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6 mt-4">
+                            {{--Valor de Delivery--}}
+                            <div class="col-md-6 mb-2">
+                                <div class="form-group">
+                                    {{ Form::label('deliveryFee','Taxa delivery') }}
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">R$</span>
+                                        {{ Form::text('deliveryFee', null, ['class' => 'form-control mask-money', 'v-model' => 'deliveryFee']) }}
+                                    </div>
+                                </div>
+                            </div>
+                            {{--Valor de Desconto--}}
+                            <div class="col-md-6 mb-2">
+                                <div class="form-group">
+                                    {{ Form::label('discount','Desconto') }}
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">R$</span>
+                                        {{ Form::text('discount', null, ['class' => 'form-control mask-money', 'v-model' => 'discount']) }}
+                                    </div>
+                                </div>
+                            </div>
+                            {{--Valor já pago--}}
+                            <div class="col-md-6 mb-2">
                                 <div class="form-group">
                                     {{ Form::label('total_paid','Valor pago') }}
                                     <div class="input-group">
@@ -144,86 +143,125 @@
                                     </div>
                                 </div>
                             </div>
+                            {{--Texto de Obs--}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="obs" class="col-md-4 col-form-label">Obs</label>
                                     <textarea id="obs" rows="2" class="form-control" name="obs" v-model="obs"></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-12 mt-4">
-                                <button class="btn btn-primary" style="width: 100%" v-on:click="submit()">
-                                    Finalizar
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container col-md-4">
+            <div class="container col-md-8">
                 <div class="card">
+                    {{--Card Header--}}
                     <div class="card-header">
                         Itens do Pedido
                     </div>
+                    {{--Card Body com os itens--}}
                     <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item list-group-item-secondary">Produtos</li>
-                            <template v-if="arrayProducts.length > 0">
-                                <li class="list-group-item d-flex align-items-center justify-content-between" v-for="(productItem, index) in arrayProducts" :value="productItem">
-                                    <span class="badge bg-info me-3"> @{{ productItem.quantity }}</span> <strong class="me-1">@{{ productItem.description }}: </strong> <span> R$ @{{ productItem.price_formated }}</span>
-                                    <div class="quantity-toggle">
-                                        <div class="mx-2" v-if="productItem.quantity == 1">
-                                            <button class="btn btn-outline-danger" title="Diminuir um" v-on:click="decrement(index, 'P', productItem.quantity)"> Remover </button>
-                                        </div>
-                                        <div class="mx-2" v-else>
-                                            <button class="btn btn-outline-info" title="Diminuir um" v-on:click="decrement(index, 'P', productItem.quantity)"> - </button>
-                                        </div>
-                                        <div class="">
-                                            <button class="btn btn-outline-info me-2" title="Acrescentar um" v-on:click="increment(index, 'P')"> + </button>
-                                        </div>
-                                    </div>
-                                </li>
-                            </template>
-                            <template v-else>
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <span> Não há produtos selecionados para este pedido</span>
-                                </li>
-                            </template>
-                        </ul>
-                        <br>
-                        <ul class="list-group">
-                            <li class="list-group-item list-group-item-secondary">Adicionais</li>
-                            <template v-if="arrayAditionals.length > 0">
-                                <li class="list-group-item d-flex align-items-center justify-content-between" v-for="(aditionalItem, index) in arrayAditionals" :value="aditionalItem">
-                                    <span class="badge bg-info me-3"> @{{ aditionalItem.quantity }}</span> <strong class="me-1">@{{ aditionalItem.description }}: </strong> <span> R$ @{{ aditionalItem.price_formated }}</span>
-                                    <div class="quantity-toggle">
-                                        <div class="me-2" v-if="aditionalItem.quantity == 1">
-                                            <button class="btn btn-outline-danger" title="Diminuir um" v-on:click="decrement(index, 'A', aditionalItem.quantity)"> Remover </button>
-                                        </div>
-                                        <div class="me-2" v-else>
-                                            <button class="btn btn-outline-info" title="Diminuir um" v-on:click="decrement(index, 'A', aditionalItem.quantity)"> - </button>
-                                        </div>
-                                        <div class="">
-                                            <button class="btn btn-outline-info me-2" title="Acrescentar um" v-on:click="increment(index, 'A')"> + </button>
-                                        </div>
-                                    </div>
-                                </li>
-                            </template>
-                            <template v-else>
-                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <span> Não há adicionais selecionados para este pedido</span>
-                                </li>
-                            </template>
-                        </ul>
-                        <ul class="list-group mt-4">
-                            <li class="list-group-item list-group-item-info"><strong>Valor Total:</strong> R$ @{{ total }}</li>
-                        </ul>
-                        <ul class="list-group mt-4">
-                            <li v-if="totalPaid != ''" class="list-group-item list-group-item-success"><strong>Valor Pago:</strong> R$ @{{ totalPaid }}</li>
-                            <li v-else class="list-group-item list-group-item-success"><strong>Valor Pago:</strong> R$ 0,00</li>
-                        </ul>
-                        <ul class="list-group mt-4">
-                            <li class="list-group-item list-group-item-danger"><strong>Restante a Receber:</strong> R$ @{{ valueMissing }}</li>
-                        </ul>
+                        <div class="mb-4" v-if="arrayProducts.length <= 0 && arrayAditionals.length <= 0">
+                            <div class="d-flex flex-column text-center justify-content-center align-content-center align-items-center">
+                                <img src="{{ asset('images/cartempty1.png') }}" alt="sem produtos">
+                                <strong>Seu caixa está vazio no momento!</strong>
+                            </div>
+                        </div>
+
+                        <div v-if="arrayProducts.length > 0">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Qtd</th>
+                                        <th class="text-center" scope="col">Valor Unitário</th>
+                                        <th class="text-center" scope="col">Valor Total</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(productItem, index) in arrayProducts" :value="productItem">
+                                        <td class="col-md-2"> Produto </td>
+                                        <td class="col-md-3">@{{ productItem.description }}</td>
+                                        <td class="col-md-1">@{{ productItem.quantity }}</td>
+                                        <td class="col-md-2 text-center">R$ @{{ productItem.price_formated }}</td>
+                                        <td class="col-md-2 text-center">R$ @{{ number_format(productItem.valueTotalProduct/100, '2', ',') }}</td>
+                                        <td class="col-md-2">
+                                            <div class="quantity-toggle text-end d-flex align-items-center justify-content-end">
+                                                <div class="me-2" v-if="productItem.quantity == 1">
+                                                    <button class="btn btn-outline-danger" title="Diminuir um" v-on:click="decrement(index, 'P', productItem.quantity)"> Remover </button>
+                                                </div>
+                                                <div class="me-2" v-else>
+                                                    <button class="btn btn-outline-info" title="Diminuir um" v-on:click="decrement(index, 'P', productItem.quantity)"> - </button>
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn btn-outline-info me-2" title="Acrescentar um" v-on:click="increment(index, 'P')"> + </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div v-else>
+                            <span></span>
+                        </div>
+
+                        <div v-if="arrayAditionals.length > 0">
+                            <table class="table">
+                                <tbody>
+                                    <tr v-for="(aditionalItem, index) in arrayAditionals" :value="aditionalItem">
+                                        <td class="col-md-2"> Adicional </td>
+                                        <td class="col-md-3">@{{ aditionalItem.description }}</td>
+                                        <td class="col-md-1">@{{ aditionalItem.quantity }}</td>
+                                        <td class="col-md-2 text-center">R$ @{{ aditionalItem.price_formated }}</td>
+                                        <td class="col-md-2 text-center">R$ @{{ number_format(aditionalItem.valueTotalAdd/100, '2', ',') }}</td>
+                                        <td class="col-md-2">
+                                            <div class="quantity-toggle text-end d-flex align-items-center justify-content-end">
+                                                <div class="me-2" v-if="aditionalItem.quantity == 1">
+                                                    <button class="btn btn-outline-danger" title="Diminuir um" v-on:click="decrement(index, 'A', aditionalItem.quantity)"> Remover </button>
+                                                </div>
+                                                <div class="me-2" v-else>
+                                                    <button class="btn btn-outline-info" title="Diminuir um" v-on:click="decrement(index, 'A', aditionalItem.quantity)"> - </button>
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn btn-outline-info me-2" title="Acrescentar um" v-on:click="increment(index, 'A')"> + </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div v-else>
+                            <span></span>
+                        </div>
+
+                        <div class="col-md-12">
+                            <ul class="list-group mt-2 text-end">
+                                <li class="list-group-item list-group-item-info"><strong>Valor Total:</strong> R$ @{{ total }}</li>
+                            </ul>
+                        </div>
+                        <div class="row mt-3 d-flex justify-content-between align-content-between">
+                            <ul class="list-group col-md-6 text-end" style="padding-left: 10px">
+                                <li v-if="totalPaid != ''" class="list-group-item list-group-item-success"><strong>Total Recebido:</strong> R$ @{{ totalPaid }}</li>
+                                <li v-else class="list-group-item list-group-item-success"><strong>Total Recebido:</strong> R$ 0,00</li>
+                            </ul>
+                            <ul class="list-group col-md-6 text-end">
+                                <li class="list-group-item list-group-item-danger"><strong>Faltando Receber:</strong> R$ @{{ valueMissing }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    {{--Card Footer com botão de finalizar--}}
+                    <div class="card-footer">
+                        {{--Botão Finalizar--}}
+                        <div class="col-md-12 mt-4">
+                            <button class="btn btn-primary" style="width: 100%" v-on:click="submit()">
+                                Finalizar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -240,6 +278,16 @@
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://unpkg.com/vue-cookies@1.7.0/vue-cookies.js"></script>
+
+{{--    <script>--}}
+{{--        $(document).ready(function() {--}}
+{{--            $('#customer_id').select2({--}}
+{{--                theme: "bootstrap",--}}
+{{--                width: '100%',--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
+
     <script>
         Vue.config.devtools = true
 
@@ -271,20 +319,34 @@
             },
             watch: {},
             created() {
+                var tzoffset        = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+                var localISOTime    = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+                this.date           = localISOTime.slice(0,10);
+
                 for (var i = 0; i < this.products.length; i++) {
                     this.products[i].quantity = 0;
+                    this.products[i].valueTotalProduct = this.products[i].price;
                 }
                 for (var i = 0; i < this.aditionals.length; i++) {
                     this.aditionals[i].quantity = 0;
+                    this.aditionals[i].valueTotalAdd = this.aditionals[i].price;
                 }
             },
             mounted() {
+                // $('.select').select2();
+
                 $('.mask-money').mask('000.000.000.000,00', {reverse: true, placeholder: '0.00'});
+                // $('#customer_id').select2({
+                //     theme: 'bootstrap-5'
+                // });
+
+                // $('#customer_id').select2({
+                //     theme: "bootstrap",
+                //     width: '100%',
+                // });
             },
             computed: {
                 total: function () {
-                    console.log('total')
-
                     this.price          = this.price.toString().replace(/,/g, '');
                     this.deliveryFee    = this.deliveryFee.replace(/,/g, '');
                     this.discount       = this.discount.replace(/,/g, '');
@@ -294,14 +356,11 @@
                     let value = (((Number(this.price) + Number(this.deliveryFee)) - Number(this.discount)) / 100);
 
                     const paidCents = this.totalPaid
-                    console.log(paidCents)
                     this.discount = this.formatReal(this.discount);
                     this.deliveryFee = this.formatReal(this.deliveryFee);
                     this.totalPaid = this.formatReal(this.totalPaid);
-                    console.log(this.totalPaid);
 
                     if (paidCents != '') {
-                        console.log('diferente')
                         app.getValueMissing(value, paidCents)
                     }
 
@@ -358,8 +417,10 @@
                     }
 
                     for (var i = 0; i < app.arrayAditionals.length; i++) {
+                        console.log(app.arrayAditionals[i].price);
                         if (app.aditional.id === app.arrayAditionals[i].id) {
                             app.arrayAditionals[i].quantity += 1;
+                            app.arrayAditionals[i].valueTotalAdd = app.arrayAditionals[i].quantity * app.arrayAditionals[i].price;
                         }
                     }
 
@@ -379,6 +440,7 @@
                     for (var i = 0; i < app.arrayProducts.length; i++) {
                         if (app.product.id === app.arrayProducts[i].id) {
                             app.arrayProducts[i].quantity += 1;
+                            app.arrayProducts[i].valueTotalProduct = app.arrayProducts[i].quantity * app.arrayProducts[i].price;
                         }
                     }
 
@@ -391,6 +453,12 @@
                             ...app.arrayProducts[index],
                             quantity: app.arrayProducts[index].quantity + 1
                         });
+
+                        app.$set(app.arrayProducts, index, {
+                            ...app.arrayProducts[index],
+                            valueTotalProduct: app.arrayProducts[index].quantity * app.arrayProducts[index].price
+                        });
+
                         app.price = Number(app.price) + Number(app.arrayProducts[index].price);
                         this.product = null;
                     } else {
@@ -398,6 +466,12 @@
                             ...app.arrayAditionals[index],
                             quantity: app.arrayAditionals[index].quantity + 1
                         });
+
+                        app.$set(app.arrayAditionals, index, {
+                            ...app.arrayAditionals[index],
+                            valueTotalAdd: app.arrayAditionals[index].quantity * app.arrayAditionals[index].price
+                        });
+
                         app.price = Number(app.price) + Number(app.arrayAditionals[index].price);
                         this.product = null;
                     }
@@ -407,28 +481,58 @@
                         if (qtdAtual == 1) {
                             app.products.filter(function (produto, i) {
                                 if (produto.id === app.arrayProducts[index].id) {
-                                    app.$set(app.products, i, {...app.products[i], quantity: 0});
+                                    app.$set(app.products, i, {
+                                        ...app.products[i],
+                                        quantity: 0
+                                    });
                                 }
                             });
+
                             app.price = Number(app.price) - Number(app.arrayProducts[index].price);
                             app.arrayProducts.splice(index, 1);
+
                             return true;
                         }
-                        app.$set(app.arrayProducts, index, {...app.arrayProducts[index], quantity: app.arrayProducts[index].quantity - 1});
+
+                        app.$set(app.arrayProducts, index, {
+                            ...app.arrayProducts[index],
+                            quantity: app.arrayProducts[index].quantity - 1
+                        });
+
+                        app.$set(app.arrayProducts, index, {
+                            ...app.arrayProducts[index],
+                            valueTotalProduct: app.arrayProducts[index].quantity * app.arrayProducts[index].price
+                        });
+
                         app.price = Number(app.price) - Number(app.arrayProducts[index].price);
                         this.product = null;
                     } else {
                         if (qtdAtual == 1) {
                             app.aditionals.filter(function (adicional, i) {
                                 if (adicional.id === app.arrayAditionals[index].id) {
-                                    app.$set(app.aditionals, i, {...app.aditionals[i], quantity: 0});
+                                    app.$set(app.aditionals, i, {
+                                        ...app.aditionals[i],
+                                        quantity: 0
+                                    });
                                 }
                             });
+
                             app.price = Number(app.price) - Number(app.arrayAditionals[index].price);
                             app.arrayAditionals.splice(index, 1);
+
                             return true;
                         }
-                        app.$set(app.arrayAditionals, index, {...app.arrayAditionals[index], quantity: app.arrayAditionals[index].quantity - 1});
+
+                        app.$set(app.arrayAditionals, index, {
+                            ...app.arrayAditionals[index],
+                            quantity: app.arrayAditionals[index].quantity - 1
+                        });
+
+                        app.$set(app.arrayAditionals, index, {
+                            ...app.arrayAditionals[index],
+                            valueTotalAdd: app.arrayAditionals[index].quantity * app.arrayAditionals[index].price
+                        });
+
                         app.price = Number(app.price) - Number(app.arrayAditionals[index].price);
                         this.aditional = null;
                     }
