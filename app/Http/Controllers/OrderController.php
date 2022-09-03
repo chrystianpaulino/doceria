@@ -71,6 +71,12 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
+    public function paid($id)
+    {
+        $order = $this->service->paid($id);
+        return redirect()->back();
+    }
+
     public function destroy($id)
     {
         $this->service->destroy($id);

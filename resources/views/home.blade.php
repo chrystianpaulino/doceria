@@ -4,7 +4,7 @@
     <div class="container">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                <li class="breadcrumb-item active" aria-current="page">Início</li>
             </ol>
         </nav>
     </div>
@@ -21,34 +21,37 @@
                     @if(count($ordersToday) > 0)
                         @foreach($ordersToday as $order)
                             <div class="list-group-item list-group-item-action">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="col-9">
-                                        <div class="d-flex align-items-center">
-                                            <strong class="me-2">{{ $order->customer->first_name  }} </strong> <span class="badge bg-secondary"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
-                                        </div>
-                                        <span class="phone">{{ $order->customer->phone }}</span> <br>
-                                        <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span> <br>
-                                    </div>
-                                    <div class=""></div>
-                                    <div class="col-2 d-flex flex-column align-items-center">
-                                        <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary mb-2"> <i class="fa-solid fa-eye"></i></a>
-                                        @if($order->status != 'DELIVERED')
-                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-success mb-2"> <i class='fa fa-check'></i></a>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex flex-row">
+                                <div class="col-12 d-flex flex-row mb-2">
                                     <div class="text-center">
                                         @if($order->status_payment == 'PAGAMENTO PENDENTE')
                                             <span class="badge bg-danger"> {{ $order->status_payment }}</span>
                                         @else
                                             <span class="badge bg-success"> {{ $order->status_payment }}</span>
                                         @endif
-                                            @if($order->status == 'DELIVERED')
-                                                <span class="badge bg-success">PEDIDO ENTREGUE</span>
-                                            @else
-                                                <span class="badge bg-danger">PEDIDO PENDENTE</span>
-                                            @endif
+                                        @if($order->status == 'DELIVERED')
+                                            <span class="badge bg-success">PEDIDO ENTREGUE</span>
+                                        @else
+                                            <span class="badge bg-danger">PEDIDO PENDENTE</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="col-9">
+                                        <div class="d-flex align-items-center">
+                                            <strong class="me-2">{{ $order->customer->first_name  }} </strong> <span class="badge bg-secondary"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
+                                        </div>
+                                        <span class="phone">{{ $order->customer->phone }}</span> <br>
+                                        <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span>
+                                    </div>
+                                    <div class=""></div>
+                                    <div class="col-2 d-flex flex-column align-items-center">
+                                        <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary mb-2"> <i class="fa-solid fa-eye"></i></a>
+                                        @if($order->status != 'DELIVERED')
+                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-dark mb-2"><i class="far fa-hand-holding-box"></i></a>
+                                        @endif
+                                        @if($order->getMissing() != '0,00' or $order->getMissing() == null)
+                                            <a href="{{ route('orders.paid', $order->id) }}" title="Pago totalmente" class="btn btn-sm btn-outline-success mb-2"> <i class="fas fa-money-bill-wave"></i></a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -70,6 +73,20 @@
                     @if(count($ordersTomorrow) > 0)
                         @foreach($ordersTomorrow as $order)
                             <div class="list-group-item list-group-item-action">
+                                <div class="col-12 d-flex flex-row mb-2">
+                                    <div class="text-center">
+                                        @if($order->status_payment == 'PAGAMENTO PENDENTE')
+                                            <span class="badge bg-danger"> {{ $order->status_payment }}</span>
+                                        @else
+                                            <span class="badge bg-success"> {{ $order->status_payment }}</span>
+                                        @endif
+                                        @if($order->status == 'DELIVERED')
+                                            <span class="badge bg-success">PEDIDO ENTREGUE</span>
+                                        @else
+                                            <span class="badge bg-danger">PEDIDO PENDENTE</span>
+                                        @endif
+                                    </div>
+                                </div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="col-9">
                                         <div class="d-flex align-items-center">
@@ -82,21 +99,10 @@
                                     <div class="col-2 d-flex flex-column align-items-center">
                                         <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary mb-2"> <i class="fa-solid fa-eye"></i></a>
                                         @if($order->status != 'DELIVERED')
-                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-success mb-2"> <i class='fa fa-check'></i></a>
+                                            <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-dark mb-2"><i class="far fa-hand-holding-box"></i></a>
                                         @endif
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex flex-row">
-                                    <div class="text-center">
-                                        @if($order->status_payment == 'PAGAMENTO PENDENTE')
-                                            <span class="badge bg-danger"> {{ $order->status_payment }}</span>
-                                        @else
-                                            <span class="badge bg-success"> {{ $order->status_payment }}</span>
-                                        @endif
-                                        @if($order->status == 'DELIVERED')
-                                            <span class="badge bg-success">PEDIDO ENTREGUE</span>
-                                        @else
-                                            <span class="badge bg-danger">PEDIDO PENDENTE</span>
+                                        @if($order->getMissing() != '0,00' or $order->getMissing() == null)
+                                            <a href="{{ route('orders.paid', $order->id) }}" title="Pago totalmente" class="btn btn-sm btn-outline-success mb-2"> <i class="fas fa-money-bill-wave"></i></a>
                                         @endif
                                     </div>
                                 </div>
@@ -139,9 +145,9 @@
                                 </div>
                             </div>
                             <div class="col-md-4 card bg-light mb-3 me-3" style="max-width: 18rem;">
-                                <div class="card-header" style="background-color: transparent">Novos Clientes</div>
+                                <div class="card-header" style="background-color: transparent">Lucro</div>
                                 <div class="card-body">
-                                    <h5 class="card-title"> {{ $novosClientes }}</h5>
+                                    <h5 class="card-title">R$ {{ \App\Helpers\showCentsValue($totalFaturado - $totalGasto) }}</h5>
                                 </div>
                             </div>
                         </div>

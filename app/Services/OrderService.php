@@ -141,6 +141,20 @@ class OrderService
 
     }
 
+    public function paid($id)
+    {
+        try {
+            $order                  = $this->find($id);
+            $order->payment_advance = $order->total_amount;
+            $order->save();
+
+            return $order;
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+    }
+
     public function destroy($id)
     {
         try {

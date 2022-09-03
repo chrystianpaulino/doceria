@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function (){
     Route::resource('/costs'                , \App\Http\Controllers\CostController::class);
 
     Route::get('/orders/delivered/{orderId}'    , [\App\Http\Controllers\OrderController::class, 'delivered'])->name('orders.delivered');
+    Route::get('/orders/paid/{orderId}'         , [\App\Http\Controllers\OrderController::class, 'paid'])->name('orders.paid');
+
     Route::get('reports'                        , [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
 
     Route::get('reports/orders'                 , [\App\Http\Controllers\ReportController::class, 'orders'])->name('reports.orders');
