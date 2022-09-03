@@ -350,17 +350,7 @@
                 }
             },
             mounted() {
-                // $('.select').select2();
-
                 $('.mask-money').mask('000.000.000.000,00', {reverse: true, placeholder: '0.00'});
-                // $('#customer_id').select2({
-                //     theme: 'bootstrap-5'
-                // });
-
-                // $('#customer_id').select2({
-                //     theme: "bootstrap",
-                //     width: '100%',
-                // });
             },
             computed: {
                 total: function () {
@@ -446,7 +436,6 @@
                     }
 
                     for (var i = 0; i < app.arrayAditionals.length; i++) {
-                        console.log(app.arrayAditionals[i].price);
                         if (app.aditional.id === app.arrayAditionals[i].id) {
                             app.arrayAditionals[i].quantity += 1;
                             app.arrayAditionals[i].valueTotalAdd = app.arrayAditionals[i].quantity * app.arrayAditionals[i].price;
