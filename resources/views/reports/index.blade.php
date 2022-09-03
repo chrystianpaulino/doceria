@@ -18,7 +18,6 @@
                 <div class="list-group">
                     <a href="{{ route('reports.orders') }}" class="list-group-item list-group-item-action">Pedidos</a>
                     <a href="{{ route('reports.costs') }}" class="list-group-item list-group-item-action">Despesas</a>
-                    <a href="{{ route('reports.customers') }}" class="list-group-item list-group-item-action">Clientes</a>
                 </div>
             </div>
         </div>

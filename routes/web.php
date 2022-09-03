@@ -49,9 +49,6 @@ Route::middleware('auth')->group(function (){
     Route::get('reports/costs'                  , [\App\Http\Controllers\ReportController::class, 'costs'])->name('reports.costs');
     Route::post('reports/costs'                 , [\App\Http\Controllers\ReportController::class, 'costs']);
 
-    Route::get('reports/customers'              , [\App\Http\Controllers\ReportController::class, 'customers'])->name('reports.customers');
-    Route::post('reports/customers'             , [\App\Http\Controllers\ReportController::class, 'customers']);
-
 });
 
 
