@@ -22,9 +22,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>
 
     <style>
-        .vertical {
-            border-left: 1px solid black;
-            height: 70px;
+        .button-home {
+            min-width: 91px;
         }
     </style>
 
@@ -48,6 +47,9 @@
             @if(Auth::check())
                 <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ route('performances.index') }}"><i class="fas fa-tachometer-alt"></i> Performace</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{{ route('products.index') }}"><i class="fas fa-burger-soda"></i> Produtos</a>
                         </li>

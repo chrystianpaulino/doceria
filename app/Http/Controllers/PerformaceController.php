@@ -7,7 +7,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use Carbon\Carbon;
 
-class HomeController extends Controller
+class PerformaceController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -71,6 +71,6 @@ class HomeController extends Controller
             array_push($arrayPedidosAno, $dadosDoMesX);
         }
 
-        return view('home', compact('ordersToday', 'arrayPedidosAno', 'arrayPedidosMes', 'pedidosTotalMes', 'totalFaturado', 'novosClientes', 'totalGasto', 'ordersTomorrow'));
+        return view('performaces.index', compact('ordersToday', 'arrayPedidosAno', 'arrayPedidosMes', 'pedidosTotalMes', 'totalFaturado', 'novosClientes', 'totalGasto', 'ordersTomorrow'));
     }
 }
