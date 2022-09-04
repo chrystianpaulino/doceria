@@ -13,6 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('create-franchise', function (){
+    $franchise = new \App\Models\Franchise();
+    $franchise->name = 'Adocicare';
+    $franchise->save();
+    dd($franchise);
+});
+
+Route::get('sync-franchise-user', function (){
+    $user = \App\Models\User::find(1);
+    $franchise = \App\Models\Franchise::find(1);
+    $franchise->users()->attach($user);
+    dd("ok");
+});
+
 Route::get('testes', function (){
     $numero = 0.29;
     $return = \App\Helpers\stringFloatToCents($numero);
