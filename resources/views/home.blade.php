@@ -31,43 +31,48 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                        <div class="col-12 d-flex flex-row mb-2">
-                                            <div class="text-center">
-                                                <span class="badge bg-info"> {{ $order->status_payment }}</span>
-                                                @if($order->status == 'DELIVERED')
-                                                    <span class="badge bg-info">PEDIDO ENTREGUE</span>
-                                                @else
-                                                    <span class="badge bg-info">ENTREGA PENDENTE</span>
-                                                @endif
-                                            </div>
+                                    <div class="col-md-12 d-flex flex-row mb-2">
+                                        <div class="text-center">
+                                            <span class="badge bg-info"> {{ $order->status_payment }}</span>
+                                            @if($order->status == 'DELIVERED')
+                                                <span class="badge bg-info">PEDIDO ENTREGUE</span>
+                                            @else
+                                                <span class="badge bg-info">ENTREGA PENDENTE</span>
+                                            @endif
                                         </div>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="col-9">
-                                                @if($order->customer)
-                                                    <div class="d-flex align-items-center">
-                                                        <strong class="me-2">{{ $order->customer->first_name  }} </strong> <span class="badge bg-success"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
-                                                    </div>
-                                                    <span class="phone">{{ $order->customer->phone }}</span> <br>
-                                                    <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span>
-                                                @else
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="badge bg-success"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
-                                                    </div>
-                                                @endif
-                                                <span>{{ $order->obs }}</span>
-                                            </div>
-                                            <div class=""></div>
-                                            <div class="col-3 d-flex flex-column align-items-center">
+                                    </div>
+                                        <div class="row mb-2 col-md-12">
+                                            @if($order->customer)
+                                                <div class="d-flex align-items-center">
+                                                    <strong class="me-2">{{ $order->customer->first_name  }} </strong>
+                                                    <span class="badge bg-secondary me-2"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span>
+                                                    <span class="badge bg-danger"> {{ $order->getMissing() == '0,00' ? "R$ " . $order->getMissing() : $order->getMissing() }}</span> <br>
+                                                </div>
+                                                <span class="phone">{{ $order->customer->phone }}</span> <br>
+                                                <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span>
+                                            @else
+                                                <div class="d-flex align-items-center">
+                                                    <span class="badge bg-success"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
+                                                </div>
+                                            @endif
+                                            <span>{{ $order->obs }}</span>
+                                        </div>
+                                        <div class="d-flex flex-row">
+                                            <div class="me-2">
                                                 <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary button-home mb-2"> <i class="fa-solid fa-eye"></i> Visualizar</a>
+                                            </div>
+                                            <div class="me-2">
                                                 @if($order->status != 'DELIVERED')
                                                     <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-dark button-home mb-2"><i class="far fa-hand-holding-box"></i> Entregue</a>
                                                 @endif
+                                            </div>
+                                            <div>
                                                 @if($order->getMissing() != '0,00' or $order->getMissing() == null)
                                                     <a href="{{ route('orders.paid', $order->id) }}" title="Pago totalmente" class="btn btn-sm btn-outline-success button-home mb-2"> <i class="fas fa-money-bill-wave"></i> Pago</a>
                                                 @endif
                                             </div>
                                         </div>
-                                    </div>
+                                </div>
                             </div>
                         @endforeach
                     @else
@@ -97,7 +102,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="col-12 d-flex flex-row mb-2">
+                                    <div class="col-md-12 d-flex flex-row mb-2">
                                         <div class="text-center">
                                             <span class="badge bg-info"> {{ $order->status_payment }}</span>
                                             @if($order->status == 'DELIVERED')
@@ -107,27 +112,32 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="col-9">
-                                            @if($order->customer)
-                                                <div class="d-flex align-items-center">
-                                                    <strong class="me-2">{{ $order->customer->first_name  }} </strong> <span class="badge bg-success"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
-                                                </div>
-                                                <span class="phone">{{ $order->customer->phone }}</span> <br>
-                                                <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span>
-                                            @else
-                                                <div class="d-flex align-items-center">
-                                                    <span class="badge bg-success"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
-                                                </div>
-                                            @endif
-                                            <span>{{ $order->obs }}</span>
-                                        </div>
-                                        <div class=""></div>
-                                        <div class="col-3 d-flex flex-column align-items-center">
+                                    <div class="row mb-2 col-md-12">
+                                        @if($order->customer)
+                                            <div class="d-flex align-items-center">
+                                                <strong class="me-2">{{ $order->customer->first_name  }} </strong>
+                                                <span class="badge bg-secondary me-2"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span>
+                                                <span class="badge bg-danger"> {{ $order->getMissing() != '0,00' ? "R$ " . $order->getMissing() : $order->getMissing() }}</span> <br>
+                                            </div>
+                                            <span class="phone">{{ $order->customer->phone }}</span> <br>
+                                            <span>{{ $order->customer->street ? $order->customer->street . ", " : '' }}{{ $order->customer->street_number }}</span>
+                                        @else
+                                            <div class="d-flex align-items-center">
+                                                <span class="badge bg-success"> R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}</span> <br>
+                                            </div>
+                                        @endif
+                                        <span>{{ $order->obs }}</span>
+                                    </div>
+                                    <div class="d-flex flex-row col-md-12">
+                                        <div class="me-2">
                                             <a href="{{ route('orders.show', $order->id) }}" title="Visualizar pedido" class="btn btn-sm btn-outline-primary button-home mb-2"> <i class="fa-solid fa-eye"></i> Visualizar</a>
+                                        </div>
+                                        <div class="me-2">
                                             @if($order->status != 'DELIVERED')
                                                 <a href="{{ route('orders.delivered', $order->id) }}" title="Marcar pedido como entregue" class="btn btn-sm btn-outline-dark button-home mb-2"><i class="far fa-hand-holding-box"></i> Entregue</a>
                                             @endif
+                                        </div>
+                                        <div>
                                             @if($order->getMissing() != '0,00' or $order->getMissing() == null)
                                                 <a href="{{ route('orders.paid', $order->id) }}" title="Pago totalmente" class="btn btn-sm btn-outline-success button-home mb-2"> <i class="fas fa-money-bill-wave"></i> Pago</a>
                                             @endif
@@ -139,7 +149,7 @@
                     @else
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="card-subtitle mb-2 text-muted">Não há pedidos para amanhã</h6>
+                                <h6 class="card-subtitle mb-2 text-muted">Não há pedidos para hoje</h6>
                             </div>
                         </div>
                     @endif

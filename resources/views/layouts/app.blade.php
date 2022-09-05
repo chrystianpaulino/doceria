@@ -34,7 +34,7 @@
             --input-focus-l: 42%;
         }
         .button-home {
-            min-width: 91px;
+            width: 100%;
         }
     </style>
 
