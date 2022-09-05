@@ -27,6 +27,14 @@ class HomeController extends Controller
     public function index()
     {
 
+        $franchises = auth()->user()->franchises;
+        foreach ($franchises as $franchise) {
+            session([
+                'franchise_id'   => $franchise->id,
+                'franchise_name' => $franchise->name
+            ]);
+        }
+
         $ordersToday    = Order::where('delivery_date', 'like', today()->format('Y-m-d') . '%')->get();
         $ordersTomorrow = Order::where('delivery_date', 'like', today()->addDay()->format('Y-m-d') . '%')->get();
         $novosClientes  = Customer::where('created_at', 'like', today()->format('Y-m') . '%')->count();

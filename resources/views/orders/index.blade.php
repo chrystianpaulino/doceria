@@ -29,8 +29,8 @@
                             <td class="text-center">Desconto</td>
                             <td class="text-center">Total</td>
                             {{--<td class="text-center">Tipo do Pagamento</td>--}}
-                            <td class="text-center">Status Pagamento</td>
-                            <td class="text-center">Status Pedido</td>
+                            <td class="text-center">Pagamento</td>
+                            <td class="text-center">Tipo</td>
                             <td class="text-center">Data</td>
                         </tr>
                     </thead>
@@ -42,7 +42,7 @@
                                     <code>#{{ $order->id }}</code>
                                 </td>
                                 <td>
-                                    {{ $order->customer->first_name }}
+                                    {{ $order->customer ? $order->customer->first_name : '' }}
                                 </td>
 
                                 <td class="text-center">
@@ -68,10 +68,10 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    @if($order->status == 'DELIVERED')
-                                        <span class="badge bg-success">PEDIDO ENTREGUE</span>
+                                    @if($order->type == 'CASHIER')
+                                        <span class="badge bg-secondary">NO CAIXA</span>
                                     @else
-                                        <span class="badge bg-danger">ENTREGA PENDENTE</span>
+                                        <span class="badge bg-secondary">ENCOMENDA</span>
                                     @endif
                                 </td>
                                 <td class="text-center">

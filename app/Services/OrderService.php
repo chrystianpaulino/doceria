@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Aditional;
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderAditional;
 use App\Models\OrderProduct;
@@ -53,11 +54,19 @@ class OrderService
 
         try {
 
-
             DB::beginTransaction();
 
+            if (isset($data['customer']['id'])) {
+                $clienteId = $data['customer']['id'];
+            } else {
+                $novoCliente       = new Customer();
+                $novoCliente->name = $data['customer'];
+                $novoCliente->save();
+                $clienteId = $novoCliente->id;
+            }
+
             $order                  = new Order();
-            $order->customer_id     = $data['customer']['id'];
+            $order->customer_id     = $clienteId;
             $order->price           = $data['price'];
             $order->delivery_fee    = $data['deliveryFee'] ? stringFloatToCents($data['deliveryFee']) : 0;
             $order->discount        = $data['discount'] ? stringFloatToCents($data['discount']) : 0;
@@ -66,7 +75,8 @@ class OrderService
             $order->delivery_date   = $data['date'] ?? now();
             $order->payment_type    = $data['paymentType'] ?? null;
             $order->obs             = $data['obs'] ?? null;
-            $order->status          = $data['status'] ?? 'PENDING';
+            $order->type            = $data['type'] ?? 'CASHIER';
+            $order->status          = (isset($data['type']) and $data['type'] == 'ORDER') ? 'PENDING' : 'DELIVERED';
             $order->save();
 
             if (isset($data['arrayProducts'])) {

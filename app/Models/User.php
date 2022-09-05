@@ -42,7 +42,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function unities()
+    public function franchises()
     {
         return $this->belongsToMany(Franchise::class, 'franchise_user');
     }

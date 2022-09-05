@@ -16,12 +16,23 @@
     <!-- Scripts -->
     {{--    @vite(['resources/sass/app.scss', 'resources/js/app.js'])--}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" id="light-style"/>
-    <link href="{{ asset('css/select2-bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
+{{--    <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" id="light-style"/>--}}
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/select2-bootstrap.min.css') }}" rel="stylesheet"/>
     <!-- bootstrap5 dataTables css cdn -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>
 
     <style>
+        .input {
+            background-color: #fff;
+        }
+
+        :root {
+            --input-colo: #8b8a8b;
+            --input-focus-h: 245;
+            --input-focus-s: 100%;
+            --input-focus-l: 42%;
+        }
         .button-home {
             min-width: 91px;
         }
@@ -35,7 +46,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href=" {{ route('home') }}">
-                <span style="color: #6cb2eb">Adocicare</span>
+                <span style="color: #6cb2eb"> {{ session('franchise_name') }}</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -126,14 +137,17 @@
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/select2.full.js') }}"></script>
-<script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script src="https://kit.fontawesome.com/4a05637478.js" crossorigin="anonymous"></script>
 
 <!-- bootstrap5 dataTables js cdn -->
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+<script src="{{ asset('js/jquery.mask.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script src="https://unpkg.com/vue-cookies@1.7.0/vue-cookies.js"></script>
+<script type="text/javascript" src="{{ asset('js/select2.full.js') }}"></script>
 
 <script>
 

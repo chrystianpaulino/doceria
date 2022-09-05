@@ -61,8 +61,8 @@
                             <div class="mb-2">
                                 <div class="form-group">
                                     {{ Form::label('customer_id','Cliente') }}
-                                    <select class="form-select" id="customer_id" name="customer_id" v-model="customer" required>
-                                        <option :value="null" disabled>Selecione</option>
+                                    <select class="form-select" id="customer_id" v-model="customer">
+                                        <option :value="null" disabled>Selecione o cliente</option>
                                         <option v-for="customer in customers" :value="customer">
                                             @{{ customer.name }}
                                         </option>
@@ -73,9 +73,9 @@
                             <div class="mb-2">
                                 <div class="form-group">
                                     {{ Form::label('product_id','Produto') }}
-                                    <select class="form-select" v-model="product" @change="adicionarProduto()" required>
+                                    <select class="form-select" id="product_id" v-model="product" @change="adicionarProduto()" required>
                                         <option :value="null" disabled>Selecione</option>
-                                        <option v-for="product in products" :value="product">
+                                        <option v-for="product in products" v-bind:value="product">
                                             @{{ product.description }}
                                         </option>
                                     </select>
@@ -85,7 +85,7 @@
                             <div class="mb-2">
                                 <div class="form-group">
                                     {{ Form::label('aditional_id','Adicional') }}
-                                    <select class="form-select" v-model="aditional" @change="adicionarAdicional()" required>
+                                    <select class="form-select" id="aditional_id" v-model="aditional" @change="adicionarAdicional()" required>
                                         <option :value="null" disabled>Selecione</option>
                                         <option v-for="aditional in aditionals" :value="aditional">
                                             @{{ aditional.description }}
@@ -98,7 +98,7 @@
                                 <div class="form-group">
                                     {{ Form::label('payment_type','Tipo de pagamento') }}
                                     <br>
-                                    <select class="form-select" class="col-12" id="paymentType" name="paymentType" v-model="paymentType" :required="true">
+                                    <select class="form-select bg-white" id="payment_type" v-model="paymentType" :required="true">
                                         <option :value="null" disabled>Selecione</option>
                                         <option v-for="payment in payments" v-bind:value="payment.value">
                                             @{{ payment.text }}
@@ -109,12 +109,12 @@
                             {{--Status do pedido--}}
                             <div class="col-md-6 mb-2">
                                 <div class="form-group">
-                                    {{ Form::label('status','Status do Pedido') }}
+                                    {{ Form::label('type','Tipo do Pedido') }}
                                     <br>
-                                    <select class="form-select" class="col-12" id="status" name="status" v-model="status" :required="true">
+                                    <select class="form-select bg-white" id="type_order" v-model="type" :required="true">
                                         <option :value="null" disabled>Selecione</option>
-                                        <option v-for="status in orderStatus" v-bind:value="status.value">
-                                            @{{ status.text }}
+                                        <option v-for="type in orderType" v-bind:value="type.value">
+                                            @{{ type.text }}
                                         </option>
                                     </select>
                                 </div>
@@ -123,7 +123,7 @@
                             <div class="col-md-6 mb-2">
                                 <div class="form-group">
                                     {{ Form::label('date','Data de entrega') }}
-                                    {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
+                                    {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control bg-white', 'v-model' => 'date', 'required' => 'true']) }}
                                 </div>
                             </div>
                             {{--Valor de Delivery--}}
@@ -132,7 +132,7 @@
                                     {{ Form::label('deliveryFee','Taxa delivery') }}
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">R$</span>
-                                        {{ Form::text('deliveryFee', null, ['class' => 'form-control mask-money', 'v-model' => 'deliveryFee']) }}
+                                        {{ Form::text('deliveryFee', null, ['class' => 'form-control mask-money bg-white', 'v-model' => 'deliveryFee']) }}
                                     </div>
                                 </div>
                             </div>
@@ -142,17 +142,17 @@
                                     {{ Form::label('discount','Desconto') }}
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">R$</span>
-                                        {{ Form::text('discount', null, ['class' => 'form-control mask-money', 'v-model' => 'discount']) }}
+                                        {{ Form::text('discount', null, ['class' => 'form-control mask-money bg-white', 'v-model' => 'discount']) }}
                                     </div>
                                 </div>
                             </div>
                             {{--Valor já pago--}}
                             <div class="col-md-6 mb-2">
                                 <div class="form-group">
-                                    {{ Form::label('total_paid','Valor pago') }}
+                                    {{ Form::label('total_paid','Valor recebido') }}
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">R$</span>
-                                        {{ Form::text('total_paid', null, ['class' => 'form-control mask-money', 'v-model' => 'totalPaid']) }}
+                                        {{ Form::text('total_paid', null, ['class' => 'form-control mask-money bg-white', 'v-model' => 'totalPaid']) }}
                                     </div>
                                 </div>
                             </div>
@@ -160,13 +160,14 @@
                             <div class="col-md-12 mb-2">
                                 <div class="form-group">
                                     <label for="obs" class="col-md-4 col-form-label">Observacões</label>
-                                    <textarea id="obs" rows="2" class="form-control" name="obs" v-model="obs"></textarea>
+                                    <textarea id="obs" rows="2" class="form-control bg-white" name="obs" v-model="obs"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--Itens-->
             <div class="container col-md-8">
                 <div class="card">
                     {{--Card Header--}}
@@ -283,23 +284,6 @@
 @endsection
 
 @section('js')
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.2.6/jquery.inputmask.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
-    <script src="https://unpkg.com/vue-cookies@1.7.0/vue-cookies.js"></script>
-
-{{--    <script>--}}
-{{--        $(document).ready(function() {--}}
-{{--            $('#customer_id').select2({--}}
-{{--                theme: "bootstrap",--}}
-{{--                width: '100%',--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
-
     <script>
         Vue.config.devtools = true
 
@@ -327,12 +311,12 @@
                     {text: 'Pix', value: 'PIX'},
                     {text: 'Dinheiro', value: 'DINHEIRO'}
                 ],
-                orderStatus: [
-                    {text: 'Pendente', value: 'PENDING'},
-                    {text: 'Entregue', value: 'DELIVERED'},
+                orderType: [
+                    {text: 'Encomenda', value: 'ORDER'},
+                    {text: 'No Caixa', value: 'CASHIER'},
                 ],
                 paymentType: null,
-                status: null,
+                type: null,
             },
             watch: {},
             created() {
@@ -350,6 +334,35 @@
                 }
             },
             mounted() {
+                $('#product_id').select2({
+                    theme: "bootstrap",
+                    width: '100%',
+                }).change(function () {
+                    console.log('change product')
+                    app.product = $(this).find("option:selected").data().data.element._value;
+                    app.adicionarProduto();
+                });
+
+                $('#aditional_id').select2({
+                    theme: "bootstrap",
+                    width: '100%',
+                }).change(function () {
+                    console.log('change aditional')
+                    app.aditional = $(this).find("option:selected").data().data.element._value;
+                    app.adicionarAdicional();
+                });
+
+                $('#customer_id').select2({
+                    theme: "bootstrap",
+                    width: '100%', tags: true
+                }).change(function () {
+                    console.log('change customer')
+                    if ($(this).find("option:selected").data().data.selected === true) {
+                        app.customer = $(this).find("option:selected").data().data.element._value;
+                    } else {
+                        app.customer = $(this).find("option:selected").data().data.text;
+                    }
+                });
                 $('.mask-money').mask('000.000.000.000,00', {reverse: true, placeholder: '0.00'});
             },
             computed: {
@@ -381,7 +394,7 @@
                         return true;
                     }
 
-                    if (app.arrayProducts.length == 0) {
+                    if (app.arrayProducts.length === 0) {
                         alert('É necessário informar pelo menos um produto');
                         return true;
                     }
@@ -396,8 +409,8 @@
                         return true;
                     }
 
-                    if (app.status == null) {
-                        alert('É necessário informar o status do pedido');
+                    if (app.type == null) {
+                        alert('É necessário informar o tipo do pedido');
                         return true;
                     }
 
@@ -418,9 +431,10 @@
                         discount: app.discount,
                         deliveryFee: app.deliveryFee,
                         totalPaid: app.totalPaid,
-                        status: app.status
+                        type: app.type
                     }
                     console.log(data);
+                    // return true;
                     axios.post('{{ route('orders.store') }}', data).then(function (response) {
                         window.location.href = '/orders';
                     });
