@@ -46,7 +46,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href=" {{ route('home') }}">
-                <span style="color: #6cb2eb"> {{ session('franchise_name') }}</span>
+                <span style="color: #6cb2eb"> Sistema de Gestão</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
