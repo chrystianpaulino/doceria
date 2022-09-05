@@ -66,6 +66,9 @@ Route::middleware('auth')->group(function (){
     Route::get('reports/costs'                  , [\App\Http\Controllers\ReportController::class, 'costs'])->name('reports.costs');
     Route::post('reports/costs'                 , [\App\Http\Controllers\ReportController::class, 'costs']);
 
+    Route::get('reports/costs-feedstocks'        , [\App\Http\Controllers\ReportController::class, 'costsFeedstocks'])->name('reports.costs-feedstocks');
+    Route::post('reports/costs-feedstocks'       , [\App\Http\Controllers\ReportController::class, 'costsFeedstocks']);
+
 });
 
 

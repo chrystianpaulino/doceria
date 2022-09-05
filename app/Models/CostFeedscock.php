@@ -40,4 +40,9 @@ class CostFeedscock extends Model
         return $this->hasOne(Feedstock::class, 'id', 'feedstock_id');
     }
 
+    public function cost()
+    {
+        return $this->hasOne(Cost::class, 'id', 'cost_id');
+    }
+
 }

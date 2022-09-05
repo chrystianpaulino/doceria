@@ -18,6 +18,7 @@
                 <div class="list-group">
                     <a href="{{ route('reports.orders') }}" class="list-group-item list-group-item-action">Pedidos</a>
                     <a href="{{ route('reports.costs') }}" class="list-group-item list-group-item-action">Despesas</a>
+                    <a href="{{ route('reports.costs-feedstocks') }}" class="list-group-item list-group-item-action">Insumos</a>
                 </div>
             </div>
         </div>

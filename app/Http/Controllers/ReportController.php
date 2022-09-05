@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CostsFeedstockService;
 use App\Services\CostService;
 use App\Services\CustomerService;
+use App\Services\FeedstockService;
 use App\Services\OrderService;
 use App\Services\ProviderService;
 use Carbon\Carbon;
@@ -15,13 +17,17 @@ class ReportController extends Controller
     protected $orderService;
     protected $providerService;
     protected $costService;
+    protected $costsFeedstockService;
+    protected $feedstockService;
 
-    public function __construct(CustomerService $customerService, OrderService $orderService, ProviderService $providerService, CostService $costService)
+    public function __construct(CustomerService $customerService, OrderService $orderService, ProviderService $providerService, CostService $costService, CostsFeedstockService $costsFeedstockService, FeedstockService $feedstockService)
     {
-        $this->customerService = $customerService;
-        $this->orderService    = $orderService;
-        $this->providerService = $providerService;
-        $this->costService     = $costService;
+        $this->customerService       = $customerService;
+        $this->orderService          = $orderService;
+        $this->providerService       = $providerService;
+        $this->costService           = $costService;
+        $this->costsFeedstockService = $costsFeedstockService;
+        $this->feedstockService      = $feedstockService;
     }
 
     public function index()
@@ -83,6 +89,34 @@ class ReportController extends Controller
 
         $providers = $this->providerService->query()->pluck('name', 'id');
         return view('reports.costs.costs', compact('providers'));
+    }
+
+    public function costsFeedstocks(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+
+            $feedstockId = $request->feedstock_id;
+            $dateFrom    = $request->from ? Carbon::createFromFormat('Y-m-d H:i:s', $request->from . ' 00:00:00')->format('Y-m-d H:i:s') : null;
+            $dateTo      = $request->to ? Carbon::createFromFormat('Y-m-d H:i:s', $request->to . ' 23:59:59')->format('Y-m-d H:i:s') : null;
+
+            $costsFeedstocks = $this->costsFeedstockService->query()
+                ->when(isset($feedstockId), function ($query) use ($feedstockId) {
+                    return $query->where('feedstock_id', '=', $feedstockId);
+                })
+                ->when(isset($dateFrom), function ($query) use ($dateFrom) {
+                    return $query->where('created_at', '>=', $dateFrom);
+                })
+                ->when(isset($dateTo), function ($query) use ($dateTo) {
+                    return $query->where('created_at', '<=', $dateTo);
+                })
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            return view('reports.costs-feedstocks.report', compact('costsFeedstocks', 'dateTo', 'dateFrom', 'feedstockId'));
+        }
+
+        $feedstocks = $this->feedstockService->query()->pluck('name', 'id');
+        return view('reports.costs-feedstocks.costs-feedstocks', compact('feedstocks'));
     }
 
 }
