@@ -4,7 +4,7 @@
     <div class="container">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Início</li>
+                <li class="breadcrumb-item"><a href=" {{ route('home') }}">Início</a></li>
             </ol>
         </nav>
     </div>

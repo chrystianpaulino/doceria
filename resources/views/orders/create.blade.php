@@ -96,7 +96,7 @@
                             {{--Tipo de Pagamento--}}
                             <div class="col-md-6 mb-2">
                                 <div class="form-group">
-                                    {{ Form::label('payment_type','Tipo de pagamento') }}
+                                    {{ Form::label('payment_type','Tipo de Pagamento') }}
                                     <br>
                                     <select class="form-select bg-white" id="payment_type" v-model="paymentType" :required="true">
                                         <option :value="null" disabled>Selecione</option>
@@ -122,14 +122,14 @@
                             {{--Data de Entrega--}}
                             <div class="col-md-6 mb-2">
                                 <div class="form-group">
-                                    {{ Form::label('date','Data de entrega') }}
+                                    {{ Form::label('date','Data de Entrega') }}
                                     {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control bg-white', 'v-model' => 'date', 'required' => 'true']) }}
                                 </div>
                             </div>
                             {{--Valor de Delivery--}}
                             <div class="col-md-6 mb-2">
                                 <div class="form-group">
-                                    {{ Form::label('deliveryFee','Taxa delivery') }}
+                                    {{ Form::label('deliveryFee','Taxa Delivery') }}
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">R$</span>
                                         {{ Form::text('deliveryFee', null, ['class' => 'form-control mask-money bg-white', 'v-model' => 'deliveryFee']) }}
@@ -149,7 +149,7 @@
                             {{--Valor já pago--}}
                             <div class="col-md-6 mb-2">
                                 <div class="form-group">
-                                    {{ Form::label('total_paid','Valor recebido') }}
+                                    {{ Form::label('total_paid','Valor Pago') }}
                                     <div class="input-group">
                                         <span class="input-group-text" id="basic-addon1">R$</span>
                                         {{ Form::text('total_paid', null, ['class' => 'form-control mask-money bg-white', 'v-model' => 'totalPaid']) }}
@@ -262,11 +262,11 @@
                         </div>
                         <div class="row mt-2 mb-2 d-flex justify-content-between align-content-between">
                             <ul class="list-group mb-2 col-md-6 text-end" style="padding-left: 10px">
-                                <li v-if="totalPaid != ''" class="list-group-item list-group-item-success"><strong>Total Recebido:</strong> R$ @{{ totalPaid }}</li>
-                                <li v-else class="list-group-item list-group-item-success"><strong>Total Recebido:</strong> R$ 0,00</li>
+                                <li v-if="totalPaid != ''" class="list-group-item list-group-item-success"><strong>Valor Pago:</strong> R$ @{{ totalPaid }}</li>
+                                <li v-else class="list-group-item list-group-item-success"><strong>Valor Pago:</strong> R$ 0,00</li>
                             </ul>
                             <ul class="list-group col-md-6 text-end" style="padding-left: 10px">
-                                <li class="list-group-item list-group-item-danger"><strong>Faltando Receber:</strong> R$ @{{ valueMissing }}</li>
+                                <li class="list-group-item list-group-item-danger"><strong>Falta Receber:</strong> R$ @{{ valueMissing }}</li>
                             </ul>
                         </div>
                         {{--Botão Finalizar--}}

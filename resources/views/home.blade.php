@@ -87,7 +87,7 @@
             {{--Pedidos amanhã--}}
             <div class="col-md-6 mb-3">
                 <div class="card mb-3 p-4">
-                    <h5 class="card-title">Pedidos de amanhã</h5>
+                    <h5 class="card-title">Pedidos para amanhã</h5>
                     @if(count($ordersTomorrow) > 0)
                         @foreach($ordersTomorrow as $order)
                             <div class="card mb-3">

@@ -40,6 +40,7 @@
                             <td>Despesa ID</td>
                             <td>Fornecedor</td>
                             <td>Insumo</td>
+                            <td>Data</td>
                             <td class="text-center">Quantidade</td>
                         </tr>
                     </thead>
@@ -58,13 +59,16 @@
                                 <td>
                                     {{ $insumo->feedstock->name }}
                                 </td>
+                                <td>
+                                    {{ \Carbon\Carbon::parse($insumo->created_at)->format('d/m/Y H:i') }}
+                                </td>
                                 <td class="text-center">
                                     {{ $insumo->quantity }}
                                 </td>
                             </tr>
                         @endforeach
                         <tr>
-                            <td colspan="4" class="text-right"><strong></strong></td>
+                            <td colspan="5" class="text-right"><strong></strong></td>
                             <td class="text-center"><strong>Total: {{ $itens->sum('quantity') }}</strong></td>
                         </tr>
                     </tbody>
