@@ -80,7 +80,7 @@
                             <a class="nav-link" aria-current="page" href="{{ route('providers.index') }}"><i class="fas fa-industry"></i> Fornecedores</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('costs.index') }}"><i class="fa fa-money" aria-hidden="true"></i> Despesas</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('costs.index') }}"><i class="fa fa-money" aria-hidden="true"></i> Contas a Pagar</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{{ route('reports.index') }}"><i class="fa fa-file" aria-hidden="true"></i> Relatórios</a>

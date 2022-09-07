@@ -5,7 +5,7 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href=" {{ route('home') }}">Início</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Despesas</li>
+                <li class="breadcrumb-item active" aria-current="page">Contas a Pagar</li>
             </ol>
         </nav>
     </div>
@@ -24,10 +24,11 @@
                         <tr>
                             <td>ID</td>
                             <td class="text-center">Fornecedor</td>
-                            <td class="text-center">Contato</td>
                             <td class="text-center">Pagamento</td>
                             <td class="text-center">Valor</td>
                             <td class="text-center">Data</td>
+                            <td class="text-center">Vencimento</td>
+                            <td class="text-center">Pagamento</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,19 +38,22 @@
                                 <code>#{{ $cost->id }}</code>
                             </td>
                             <td class="text-center">
-                                {{ $cost->provider->name }}
+                                {{ isset($cost->provider->name) ? $cost->provider->name : '' }}
                             </td>
                             <td class="text-center">
-                                {{ $cost->provider->phone }}
-                            </td>
-                            <td class="text-center">
-                                {{ $cost->payment_type }}
+                                {{ $cost->payment_type ?? '' }}
                             </td>
                             <td class="text-center">
                                 R$ {{ \App\Helpers\showCentsValue($cost->amount) }}
                             </td>
                             <td class="text-center">
                                 {{ \Carbon\Carbon::parse($cost->date_cost)->format('d/m/Y') }}
+                            </td>
+                            <td class="text-center">
+                                {{ \Carbon\Carbon::parse($cost->date_due)->format('d/m/Y') }}
+                            </td>
+                            <td class="text-center">
+                                {{ isset($cost->date_paid) ? \Carbon\Carbon::parse($cost->date_paid)->format('d/m/Y') : 'Pagamento Pendente'}}
                             </td>
                         </tr>
                     @endforeach

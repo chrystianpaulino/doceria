@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function (){
     Route::resource('/costs'                , \App\Http\Controllers\CostController::class);
     Route::resource('/performances'         , \App\Http\Controllers\PerformaceController::class);
 
+    Route::post('costs/paid/{costId}'           , [\App\Http\Controllers\CostController::class, 'paid'])->name('costs.paid');
+
     Route::get('/orders/delivered/{orderId}'    , [\App\Http\Controllers\OrderController::class, 'delivered'])->name('orders.delivered');
     Route::get('/orders/paid/{orderId}'         , [\App\Http\Controllers\OrderController::class, 'paid'])->name('orders.paid');
 

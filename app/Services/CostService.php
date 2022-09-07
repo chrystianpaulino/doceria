@@ -47,12 +47,16 @@ class CostService
     {
         try {
             $cost               = new $this->model();
-            $cost->provider_id  = $data['provider']['id'];
+            $cost->provider_id  = isset($data['provider']['id']) ? $data['provider']['id'] : null;
             $cost->amount       = stringFloatToCents($data['amount']);
             $cost->date_cost    = $data['date'] ?? date('Y-m-d');
+            $cost->date_due     = $data['date_due'] ?? date('Y-m-d');
+            $cost->date_paid    = isset($data['date_paid']) ? $data['date_paid'] : null;
             $cost->payment_type = $data['paymentType'] ?? null;
+            $cost->description  = $data['description'] ?? null;
             $cost->save();
 
+            // Insumos do Fornecedor
             if (isset($data['feedstocks'])) {
                 foreach ($data['feedstocks'] as $insumo) {
                     if ($insumo['quantity'] > 0) {
@@ -65,7 +69,6 @@ class CostService
                         $costFeedstock->total        = 0;
                         $costFeedstock->save();
                     }
-
                 }
             }
 
@@ -85,6 +88,15 @@ class CostService
         } catch (Exception $e) {
             throw $e;
         }
+    }
+
+    public function paid($data, $id)
+    {
+        $cost               = $this->find($id);
+        $cost->payment_type = $data['payment_type'];
+        $cost->date_paid    = $data['date_paid'];
+        $cost->save();
+        return $cost;
     }
 
 }

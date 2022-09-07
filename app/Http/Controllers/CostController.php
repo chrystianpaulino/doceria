@@ -58,4 +58,10 @@ class CostController extends Controller
         $this->service->destroy($id);
         return redirect()->back();
     }
+
+    public function paid(Request $request, $costId)
+    {
+        $this->service->paid($request->all(), $costId);
+        return redirect()->back();
+    }
 }

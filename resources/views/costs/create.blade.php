@@ -188,7 +188,16 @@
                     </div>
                 @endif
                 <div class="row col-md-12 m-0 d-flex">
-                    <div class="col-md-3 mb-4">
+                    {{--Descricao--}}
+                    <div class="col-md-5 mb-2">
+                        <div class="form-group">
+                            {{ Form::label('description','Descricão') }}
+                            {{ Form::text('description', null, ['class' => 'form-control', 'v-model' => 'description', 'required' => 'true']) }}
+                            <small>Opcional</small>
+                        </div>
+                    </div>
+                    {{--Fornecedor--}}
+                    <div class="col-md-3 mb-2">
                         <div class="form-group">
                             {{ Form::label('provider_id','Fornecedor') }}
                         </div>
@@ -200,38 +209,66 @@
                                 </option>
                             </select>
                         </div>
+                        <small>Opcional</small>
                     </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="form-group">
-                            {{ Form::label('date','Data') }}
-                            {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
+                    {{--Valor--}}
+                    <div class="col-md-3 mb-2">
                         <div class="form-group">
                             {{ Form::label('amount','Valor') }}
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">R$</span>
                                 <input id="amount" class="form-control mask-money" @focusout="amountFocusout" v-model="amount" required>
                             </div>
+                            <small>Valor da despesa (obrigatório)</small>
                         </div>
                     </div>
-                    <div class="col-md-3 mb-4">
+                    {{--Date Competence--}}
+                    <div class="col-md-3 mb-2">
                         <div class="form-group">
-                            {{ Form::label('payment_type','Tipo de pagamento') }}
-                        </div>
-                        <div class="form-group">
-                            <select class="form-select" id="paymentType" name="paymentType" v-model="paymentType" :required="true">
-                                <option :value="null" disabled>Selecione</option>
-                                <option v-for="payment in payments" v-bind:value="payment.value">
-                                    @{{ payment.text }}
-                                </option>
-                            </select>
+                            {{ Form::label('date','Data de Competência') }}
+                            {{ Form::date('date', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date', 'required' => 'true']) }}
+                            <small>Data em que a desepesa ocorreu (obrigatório)</small>
                         </div>
                     </div>
-                    <div class="col-md-12 mb-4">
+                    {{--Date Vencimento--}}
+                    <div class="col-md-3 mb-2">
                         <div class="form-group">
-                            {{ Form::label('feedstocks','Insumos da Despesa (opcional)') }}
+                            {{ Form::label('date_due','Data de Vencimento') }}
+                            {{ Form::date('date_due', date('Y-m-d'), ['class' => 'form-control', 'v-model' => 'date_due', 'required' => 'true']) }}
+                        </div>
+                        <small>Data de vencimento da desepesa (obrigatório)</small>
+                    </div>
+                    <hr>
+                    {{--Aba de Pagamento--}}
+                    <div class="col-md-12 mb-2">
+                        {{--Check Pagamento--}}
+                        <div class="form-group">
+                            <input type="checkbox" id="checkbox" v-model="checked">
+                            {{ Form::label('paid','Pago') }}
+                        </div>
+                        {{--Date Pagamento--}}
+                        <div class="row col-md-12 mt-2 mb-2">
+                            {{--Tipo Pagamento--}}
+                            <div class="form-group col-md-6">
+                                {{ Form::label('payment_type','Tipo de pagamento') }}
+                                <select class="form-select" id="paymentType" name="paymentType" v-model="paymentType" :required="true" :disabled="checked == false">
+                                    <option :value="null" disabled>Selecione</option>
+                                    <option v-for="payment in payments" v-bind:value="payment.value">
+                                        @{{ payment.text }}
+                                    </option>
+                                </select>
+                                <small>Obrigatório</small>
+                            </div>
+                            <div class="form-group  col-md-6">
+                                {{ Form::label('date_paid','Data de pagamento') }}
+                                {{ Form::date('date_paid', null, ['class' => 'form-control', 'v-model' => 'date_paid', ':readonly' => "checked == false", ":required" => "checked == true"]) }}
+                            </div>
+                        </div>
+                    </div>
+                    {{--Insumos--}}
+                    <div v-if="provider != null" class="col-md-12 mb-2">
+                        <div class="form-group">
+                            {{ Form::label('feedstocks','Itens da Despesa (opcional)') }}
                         </div>
                         <ul class="feedstocks text-center d-flex flex-column justify-content-between">
                             <div class="row">
@@ -247,6 +284,7 @@
                             </div>
                         </ul>
                     </div>
+                    {{--Finalizar--}}
                     <div class="col-md-12">
                         <button class="btn btn-primary" style="width: 100%" v-on:click="submit()">
                             Finalizar
@@ -278,12 +316,16 @@
                 checkedFeedstocks: [],
                 amount: "",
                 date: null,
+                date_due: null,
+                date_paid: null,
                 payments: [
                     {text: 'Cartão', value: 'CARTAO'},
                     {text: 'Pix', value: 'PIX'},
                     {text: 'Dinheiro', value: 'DINHEIRO'}
                 ],
                 paymentType: null,
+                description: '',
+                checked: false
             },
             watch: {
             },
@@ -291,6 +333,7 @@
                 var tzoffset        = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
                 var localISOTime    = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
                 this.date           = localISOTime.slice(0,10);
+                this.date_due       = localISOTime.slice(0,10);
 
                 for (var i = 0; i < this.feedstocks.length; i++) {
                     this.feedstocks[i].quantity = 0;
@@ -337,12 +380,21 @@
                     this.amount = this.formatReal(this.amount);
                 },
                 submit() {
+
+                    if (app.amount == null || app.amount == '') {
+                        alert('É necessário informar valor da despesa');
+                        return true;
+                    }
+
                     const data = {
                         feedstocks: app.feedstocks,
                         provider: app.provider,
                         amount: app.amount,
                         date: app.date,
-                        paymentType: app.paymentType
+                        date_due: app.date_due,
+                        date_paid: app.date_paid,
+                        paymentType: app.paymentType,
+                        description: app.description
                     }
                     console.log(data);
                     console.log('submit');
