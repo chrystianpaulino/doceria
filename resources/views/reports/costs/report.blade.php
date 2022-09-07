@@ -6,7 +6,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Início</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('reports.index') }}">Relatórios</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Pedidos</li>
+                <li class="breadcrumb-item active" aria-current="page">Despesas</li>
             </ol>
         </nav>
     </div>
@@ -17,7 +17,7 @@
     <div class="container d-flex justify-content-center mb-4">
         <div class="card col-md-12">
             <div class="card-header d-flex justify-content-between align-items-center">
-                Relatório de Custos
+                Relatório de Despesas
             </div>
             @if(isset($dateTo) and isset($dateFrom))
                 <div class="text-center bg-secondary">
@@ -36,18 +36,20 @@
                     <td>Fornecedor</td>
                     <td class="text-center">Total</td>
                     <td class="text-center">Tipo do Pagamento</td>
-                    <td class="text-center">Data da Despesa</td>
+                    <td class="text-center">Competência</td>
+                    <td class="text-center">Vencimento</td>
+                    <td class="text-center">Pagamento</td>
                     <td class="text-center">Data de Registro</td>
                 </tr>
                 </thead>
                 <tbody>
                     @foreach($costs as $cost)
-                        <tr class="align-middle" onclick="alertMe(this)" data-url="{{ route('orders.show', $cost->id) }}">
+                        <tr class="align-middle {{ is_null($cost->date_paid) ? "bg-danger" : "" }}">
                             <td>
                                 <code>#{{ $cost->id }}</code>
                             </td>
                             <td>
-                                {{ $cost->provider->name }}
+                                {{ isset($cost->provider->name) ? $cost->provider->name : '' }}
                             </td>
 
                             <td class="text-center">
@@ -55,11 +57,19 @@
                             </td>
 
                             <td class="text-center">
-                                {{ $cost->payment_type }}
+                                {{ $cost->payment_type ?? 'Pagamento Pendente' }}
                             </td>
 
                             <td class="text-center">
-                                <span class=""> {{ \Carbon\Carbon::parse($cost->date_cost)->format('d/m/Y H:i')}}</span>
+                                <span class=""> {{ isset($cost->date_cost) ? \Carbon\Carbon::parse($cost->date_cost)->format('d/m/Y') : '' }}</span>
+                            </td>
+
+                            <td class="text-center">
+                                <span class=""> {{ isset($cost->date_due) ? \Carbon\Carbon::parse($cost->date_due)->format('d/m/Y') : '' }}</span>
+                            </td>
+
+                            <td class="text-center">
+                                <span class=""> {{ isset($cost->date_paid) ? \Carbon\Carbon::parse($cost->date_paid)->format('d/m/Y') : 'Pagamento Pendente' }}</span>
                             </td>
 
                             <td class="text-center">

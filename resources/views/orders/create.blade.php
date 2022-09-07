@@ -260,10 +260,15 @@
                                 <li class="list-group-item list-group-item-info"><strong>Valor Total:</strong> R$ @{{ total }}</li>
                             </ul>
                         </div>
-                        <div class="row mt-2 mb-2 d-flex justify-content-between align-content-between">
-                            <ul class="list-group mb-2 col-md-6 text-end" style="padding-left: 10px">
+                        <div class="col-md-12">
+                            <ul class="list-group mt-2 text-end">
                                 <li v-if="totalPaid != ''" class="list-group-item list-group-item-success"><strong>Valor Pago:</strong> R$ @{{ totalPaid }}</li>
                                 <li v-else class="list-group-item list-group-item-success"><strong>Valor Pago:</strong> R$ 0,00</li>
+                            </ul>
+                        </div>
+                        <div class="row mt-2 mb-2 d-flex">
+                            <ul class="list-group col-md-6 text-end" style="padding-left: 10px">
+                                <li class="list-group-item list-group-item-secondary"><strong>Troco:</strong> R$ @{{ valueChange }}</li>
                             </ul>
                             <ul class="list-group col-md-6 text-end" style="padding-left: 10px">
                                 <li class="list-group-item list-group-item-danger"><strong>Falta Receber:</strong> R$ @{{ valueMissing }}</li>
@@ -296,6 +301,7 @@
                 price: 0,
                 totalAmount: 0,
                 valueMissing: "0,00",
+                valueChange: "0,00",
                 deliveryFee: '',
                 discount: '',
                 totalPaid: '',
@@ -382,6 +388,7 @@
 
                     if (paidCents != '') {
                         app.getValueMissing(value, paidCents)
+                        app.getValueChange(value, paidCents)
                     }
 
                     return this.number_format(value, '2', ',');
@@ -604,8 +611,23 @@
                     return tmp;
                 },
                 getValueMissing(value, totalPaid) {
-                    const valueMissing  = value - (totalPaid / 100);
-                    app.valueMissing    = this.number_format(valueMissing, '2', ',');
+                    const valueMissing = value - (totalPaid / 100);
+                    console.log('getValueMissing')
+                    console.log(valueMissing)
+
+                    if (valueMissing > 0)
+                        app.valueMissing = this.number_format(valueMissing, '2', ',');
+                    else
+                        app.valueMissing = this.number_format(0, '2', ',');
+                },
+                getValueChange(value, totalPaid) {
+                    const valueChange = (totalPaid / 100) - value;
+                    console.log('getValueChange')
+                    console.log(valueChange)
+                    if (valueChange > 0)
+                        app.valueChange = this.number_format(valueChange, '2', ',');
+                    else
+                        app.valueChange = this.number_format(0, '2', ',');
                 }
             }
         })

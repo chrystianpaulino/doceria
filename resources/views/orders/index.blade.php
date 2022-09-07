@@ -28,6 +28,7 @@
                             <td class="text-center">Taxa de Delivery</td>
                             <td class="text-center">Desconto</td>
                             <td class="text-center">Total</td>
+                            <td class="text-end">Débito</td>
                             {{--<td class="text-center">Tipo do Pagamento</td>--}}
                             <td class="text-center">Pagamento</td>
                             <td class="text-center">Tipo</td>
@@ -56,6 +57,9 @@
                                 </td>
                                 <td class="text-center">
                                     R$ {{ \App\Helpers\showCentsValue($order->total_amount) }}
+                                </td>
+                                <td class="text-end">
+                                    {{ $order->getMissing() == '0,00' ? "R$ " . $order->getMissing() : $order->getMissing() }}
                                 </td>
                                 {{--<td class="text-center">
                                     {{ $order->payment_type }}
