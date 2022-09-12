@@ -56,6 +56,12 @@ class CostService
             $cost->description  = $data['description'] ?? null;
             $cost->save();
 
+            if (isset($data['qtd_recurrences'])) {
+                for ($ocorrencia = 1; $ocorrencia <= $data['qtd_recurrences']; $ocorrencia++) {
+
+                }
+            }
+
             // Insumos do Fornecedor
             if (isset($data['feedstocks'])) {
                 foreach ($data['feedstocks'] as $insumo) {

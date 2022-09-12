@@ -239,6 +239,36 @@
                         <small>Data de vencimento da desepesa (obrigatório)</small>
                     </div>
                     <hr>
+                    {{--Aba de Recorrencia--}}
+                    <div class="col-md-12 mb-2">
+                        {{--Check Pagamento--}}
+                        <div class="form-group">
+                            <input type="checkbox" id="checkbox" v-model="recurrence">
+                            {{ Form::label('recurrence','Repetir') }}
+                        </div>
+                        {{--Date Pagamento--}}
+                        <div class="row col-md-12 mt-2 mb-2">
+                            {{--Tipo Pagamento--}}
+                            <div class="form-group col-md-6">
+                                {{ Form::label('recurrence_type','Tipo de repeticão') }}
+                                <select class="form-select" id="recurrenceType" name="recurrenceType" v-model="recurrenceType" :required="true" :disabled="recurrence == false">
+                                    <option :value="null" disabled>Selecione</option>
+                                    <option v-for="recurrence in recurrences" v-bind:value="recurrence.value">
+                                        @{{ recurrence.text }}
+                                    </option>
+                                </select>
+                                <small>Obrigatório</small>
+                            </div>
+                            <div class="form-group  col-md-6">
+                                {{ Form::label('qtd_recurrences','Qtd. Repeticões') }}
+                                <div class="input-group">
+                                    <input type="number" min="2" max="24" id="qtd_recurrences" class="form-control" v-model="qtd_recurrences" :disabled="recurrence == false">
+                                </div>
+                                <small>Qtd repeticões da ocorrência)</small>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
                     {{--Aba de Pagamento--}}
                     <div class="col-md-12 mb-2">
                         {{--Check Pagamento--}}
@@ -323,9 +353,15 @@
                     {text: 'Pix', value: 'PIX'},
                     {text: 'Dinheiro', value: 'DINHEIRO'}
                 ],
+                recurrences: [
+                    {text: 'Mensalmente', value: 'MENSAL'},
+                ],
                 paymentType: null,
                 description: '',
-                checked: false
+                checked: false,
+                recurrence: false,
+                recurrenceType: null,
+                qtd_recurrences: null,
             },
             watch: {
             },
@@ -394,10 +430,13 @@
                         date_due: app.date_due,
                         date_paid: app.date_paid,
                         paymentType: app.paymentType,
-                        description: app.description
+                        description: app.description,
+                        recurrenceType: app.recurrenceType,
+                        qtd_recurrences: app.qtd_recurrences,
                     }
                     console.log(data);
                     console.log('submit');
+                    return true;
                     axios.post('{{ route('costs.store') }}', data).then(function (response) {
                         window.location.href = '/costs';
                     });
